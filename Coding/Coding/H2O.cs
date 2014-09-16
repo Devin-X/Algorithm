@@ -11,6 +11,8 @@ namespace Coding
         private static int _hCount = 0;
         private static int _oCount = 0;
 
+        private static Object locker = new Object();
+
         //public H2O()
         //{
         //    _H = new Semaphore(0, 2);
@@ -19,38 +21,38 @@ namespace Coding
 
         public static void H(object num)
         {
-            //Thread.Sleep(10);
-            //if (_hCount > 1 && _oCount > 0)
+            Thread.Sleep(100);
+            //lock (locker)
             //{
-            //    _hCount -= 2;
-            //    _oCount -= 1;
-            //    _H.Release(2);
-            //    _O.Release();
-            //    Console.WriteLine("H H2O made!");
+            //    if (_hCount > 1 && _oCount > 0)
+            //    {
+            //        _hCount -= 2;
+            //        _oCount -= 1;
+            //        _H.Release(2);
+            //        _O.Release();
+            //        Console.WriteLine("H H2O made!");
+            //    }
             //}
-
-            //_hCount ++;
-            //_O.WaitOne();
-            //Console.WriteLine("H H2O made!");
-            _H.Release();
+            _hCount++;
+            _H.WaitOne();
         }
 
         public static void O(object num)
         {
-            //if (_hCount > 1 && _oCount > 0)
-            //{
-            //    _hCount -= 2;
-            //    _oCount -= 1;
-            //    _H.Release(2);
-            //    _O.Release();
-            //    Console.WriteLine("O H2O made!");
-            //}
-
-            //_oCount++;
-            _H.WaitOne();
-            _H.WaitOne();
-            Console.WriteLine("O H2O made!");
-            _O.Release();
+            Thread.Sleep(100);
+            lock (locker)
+            {
+                if (_hCount > 1 && _oCount > 0)
+                {
+                    _hCount -= 2;
+                    _oCount -= 1;
+                    _H.Release(2);
+                    _O.Release();
+                    Console.WriteLine("O H2O made!");
+                }
+            }
+            _oCount++;
+            _O.WaitOne();
         }
 
 
