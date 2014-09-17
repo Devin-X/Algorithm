@@ -5,34 +5,28 @@ namespace Coding
 {
     class H2O
     {
-        private static Semaphore _H = new Semaphore(0, 20);
-        private static Semaphore _O = new Semaphore(0, 20);
+        private static Semaphore _H = new Semaphore(0, 2);
+        private static Semaphore _O = new Semaphore(0, 1);
 
         private static int _hCount = 0;
         private static int _oCount = 0;
 
         private static Object locker = new Object();
 
-        //public H2O()
-        //{
-        //    _H = new Semaphore(0, 2);
-        //    _O = new Semaphore(0, 1);
-        //}
-
         public static void H(object num)
         {
             Thread.Sleep(100);
-            //lock (locker)
-            //{
-            //    if (_hCount > 1 && _oCount > 0)
-            //    {
-            //        _hCount -= 2;
-            //        _oCount -= 1;
-            //        _H.Release(2);
-            //        _O.Release();
-            //        Console.WriteLine("H H2O made!");
-            //    }
-            //}
+            lock (locker)
+            {
+                if (_hCount > 1 && _oCount > 0)
+                {
+                    _hCount -= 2;
+                    _oCount -= 1;
+                    _H.Release(2);
+                    _O.Release();
+                    Console.WriteLine("H H2O made!");
+                }
+            }
             _hCount++;
             _H.WaitOne();
         }
@@ -58,7 +52,7 @@ namespace Coding
 
         public static void Simulate()
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Thread hWorker = new Thread(new ParameterizedThreadStart(H2O.H));
                 hWorker.Start();
@@ -67,6 +61,8 @@ namespace Coding
             {
                 Thread oWorker = new Thread(new ParameterizedThreadStart(H2O.O));
                 oWorker.Start();
+                Thread hWorker = new Thread(new ParameterizedThreadStart(H2O.H));
+                hWorker.Start();
             }
         }
     }
