@@ -10,7 +10,8 @@ namespace Coding
     {
         static void Main(string[] args)
         {
-            H2O.Simulate();
+            //H2O.Simulate();
+            WordsLadderLength.GetLadderLength("hot", "cog");
         }
     }
 }
