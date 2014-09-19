@@ -9,9 +9,9 @@ namespace Coding
     public class WordsLadderLength
     {
         private static Dictionary<string, int> _dict = new Dictionary<string, int>();
-        private static int _wordLength = 0;
         private static Dictionary<string, int> _resultSet = new Dictionary<string, int>();
         private static int _result = int.MaxValue;
+        private static int _wordLength = 0;
         private static List<string> _bestResult = new List<string>();
 
         public static void GetLadderLength(string start, string end)
@@ -77,7 +77,9 @@ namespace Coding
                                     Console.WriteLine(word);
                                 }
 
-                                return;
+                                //_bestResult.Remove(s);
+                                //_dict.Add(start, 0);
+                                //return;
                             }
 
                             _dict.Add(start, 0);
