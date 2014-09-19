@@ -14,6 +14,8 @@ namespace Coding
         private static int _wordLength = 0;
         private static List<string> _bestResult = new List<string>();
 
+        private static List<string> _intermideateResult = new List<string>();
+
         public static void GetLadderLength(string start, string end)
         {
             _wordLength = start.Length;
@@ -31,8 +33,15 @@ namespace Coding
 
             _resultSet.Remove(start);
             _resultSet.Add(start, 1);
+            _intermideateResult.Add(start);
             _bestResult.Add(start);
             SearchLadderLength(start, end);
+
+            Console.WriteLine("The best result is " );
+            foreach (string word in _bestResult)
+            {
+                Console.WriteLine(word);
+            }
 
         }
 
@@ -58,7 +67,7 @@ namespace Coding
                             _resultSet.Remove(s);
                             _resultSet.Add(s, b + 1);
                             _dict.Remove(start);
-                            _bestResult.Add(s);
+                            _intermideateResult.Add(s);
 
                             if (s.CompareTo(end) != 0)
                             {
@@ -69,10 +78,11 @@ namespace Coding
                                 if (_result > b + 1)
                                 {
                                     _result = b + 1;
+                                    _bestResult = _intermideateResult.ToList<string>();
                                 }
 
                                 Console.WriteLine("Lenth: {0}", b + 1);
-                                foreach (string word in _bestResult)
+                                foreach (string word in _intermideateResult)
                                 {
                                     Console.WriteLine(word);
                                 }
@@ -83,7 +93,7 @@ namespace Coding
                             }
 
                             _dict.Add(start, 0);
-                            _bestResult.Remove(s);
+                            _intermideateResult.Remove(s);
                         }
                     }
                 }
