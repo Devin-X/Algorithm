@@ -11,7 +11,10 @@ namespace Coding
         static void Main(string[] args)
         {
             //H2O.Simulate();
-            WordsLadderLength.GetLadderLength("hot", "cog");
+            //WordsLadderLength.GetLadderLength("hot", "cog");
+
+            //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
+            Stock.TestMaxProfit();
         }
     }
 }
