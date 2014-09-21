@@ -14,7 +14,8 @@ namespace Coding
             //WordsLadderLength.GetLadderLength("hot", "cog");
 
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
-            Stock.TestMaxProfit();
+            //Stock.TestMaxProfit();
+            ReverseWordsInString.TestReverseWordsInString();
         }
     }
 }
