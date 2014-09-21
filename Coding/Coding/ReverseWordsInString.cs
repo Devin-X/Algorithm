@@ -10,47 +10,72 @@ namespace Coding
     {
         public static string ReverseWords(string str)
         {
-            char[] temp = str.Trim().ToCharArray();
+            char[] tempWithSpaces = str.Trim().ToCharArray();
+            char[] temp = new char[tempWithSpaces.Length];
             for(int i = 0; i < temp.Length; i++)
             {
-                if(temp[i] == ' ')
+                temp[i] = ' ';
+            }
+
+            int index = 0;
+            for (int i = 0; i < tempWithSpaces.Length; i++)
+            {
+                if (tempWithSpaces[i] == ' ') continue;
+
+                while (i < tempWithSpaces.Length && tempWithSpaces[i] != ' ' )
+                {
+                    temp[index++] = tempWithSpaces[i++];
+                }
+
+                if (index < temp.Length)
+                {
+                    temp[index++] = ' ';
+                }
+            }
+
+            --index;
+            for (int i = 0; i < index; i++)
+            {
+                if (temp[i] == ' ')
                 {
                     continue;
                 }
 
                 int j;
-                for(j = i+1; j < temp.Length; j++)
+                for (j = i + 1; j < index; j++)
                 {
-                    if(temp[j]!=' ') continue;
+                    if (temp[j] != ' ') continue;
                     else break;
                 }
 
                 j--;
-
-                for(int ii = i; ii < j ; ii++,j--)
+                for (int ii = i; ii < j; ii++, j--)
                 {
                     char c = temp[ii];
                     temp[ii] = temp[j];
                     temp[j] = c;
-                 }
+                }
 
                 i = j + 1;
-             }
+            }
 
-            for (int i = 0, j = temp.Length - 1; i < j; i++, j--)
+            for (int i = 0, j = index - 1; i < j; i++, j--)
             {
                 char c = temp[i];
                 temp[i] = temp[j];
                 temp[j] = c;
             }
 
-            return new string(temp);
+            string result = new string(temp);
+
+            return result.Trim();
         }
 
         public static void TestReverseWordsInString()
         {
-            string s = "the sky is blue";
-            Console.WriteLine(ReverseWords(s));
+            string s = "  the   sky   is   blue  ";
+            Console.Write(ReverseWords(s)); Console.Write(ReverseWords(s)); Console.Write(ReverseWords(s));
+
         }
     }
 }
