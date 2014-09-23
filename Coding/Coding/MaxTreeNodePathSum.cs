@@ -29,82 +29,135 @@ namespace Coding
             int leftSum = 0;
             int rightSum = 0;
 
+            if (root == null)
+            {
+                return maxSum;
+            }
+
             if(root.left == null && root.right == null)
             {
                 _maxSum = _maxSum > root.val ? _maxSum : root.val;
-                return root.val;
+                return root.val;// > 0 ? root.val : 0;
             }
 
             if(root.left != null)
             {
                 leftSum = FindMaxPathSum(root.left);
-                leftSum += root.val;
-                maxSum = root.val > leftSum ? root.val : leftSum;
+                maxSum = root.val > leftSum + root.val ? root.val : leftSum + root.val;
             }
 
             if (root.right != null)
             {
                 rightSum = FindMaxPathSum(root.right);
-                rightSum += root.val;
-                maxSum = root.val > rightSum ? root.val : rightSum;
+                maxSum = maxSum > rightSum + root.val ? maxSum : rightSum + root.val;
             }
-
-            if(root.left != null)
-            {
-                int leftSumToRoot = FindMaxPathToRoot(root.left);
-                _maxSum = leftSumToRoot + rightSum > _maxSum ? leftSumToRoot + rightSum : _maxSum;
-                //maxSum = leftSumToRoot + root.val > maxSum ? leftSumToRoot + root.val : maxSum;
-            }
-
-            if(root.right != null)
-            {
-                int rightSumToRoot = FindMaxPathToRoot(root.right);
-                _maxSum = leftSum + rightSumToRoot > _maxSum ? leftSum + rightSumToRoot : _maxSum;
-                //maxSum = root.val + rightSumToRoot > maxSum ? leftSum + root.val : maxSum;
-            }
-
+            
             _maxSum = maxSum > _maxSum ? maxSum : _maxSum;
+            _maxSum = leftSum + rightSum + root.val > _maxSum ? leftSum + rightSum + root.val : _maxSum;
             return maxSum;
         }
 
-        private static int FindMaxPathToRoot(TreeNode root)
-        {
-            int sum = int.MinValue;
-            int left = 0;
-            int right = 0;
-
-            if(root.left == null && root.right == null)
-            {
-                return root.val;
-            }
-
-            if(root.left != null)
-            {
-                left = FindMaxPathToRoot(root.left);
-            }
-
-            if(root.right != null)
-            {
-                right = FindMaxPathToRoot(root.right);
-            }
-
-            sum = left > right ? left + root.val : right + root.val;
-            sum = sum > root.val ? sum : root.val;
-            sum = sum > 0 ? sum : 0;
-
-            return sum;
-        }
 
         public static void TestFindMaxPath()
         {
-            TreeNode node1 = new TreeNode(1, null, null);
+            TreeNode node6 = new TreeNode(-1, null, null);
+            TreeNode node1 = new TreeNode(1, null, node6);
             TreeNode node2 = new TreeNode(3, null, null);
-            TreeNode node3 = new TreeNode(-1, node1, node2);
-            TreeNode node4 = new TreeNode(4, null, null);
-            TreeNode root = new TreeNode(-1, node3, node4);
+            TreeNode node3 = new TreeNode(-2, node1, node2);
+            TreeNode node4 = new TreeNode(-2, null, null);
+            TreeNode node5 = new TreeNode(-3, node4, null);
+            TreeNode root = new TreeNode(-1, node3, node5);
 
             Console.WriteLine(FindMaxPathSum(root));
             Console.WriteLine(_maxSum);
         }
     }
 }
+
+
+
+    //private int maxPathSumhelper(TreeNode root) {
+    //    int leftmax, rightmax;
+    //    if (root.left == null && root.right == null){
+    //    if (root.val > maxpathsum)
+    //        maxpathsum = root.val;
+    //        return root.val;
+    //    }
+
+    //    if (root.left != null)
+    //        leftmax = maxPathSumhelper(root.left);
+    //    else
+    //        leftmax = 0;
+    //    if (root.right != null)
+    //        rightmax = maxPathSumhelper(root.right);
+    //    else
+    //        rightmax = 0;
+
+    //    int localmax = max(root.val, root.val + leftmax, root.val + rightmax);
+    //    if (localmax > maxpathsum)
+    //        maxpathsum = localmax;
+    //    if (root.val + leftmax + rightmax > maxpathsum)
+    //        maxpathsum = root.val + leftmax + rightmax;
+    //    return localmax;
+    //}
+
+
+
+
+//class Solution {
+//public:
+//    int _maxSum = INT_MIN;
+//    int maxPathSum(TreeNode *root) {
+//            if(root == NULL)
+//            {
+//                return _maxSum;
+//            }
+            
+//        maxPathLeper(root);
+//        return _maxSum;
+//    }
+    
+//    int maxPathLeper(TreeNode *root){
+            
+//            int maxSum;
+//            int leftSum = 0;
+//            int rightSum = 0;
+            
+//            if(root->left == NULL && root->right == NULL)
+//            {
+//                _maxSum = _maxSum > root->val ? _maxSum : root->val;
+//                return root->val;
+//            }
+
+//            if(root->left != NULL)
+//            {
+//                leftSum = maxPathSum(root->left);
+//            }
+
+//            //maxSum = root->val > leftSum + root->val ? root->val : leftSum + root->val;
+            
+//            if (root->right != NULL)
+//            {
+//                rightSum = maxPathSum(root->right);
+//            }
+            
+//            //maxSum = maxSum > rightSum + root->val? maxSum : rightSum + root->val;
+            
+//            maxSum = max(root->val, leftSum + root->val, rightSum + root->val);
+            
+//            _maxSum = maxSum > _maxSum ? maxSum : _maxSum;
+            
+//            _maxSum = leftSum + rightSum + root->val > _maxSum ? leftSum + rightSum + root->val : _maxSum;
+
+//            return maxSum;
+//    }
+    
+//    int max(int a, int b, int c){
+//    if (a >= b && a >=c)
+//        return a;
+//    else if (b>=c)
+//        return b;
+//    else
+//        return c;
+//    }
+// };   
