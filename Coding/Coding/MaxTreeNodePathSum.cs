@@ -22,7 +22,7 @@ namespace Coding
 
     public class MaxTreeNodePathSum
     {
-        public static int _maxSum = 0;
+        public static int _maxSum = int.MinValue;
         public static int FindMaxPathSum(TreeNode root)
         {
             int maxSum = int.MinValue;
@@ -31,6 +31,7 @@ namespace Coding
 
             if(root.left == null && root.right == null)
             {
+                _maxSum = _maxSum > root.val ? _maxSum : root.val;
                 return root.val;
             }
 
@@ -51,15 +52,15 @@ namespace Coding
             if(root.left != null)
             {
                 int leftSumToRoot = FindMaxPathToRoot(root.left);
-                maxSum =  leftSumToRoot +  rightSum > maxSum ? leftSumToRoot + rightSum : maxSum;
-                maxSum = leftSumToRoot + root.val > maxSum ? leftSumToRoot + root.val : maxSum;
+                _maxSum = leftSumToRoot + rightSum > _maxSum ? leftSumToRoot + rightSum : _maxSum;
+                //maxSum = leftSumToRoot + root.val > maxSum ? leftSumToRoot + root.val : maxSum;
             }
 
             if(root.right != null)
             {
                 int rightSumToRoot = FindMaxPathToRoot(root.right);
-                maxSum = leftSum + rightSumToRoot > maxSum ? leftSum + rightSumToRoot : maxSum;
-                maxSum = root.val + rightSumToRoot > maxSum ? leftSum + root.val : maxSum;
+                _maxSum = leftSum + rightSumToRoot > _maxSum ? leftSum + rightSumToRoot : _maxSum;
+                //maxSum = root.val + rightSumToRoot > maxSum ? leftSum + root.val : maxSum;
             }
 
             _maxSum = maxSum > _maxSum ? maxSum : _maxSum;
