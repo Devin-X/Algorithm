@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="H2O.cs" />
     <Compile Include="MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />

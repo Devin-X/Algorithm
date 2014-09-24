@@ -36,24 +36,25 @@ namespace Coding
 
             if(root.left == null && root.right == null)
             {
-                _maxSum = _maxSum > root.val ? _maxSum : root.val;
+                _maxSum = Math.Max(_maxSum, root.val);
                 return root.val;// > 0 ? root.val : 0;
             }
 
             if(root.left != null)
             {
                 leftSum = FindMaxPathSum(root.left);
-                maxSum = root.val > leftSum + root.val ? root.val : leftSum + root.val;
+                maxSum = Math.Max(root.val, leftSum + root.val);
             }
 
             if (root.right != null)
             {
                 rightSum = FindMaxPathSum(root.right);
-                maxSum = maxSum > rightSum + root.val ? maxSum : rightSum + root.val;
+                maxSum = Math.Max(maxSum, rightSum + root.val);
             }
             
-            _maxSum = maxSum > _maxSum ? maxSum : _maxSum;
-            _maxSum = leftSum + rightSum + root.val > _maxSum ? leftSum + rightSum + root.val : _maxSum;
+            _maxSum = Math.Max(maxSum, _maxSum);
+            _maxSum = Math.Max(_maxSum, leftSum + rightSum + root.val);
+
             return maxSum;
         }
 
