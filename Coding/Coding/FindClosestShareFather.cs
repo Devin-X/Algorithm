@@ -21,158 +21,137 @@ namespace Coding
     //}
     class FindClosestShareFather
     {
-        public static TreeNode _mostCurrentRoot;
-        public static TreeNode _aParent;
-        public static TreeNode _bParenet;
+        public static TreeNode _mostCurrentRoot = null;
+        public static TreeNode _aParent = null;
+        public static TreeNode _bParenet = null;
         public static int _travelDepth = 0;
         public static int _aDepth = -1;
         public static int _bDepth = -1;
 
         public static TreeNode GetClosestShareFather(TreeNode root, TreeNode a, TreeNode b)
         {
-            if (root != null)
-                _travelDepth++;
-
-            if (root.left == a && root.right == b || root.right == a && root.left == b)
-                return root;
-
-            TreeNode ret = null;
+            if(root == null || root.left == null && root.right == null)
+            {
+                return null;
+            }
 
             if (root.left == a || root.right == a)
             {
-                _aDepth = _travelDepth;
+                _aParent = root;
             }
 
             if (root.right == b || root.left == b)
             {
-                _bDepth = _travelDepth;
+                _bParenet = root;
             }
 
-            if(_aDepth != -1 && _bDepth == -1)
+            GetClosestShareFather(root.left, a, b);
+            GetClosestShareFather(root.right, a, b);
+
+            if(_aParent == root.left || _aParent == root.right)
             {
-                GetClosestShareFather(root.left, a, b);
-                if (_bDepth != -1)
-                    return root;
-                else
-                {
-                    GetClosestShareFather(root.right, a, b);
-                    if(_bDepth != -1)
-                        return root;
-                    else 
-                        return null;
+                _aParent = root;
             }
 
-            if (_aDepth == -1 && _bDepth != -1)
+            if(_bParenet == root.left || _bParenet == root.right)
             {
-                GetClosestShareFather(root.left, a, b);
-                if (_aDepth != -1)
-                    return root;
-                else
-                {
-                    GetClosestShareFather(root.right, a, b);
-                    if(_aDepth != -1)
-                        return root;
-                    else 
-                        return null;
-                }
+                _bParenet = root;
             }
 
-            if(_aDepth == -1 && _bDepth == -1)
+            if (_aParent == _bParenet && _aParent != null)
             {
-                ret = GetClosestShareFather(root.left, a, b);
-                if (ret != null)
-                    return ret;
-                else
-                    return GetClosestShareFather(root.right, a, b);
+                _mostCurrentRoot = _mostCurrentRoot == null ? _aParent : _mostCurrentRoot;
+                return _mostCurrentRoot;
             }
 
-
-            return null;
+            return _mostCurrentRoot;
         }
 
-        private static int GetDepth(TreeNode root, TreeNode a)
-        {
-            if (root == null)
-                return -1;
-            if(root == a)
-            {
-                return 0;
-            }
-
-            int left = GetDepth(root.left, a);
-            if (left != -1)
-                return left++;
-
-            int right = GetDepth(root.right, a);
-            if (right != -1)
-                return right++;
-
-            return -1;
-        }
-
-        private static Boolean IsSameFather(TreeNode root, TreeNode a, TreeNode b)
-        {
-            if ((root.left == a && root.right == b) || (root.right == a && root.left == b))
-            {
-                return true;
-            }
-
-            bool isARightSon = IsSon(root.right, a);
-            bool isALeftSon = IsSon(root.left, a);
-            bool isBRightSon = IsSon(root.right, b);
-            bool isBLeftSon = IsSon(root.left, b);
-
-            if (root.left == a && isBRightSon)
-                return true;
-
-            if (root.right == a && isBLeftSon)
-                return true;
-
-            if (root.left == b && isALeftSon)
-                return true;
-
-            if (root.right == b && isARightSon)
-                return true;
-
-            if (isALeftSon && isBRightSon)
-                return true;
-
-            if (isARightSon & isBLeftSon)
-                return true;
-
-            return false;
-        }
-
-        private static Boolean IsSon(TreeNode root, TreeNode son)
-        {
-            if(root == null || son == null)
-            {
-                return false;
-            }
-
-            if (root.left == son || root.right == son)
-                return true;
-
-            if (IsSon(root.left, son))
-                return true;
-            if (IsSon(root.right, son))
-                return true;
-
-            return false;
-        }
-
+       
         public static void TestclosestFather()
         {
-            TreeNode node6 = new TreeNode(-1, null, null);
-            TreeNode node1 = new TreeNode(1, null, node6);
-            TreeNode node2 = new TreeNode(3, null, null);
-            TreeNode node3 = new TreeNode(-2, node1, node2);
-            TreeNode node4 = new TreeNode(-2, null, null);
-            TreeNode node5 = new TreeNode(-3, node4, null);
-            TreeNode root = new TreeNode(-1, node3, node5);
+            TreeNode node1 = new TreeNode(1, null, null);
+            TreeNode node2 = new TreeNode(2, null, node1);
+            TreeNode node3 = new TreeNode(3, null, null);
+            TreeNode node4 = new TreeNode(4, node2, node3);
+            TreeNode node5 = new TreeNode(5, null, null);
+            TreeNode node6 = new TreeNode(6, node5, null);
+            TreeNode root = new TreeNode(7, node4, node6);
 
-            GetClosestShareFather(root, node3, node4);
+            GetClosestShareFather(root, node4, node6);
             Console.WriteLine(_mostCurrentRoot.val);
         }
     }
 }
+
+
+//private static int GetDepth(TreeNode root, TreeNode a)
+//{
+//    if (root == null)
+//        return -1;
+//    if(root == a)
+//    {
+//        return 0;
+//    }
+
+//    int left = GetDepth(root.left, a);
+//    if (left != -1)
+//        return left++;
+
+//    int right = GetDepth(root.right, a);
+//    if (right != -1)
+//        return right++;
+
+//    return -1;
+//}
+
+        //private static Boolean IsSameFather(TreeNode root, TreeNode a, TreeNode b)
+        //{
+        //    if ((root.left == a && root.right == b) || (root.right == a && root.left == b))
+        //    {
+        //        return true;
+        //    }
+
+        //    bool isARightSon = IsSon(root.right, a);
+        //    bool isALeftSon = IsSon(root.left, a);
+        //    bool isBRightSon = IsSon(root.right, b);
+        //    bool isBLeftSon = IsSon(root.left, b);
+
+        //    if (root.left == a && isBRightSon)
+        //        return true;
+
+        //    if (root.right == a && isBLeftSon)
+        //        return true;
+
+        //    if (root.left == b && isALeftSon)
+        //        return true;
+
+        //    if (root.right == b && isARightSon)
+        //        return true;
+
+        //    if (isALeftSon && isBRightSon)
+        //        return true;
+
+        //    if (isARightSon & isBLeftSon)
+        //        return true;
+
+        //    return false;
+        //}
+
+        //private static Boolean IsSon(TreeNode root, TreeNode son)
+        //{
+        //    if(root == null || son == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    if (root.left == son || root.right == son)
+        //        return true;
+
+        //    if (IsSon(root.left, son))
+        //        return true;
+        //    if (IsSon(root.right, son))
+        //        return true;
+
+        //    return false;
+        //}

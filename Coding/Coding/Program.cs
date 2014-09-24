@@ -16,7 +16,7 @@ namespace Coding
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
-            MaxTreeNodePathSum.TestFindMaxPath();
+            //MaxTreeNodePathSum.TestFindMaxPath();
             FindClosestShareFather.TestclosestFather();
         }
     }
