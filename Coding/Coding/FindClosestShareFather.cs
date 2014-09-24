@@ -22,27 +22,92 @@ namespace Coding
     class FindClosestShareFather
     {
         public static TreeNode _mostCurrentRoot;
+        public static TreeNode _aParent;
+        public static TreeNode _bParenet;
+        public static int _travelDepth = 0;
+        public static int _aDepth = -1;
+        public static int _bDepth = -1;
+
         public static TreeNode GetClosestShareFather(TreeNode root, TreeNode a, TreeNode b)
         {
-            if(IsSameFather(root, a, b))
-            {
-                _mostCurrentRoot = root;
+            if (root != null)
+                _travelDepth++;
+
+            if (root.left == a && root.right == b || root.right == a && root.left == b)
                 return root;
+
+            TreeNode ret = null;
+
+            if (root.left == a || root.right == a)
+            {
+                _aDepth = _travelDepth;
             }
 
-            if(IsSameFather(root.left, a, b))
+            if (root.right == b || root.left == b)
             {
-                _mostCurrentRoot = root.left;
-                return root.left;
+                _bDepth = _travelDepth;
             }
 
-            if(IsSameFather(root.right, a, b))
+            if(_aDepth != -1 && _bDepth == -1)
             {
-                _mostCurrentRoot = root.right;
-                return root.right;
+                GetClosestShareFather(root.left, a, b);
+                if (_bDepth != -1)
+                    return root;
+                else
+                {
+                    GetClosestShareFather(root.right, a, b);
+                    if(_bDepth != -1)
+                        return root;
+                    else 
+                        return null;
             }
+
+            if (_aDepth == -1 && _bDepth != -1)
+            {
+                GetClosestShareFather(root.left, a, b);
+                if (_aDepth != -1)
+                    return root;
+                else
+                {
+                    GetClosestShareFather(root.right, a, b);
+                    if(_aDepth != -1)
+                        return root;
+                    else 
+                        return null;
+                }
+            }
+
+            if(_aDepth == -1 && _bDepth == -1)
+            {
+                ret = GetClosestShareFather(root.left, a, b);
+                if (ret != null)
+                    return ret;
+                else
+                    return GetClosestShareFather(root.right, a, b);
+            }
+
 
             return null;
+        }
+
+        private static int GetDepth(TreeNode root, TreeNode a)
+        {
+            if (root == null)
+                return -1;
+            if(root == a)
+            {
+                return 0;
+            }
+
+            int left = GetDepth(root.left, a);
+            if (left != -1)
+                return left++;
+
+            int right = GetDepth(root.right, a);
+            if (right != -1)
+                return right++;
+
+            return -1;
         }
 
         private static Boolean IsSameFather(TreeNode root, TreeNode a, TreeNode b)
