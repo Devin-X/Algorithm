@@ -9,6 +9,8 @@ namespace Coding
     public class Permutation
     {
         private static int startIndex = 0;
+        private static int combinationStartIndex = 0;
+        private static List<char> ret = new List<char>();
         public static void FullPermutation(ref char[] str)
         {
             if(startIndex == str.Length-1)
@@ -25,6 +27,26 @@ namespace Coding
             }
         }
 
+        public static void FullCombination(ref char[] str)
+        {
+            if(combinationStartIndex == str.Length)
+            {
+                Console.WriteLine("empty set");
+                return;
+            }
+
+            for (int i = combinationStartIndex; i < str.Length; i++)
+            {
+                ret.Add(str[i]);
+                Console.WriteLine(ret.ToArray());
+                ret.Remove(str[i]);
+            }
+
+            ret.Add(str[combinationStartIndex++]);
+            FullCombination(ref str);
+        }
+
+
         private static void Swap(ref char[] str, int a, int b)
         {
             char c= str[b];
@@ -32,11 +54,13 @@ namespace Coding
             str[a] = c;
         }
 
+
+
         public static void TestFullPermutation()
         {
-            char[] str = "aBcD".ToCharArray();
-            FullPermutation(ref str);
-
+            char[] str = "abc".ToCharArray();
+            //FullPermutation(ref str);
+            FullCombination(ref str);
         }
     }
 }
