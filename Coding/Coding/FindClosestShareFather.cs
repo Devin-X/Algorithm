@@ -24,10 +24,6 @@ namespace Coding
         public static TreeNode _mostCurrentRoot = null;
         public static TreeNode _aParent = null;
         public static TreeNode _bParenet = null;
-        public static int _travelDepth = 0;
-        public static int _aDepth = -1;
-        public static int _bDepth = -1;
-
         public static TreeNode GetClosestShareFather(TreeNode root, TreeNode a, TreeNode b)
         {
             if(root == null || root.left == null && root.right == null)

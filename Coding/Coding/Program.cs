@@ -17,7 +17,8 @@ namespace Coding
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
             //MaxTreeNodePathSum.TestFindMaxPath();
-            FindClosestShareFather.TestclosestFather();
+            //FindClosestShareFather.TestclosestFather();
+            Permutation.TestFullPermutation();
         }
     }
 }
