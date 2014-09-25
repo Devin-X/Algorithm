@@ -54,8 +54,6 @@ namespace Coding
             str[a] = c;
         }
 
-
-
         public static void TestFullPermutation()
         {
             char[] str = "abcd".ToCharArray();
