@@ -58,8 +58,8 @@ namespace Coding
 
         public static void TestFullPermutation()
         {
-            char[] str = "abc".ToCharArray();
-            //FullPermutation(ref str);
+            char[] str = "abcd".ToCharArray();
+            FullPermutation(ref str);
             FullCombination(ref str);
         }
     }
