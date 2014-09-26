@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Combination.cs" />
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="FullPermutation.cs" />
     <Compile Include="H2O.cs" />

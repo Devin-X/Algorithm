@@ -14,6 +14,7 @@ namespace Coding
         {
             int leftMax = int.MinValue;
             int rightMax = int.MinValue;
+            max = int.MinValue;
 
             int totalLeft = 1;
             int totalRight = 1;
@@ -38,19 +39,18 @@ namespace Coding
                     hasZeroRight = true;
                 }
 
-
                 if (!hasZeroleft)
                 {
                     totalLeft *= array[i];
+                    leftMax = Math.Max(totalLeft, leftMax);
                 }
 
                 if (!hasZeroRight)
                 {
                     totalRight *= array[array.Length - 1 - i];
+                    rightMax = Math.Max(totalRight, rightMax);
                 }
 
-                rightMax = Math.Max(totalRight, rightMax);
-                leftMax = Math.Max(totalLeft, leftMax);
                 max = Math.Max(max, Math.Max(rightMax, leftMax));
                 max = Math.Max(max, array[i]);
             }
@@ -95,6 +95,18 @@ namespace Coding
             //Console.WriteLine(GetMaxSubProductionFast(array));
             int[] array = {-1, 2, 3, 0, 4, 5, 0, -3, -6};
             Console.WriteLine(GetMaxSubProductionFast(array));
+
+            int[] array1 = { 0 };
+            Console.WriteLine(GetMaxSubProductionFast(array1));
+
+            int[] array2 = { -2 };
+            Console.WriteLine(GetMaxSubProductionFast(array2));
+
+            int[] array3 = { -1, 2, 3, 0, 4, 5, 0, -3, -6 };
+            Console.WriteLine(GetMaxSubProductionFast(array3));
+
+            int[] array4 = { -1, 2, 3, 0, 4, 5, 0, -3, -6 };
+            Console.WriteLine(GetMaxSubProductionFast(array4));
         }
     }
 }

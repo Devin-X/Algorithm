@@ -19,7 +19,8 @@ namespace Coding
             //MaxTreeNodePathSum.TestFindMaxPath();
             //FindClosestShareFather.TestclosestFather();
             //Permutation.TestFullPermutation();
-            MaxSubProduction.TestMaxSubProduction();
+            //MaxSubProduction.TestMaxSubProduction();
+            Combination.TestFullCombination();
         }
     }
 }
