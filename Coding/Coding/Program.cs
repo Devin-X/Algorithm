@@ -18,7 +18,8 @@ namespace Coding
             //ReverseWordsInString.TestReverseWordsInString();
             //MaxTreeNodePathSum.TestFindMaxPath();
             //FindClosestShareFather.TestclosestFather();
-            Permutation.TestFullPermutation();
+            //Permutation.TestFullPermutation();
+            MaxSubProduction.TestMaxSubProduction();
         }
     }
 }
