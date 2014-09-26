@@ -11,9 +11,8 @@ namespace Coding
         private static int startIndex = 0;
         private static int combinationStartIndex = 0;
         private static int uniqueIndex = 0;
-        private static int uniqueCount = 0;
         private static HashSet<string> retCollection = new HashSet<string>();
-        public static HashSet<int[]> retCollectionArray = new HashSet<int[]>();
+        public static List<int[]> retCollectionArray = new List<int[]>();
 
         private static List<char> ret = new List<char>();
         public static void FullPermutation(ref char[] str)
@@ -77,33 +76,35 @@ namespace Coding
         /// </summary>
         /// <param name="array"></param>
         public static void UniquePermutatiaonsInt(ref int[] array)
-        {
-            if (uniqueIndex == array.Length)
+        {           
+            for(int i = uniqueIndex; i < array.Length; i++)
             {
-                retCollectionArray.Add(array.ToArray());
-                return;
-            }
+                if (array[uniqueIndex] != array[i])
+                {
+                    Swap(ref array, uniqueIndex++, i);
+                    UniquePermutatiaonsInt(ref array);
+                    Swap(ref array, --uniqueIndex, i);
+                }
 
-            bool skip = true;
-            int i = uniqueIndex;
+                if (i == array.Length - 1)
+                {
+                    retCollectionArray.Add(array.ToArray());
+                    return;
+                }
+                //bool isSkip = false;
+                //while (i < array.Length && array[i] == array[uniqueIndex])
+                //{
+                //    i++;
+                //    isSkip = true;
+                //}
 
-            while (skip && i < array.Length - 1)
-            {
-                skip = array[i++] == array[uniqueIndex];
-            }
+                //if (i == array.Length)
+                //{
+                //    return;
+                //}
 
-            if (i == array.Length)
-                return;
-
-            int temp = uniqueIndex;
-            uniqueIndex = i;
-            i = temp;
-
-            for (; i < array.Length; i++)
-            {
-                Swap(ref array, uniqueIndex++, i);
-                UniquePermutatiaonsInt(ref array);
-                Swap(ref array, --uniqueIndex, i);
+                //if (isSkip)
+                //    i--;
             }
         }
 
@@ -135,7 +136,7 @@ namespace Coding
 
             //str = "1112".ToCharArray();
             //UniquePermutations(ref str);
-            int[] array = { 1, 1, 1, 2, 2 };
+            int[] array = {1,  1, 2, 2 };
 
             UniquePermutatiaonsInt(ref array);
 
