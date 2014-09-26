@@ -8,7 +8,58 @@ namespace Coding
 {
     class MaxSubProduction
     {
-        public static int max = int.MinValue;
+        public static int max = 1;
+
+        public static int GetMaxSubProductionFast(int[] array)
+        {
+            if (array.Length == 1)
+                return array[0];
+
+            List<int> tempList = new List<int>();
+            int localMax = 1;
+            int neCount = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] > 0)
+                {
+                    localMax *= array[i];
+                }
+                else
+                {
+                    if(localMax != 1)
+                    {
+                        tempList.Add(localMax);
+                        max *= localMax;
+                        localMax = 1;
+                    }
+                    
+                    tempList.Add(array[i]);
+                    max *= array[i];
+                    neCount++;
+                }
+            }
+
+            if (localMax != 1)
+            {
+                tempList.Add(localMax);
+                max *= localMax;
+                localMax = 1;
+            }
+
+            if (neCount%2 == 0)
+                return max;
+
+            int localMax2 = max;
+            foreach (int i in tempList)
+            {
+                localMax *= i;
+                localMax2 = i == 0 ? 0 : localMax2/i;
+                max = Math.Max(max, Math.Max(localMax, localMax2));
+            }
+
+            return max;
+        }
 
         public static  int GetMaxSubProduction(int[] array)
         {
@@ -19,6 +70,7 @@ namespace Coding
             
             return max;
         }
+
         private static int MaxSubProductionHelper(int[] array, int count)
         {
             int localMax = 0;
@@ -38,10 +90,13 @@ namespace Coding
             return max;
         }
 
+
         public static void TestMaxSubProduction()
         {
-            int[] array = { 1, 2, -3, -4, -5, -6 };
-            Console.WriteLine(GetMaxSubProduction(array));
+            int[] array = {-2, -3, 0, 4, 5};
+            //Console.WriteLine(GetMaxSubProduction(array));
+
+            Console.WriteLine(GetMaxSubProductionFast(array));
         }
     }
 }
