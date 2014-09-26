@@ -8,54 +8,51 @@ namespace Coding
 {
     class MaxSubProduction
     {
-        public static int max = 1;
+        public static int max = int.MinValue;
 
         public static int GetMaxSubProductionFast(int[] array)
         {
-            if (array.Length == 1)
-                return array[0];
+            int leftMax = int.MinValue;
+            int rightMax = int.MinValue;
 
-            List<int> tempList = new List<int>();
-            int localMax = 1;
-            int neCount = 0;
+            int totalLeft = 1;
+            int totalRight = 1;
+            bool hasZeroleft = false;
+            bool hasZeroRight = false;
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] > 0)
+                hasZeroleft = false;
+                hasZeroRight = false;
+                if(array[i] == 0)
                 {
-                    localMax *= array[i];
+                    totalLeft = 1;
+                    max = Math.Max(max, array[i]);
+                    hasZeroleft = true;
                 }
-                else
+
+                if (array[array.Length-1-i] == 0)
                 {
-                    if(localMax != 1)
-                    {
-                        tempList.Add(localMax);
-                        max *= localMax;
-                        localMax = 1;
-                    }
-                    
-                    tempList.Add(array[i]);
-                    max *= array[i];
-                    neCount++;
+                    totalRight = 1;
+                    max = Math.Max(max, array[i]);
+                    hasZeroRight = true;
                 }
-            }
 
-            if (localMax != 1)
-            {
-                tempList.Add(localMax);
-                max *= localMax;
-                localMax = 1;
-            }
 
-            if (neCount%2 == 0)
-                return max;
+                if (!hasZeroleft)
+                {
+                    totalLeft *= array[i];
+                }
 
-            int localMax2 = max;
-            foreach (int i in tempList)
-            {
-                localMax *= i;
-                localMax2 = i == 0 ? 0 : localMax2/i;
-                max = Math.Max(max, Math.Max(localMax, localMax2));
+                if (!hasZeroRight)
+                {
+                    totalRight *= array[array.Length - 1 - i];
+                }
+
+                rightMax = Math.Max(totalRight, rightMax);
+                leftMax = Math.Max(totalLeft, leftMax);
+                max = Math.Max(max, Math.Max(rightMax, leftMax));
+                max = Math.Max(max, array[i]);
             }
 
             return max;
@@ -90,12 +87,13 @@ namespace Coding
             return max;
         }
 
-
         public static void TestMaxSubProduction()
         {
-            int[] array = {-2, -3, 0, 4, 5};
+            //int[] array = {-2, 0, -3, 0, -4};
             //Console.WriteLine(GetMaxSubProduction(array));
 
+            //Console.WriteLine(GetMaxSubProductionFast(array));
+            int[] array = {-1, 2, 3, 0, 4, 5, 0, -3, -6};
             Console.WriteLine(GetMaxSubProductionFast(array));
         }
     }

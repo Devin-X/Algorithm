@@ -152,7 +152,7 @@ namespace Coding
         public static void TestFullPermutation()
         {
             char[] str = "abcd".ToCharArray();
-            //FullPermutation(ref str);
+            FullPermutation(ref str);
             //FullCombination(ref str);
 
 
