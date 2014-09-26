@@ -71,40 +71,61 @@ namespace Coding
             }
         }
 
+        public static void UniquePermurationPhilip(ref int[] array)
+        {
+            if (array.Length <= 0)
+                return;
+            bool[] visit = new bool[array.Length];
+            List<int> solution = new List<int>();
+            PhilipInner(ref array, ref solution, ref visit);
+
+            return;
+        }
+        private static void PhilipInner(ref int[] array, ref List<int> solution, ref bool[] visit)
+        {
+            if(array.Length == solution.Count)
+            {
+                retCollectionArray.Add(solution.ToArray());
+            }
+
+            int previous = int.MaxValue;
+            for(int i = 0; i < array.Length; i++)
+            {
+                if (!visit[i] && array[i] != previous)
+                {
+                    visit[i] = true;
+                    solution.Add(array[i]);
+                    PhilipInner(ref array, ref solution, ref visit);
+                    solution.Remove(array[i]);
+                    visit[i] = false;
+                    previous = array[i];
+                }
+            }
+        }
+
         /// <summary>
         /// Assume the arry is already sorted, but there are duplicate in the array. 
         /// </summary>
         /// <param name="array"></param>
         public static void UniquePermutatiaonsInt(ref int[] array)
-        {           
-            for(int i = uniqueIndex; i < array.Length; i++)
+        {
+            if (startIndex == array.Length - 1)
             {
-                if (array[uniqueIndex] != array[i])
+                retCollectionArray.Add(array.ToArray());
+                return;
+            }
+
+            HashSet<int> map = new HashSet<int>();
+
+            for (int i = startIndex; i < array.Length; i++)
+            {
+                if (!map.Contains(array[i]))
                 {
-                    Swap(ref array, uniqueIndex++, i);
+                    Swap(ref array, startIndex++, i);
                     UniquePermutatiaonsInt(ref array);
-                    Swap(ref array, --uniqueIndex, i);
+                    Swap(ref array, --startIndex, i);
+                    map.Add(array[i]);
                 }
-
-                if (i == array.Length - 1)
-                {
-                    retCollectionArray.Add(array.ToArray());
-                    return;
-                }
-                //bool isSkip = false;
-                //while (i < array.Length && array[i] == array[uniqueIndex])
-                //{
-                //    i++;
-                //    isSkip = true;
-                //}
-
-                //if (i == array.Length)
-                //{
-                //    return;
-                //}
-
-                //if (isSkip)
-                //    i--;
             }
         }
 
@@ -127,6 +148,7 @@ namespace Coding
             return false;
         }
 
+        //https://oj.leetcode.com/problems/next-permutation/
         public static void TestFullPermutation()
         {
             char[] str = "abcd".ToCharArray();
@@ -136,7 +158,7 @@ namespace Coding
 
             //str = "1112".ToCharArray();
             //UniquePermutations(ref str);
-            int[] array = {1,  1, 2, 2 };
+            int[] array = {1, 2, 2, 1 };
 
             UniquePermutatiaonsInt(ref array);
 
@@ -146,6 +168,8 @@ namespace Coding
                     Console.Write(a);
                 Console.WriteLine();
             }
+
+            UniquePermurationPhilip(ref array);
         }
 
     }
