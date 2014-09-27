@@ -111,7 +111,7 @@ namespace Coding
                 {
                     int sum = 0;
                     int production = 1;
-                    Hash(list, ref sum, ref production);
+                    Hash(list, sum, production);
                     if (sum == target)
                     {
                         if (unique.Contains(production))
@@ -125,7 +125,7 @@ namespace Coding
             return retFinal;
         }
 
-        private static bool Hash(List<int> array, ref int sum, ref int production)
+        private static bool Hash(List<int> array, int sum, int production)
         {
             sum = 0;
             production = 1;
