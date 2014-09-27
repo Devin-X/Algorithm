@@ -78,7 +78,7 @@ namespace Coding
         /// </summary>
         /// <param name="str"></param>
         /// <param name="target"></param>
-        public static void FullCombinationSum(int[] str, int target)
+        public static List<List<int>> FullCombinationSum(int[] str, int target)
         {
             if (retII.Count == 0)
             {
@@ -86,7 +86,7 @@ namespace Coding
             }
 
             if (combinationStartIndexII == str.Length)
-                return;
+                return retFinal;
 
             List<List<int>> tempList = new List<List<int>>();
             foreach (List<int> set in retII)
@@ -121,6 +121,8 @@ namespace Coding
                     }
                 }
             }
+
+            return retFinal;
         }
 
         private static bool Hash(List<int> array, ref int sum, ref int production)
