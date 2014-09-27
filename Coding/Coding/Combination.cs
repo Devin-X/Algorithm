@@ -138,10 +138,72 @@ namespace Coding
             return true;
         }
 
+
+        private static List<int[]> retFinalSwapInternal = new List<int[]>();
+        public static List<int[]> retFinalSwap = new List<int[]>();
+
+        public static void GetSubCombinatoinSwap(int[] array, int target)
+        {
+            for(int i = 1; i <= array.Length; i ++)
+            {
+                GetSubCombinatonHelper(array, i);
+            }
+
+            int sum = 0;
+            for(int i = 0; i < retFinalSwapInternal.Count; i++)
+            {
+                sum = 0;
+                for(int j = 0; j < retFinalSwapInternal[i].Length; j++)
+                {
+                    sum += retFinalSwapInternal[i][j];
+                }
+
+                if (sum == target)
+                {
+                    retFinalSwap.Add((int[])retFinalSwapInternal[i].Clone());
+                }
+            }
+        }
+
+        private static void GetSubCombinatonHelper(int[] array, int count)
+        {
+            HashSet<int> map = new HashSet<int>();
+            HashSet<int> mapSmall = new HashSet<int>();
+            int[] tempRet = new int[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                tempRet[i] = array[i];
+            }
+
+            retFinalSwapInternal.Add((int[])tempRet.Clone());
+
+            for(int i = count; i < array.Length; i++)
+            {
+                if (!map.Contains(array[i]))
+                {
+                    for (int j = count-1; j >= 0; j--)
+                    {
+                        if (!mapSmall.Contains(tempRet[j]))
+                        {
+                            int swap = tempRet[j];
+                            tempRet[j] = array[i];
+                            retFinalSwapInternal.Add((int[])tempRet.Clone());
+                            map.Add(array[i]);
+                            tempRet[j] = swap;
+                            mapSmall.Add(tempRet[j]);
+                        }
+                    }
+                }
+
+                mapSmall.Clear();
+            }
+        }
+
         public static void TestFullCombination()
         {
-            FullCombination("abc".ToCharArray());
-            FullCombinationRecursive("abc".ToCharArray());
+            //FullCombination("abc".ToCharArray());
+            //FullCombinationRecursive("abc".ToCharArray());
 
             foreach (HashSet<char> set in ret)
             {
@@ -151,10 +213,20 @@ namespace Coding
             int[] array = {10, 1, 2, 7, 6, 1, 5, 7, 7, 7};
             List<int> list = array.ToList<int>();
             list.Sort();
+            array = list.ToArray();
 
             FullCombinationSum(list.ToArray<int>(), 8);
-
             foreach (List<int> set in retFinal)
+            {
+                foreach (int i in set)
+                    Console.Write("{0} ", i);
+                Console.WriteLine();
+            }
+
+            GetSubCombinatoinSwap(array, 8);
+                    
+
+            foreach (int[] set in retFinalSwap)
             {
                 foreach (int i in set)
                     Console.Write("{0} ", i);
