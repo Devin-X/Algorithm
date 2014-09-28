@@ -20,7 +20,8 @@ namespace Coding
             //FindClosestShareFather.TestclosestFather();
             //Permutation.TestFullPermutation();
             //MaxSubProduction.TestMaxSubProduction();
-            Combination.TestFullCombination();
+            //Combination.TestFullCombination();
+            SubSet.TestSubSet();
         }
     }
 }

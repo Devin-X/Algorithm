@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseWordsInString.cs" />
     <Compile Include="Stock.cs" />
+    <Compile Include="SubSet.cs" />
     <Compile Include="WordsLadderLength.cs" />
   </ItemGroup>
   <ItemGroup>
