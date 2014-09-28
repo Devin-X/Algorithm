@@ -9,9 +9,9 @@ namespace Coding
     class Combination
     {
         private static int combinationStartIndex = 0;
-        
+
         public static List<HashSet<char>> ret = new List<HashSet<char>>();
-        
+
         public static void FullCombination(char[] str)
         {
             if (ret.Count == 0)
@@ -111,7 +111,7 @@ namespace Coding
                 {
                     int sum = 0;
                     int production = 1;
-                    Hash(list, sum, production);
+                    Hash(list, ref sum, ref production);
                     if (sum == target)
                     {
                         if (unique.Contains(production))
@@ -125,11 +125,11 @@ namespace Coding
             return retFinal;
         }
 
-        private static bool Hash(List<int> array, int sum, int production)
+        private static bool Hash(List<int> array, ref int sum, ref int production)
         {
             sum = 0;
             production = 1;
-            foreach(int a in array)
+            foreach (int a in array)
             {
                 production = production * 10 + a;
                 sum += a;
@@ -139,64 +139,99 @@ namespace Coding
         }
 
 
-        private static List<int[]> retFinalSwapInternal = new List<int[]>();
+        private static List<List<int>> retFinalSwapInternal = new List<List<int>>();
         public static List<int[]> retFinalSwap = new List<int[]>();
 
         public static void GetSubCombinatoinSwap(int[] array, int target)
         {
-            for(int i = 1; i <= array.Length; i ++)
+            List<List<int>> retFinalSwapTemp = new List<List<int>>();
+            for (int i = 1; i <= array.Length; i++)
             {
                 GetSubCombinatonHelper(array, i);
             }
 
             int sum = 0;
-            for(int i = 0; i < retFinalSwapInternal.Count; i++)
+            for (int i = 0; i < retFinalSwapInternal.Count; i++)
             {
                 sum = 0;
-                for(int j = 0; j < retFinalSwapInternal[i].Length; j++)
+                for (int j = 0; j < retFinalSwapInternal[i].Count; j++)
                 {
                     sum += retFinalSwapInternal[i][j];
                 }
 
                 if (sum == target)
                 {
-                    retFinalSwap.Add((int[])retFinalSwapInternal[i].Clone());
+                    retFinalSwapInternal[i].Sort();
+                    retFinalSwapTemp.Add(new List<int>(retFinalSwapInternal[i]));
                 }
+            }
+
+            HashSet<string> uniqueResult = new HashSet<string>();
+            foreach (List<int> set in retFinalSwapTemp)
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < set.Count; i++)
+                {
+                    sb.Append(set[i].ToString() + " ");
+                }
+
+                if (!uniqueResult.Contains(sb.ToString()))
+                {
+                    retFinalSwap.Add(set.ToArray());
+                }
+
+                uniqueResult.Add(sb.ToString());
             }
         }
 
         private static void GetSubCombinatonHelper(int[] array, int count)
         {
-            HashSet<int> map = new HashSet<int>();
-            HashSet<int> mapSmall = new HashSet<int>();
-            int[] tempRet = new int[count];
-
+            HashSet<int> mapSwapIn = new HashSet<int>();
+            HashSet<int> mapSwapOut = new HashSet<int>();
+            List<int> tempRet = new List<int>(count);
+            List<int> previous = new List<int>(count);
             for (int i = 0; i < count; i++)
             {
-                tempRet[i] = array[i];
+                previous.Add(int.MinValue);
             }
 
-            retFinalSwapInternal.Add((int[])tempRet.Clone());
-
-            for(int i = count; i < array.Length; i++)
+            for (int baseIndex = 0; baseIndex <= array.Length - count; baseIndex++)
             {
-                if (!map.Contains(array[i]))
+                int isSameAsPrevious = 0;
+                tempRet.Clear();
+                for (int i = 0; i < count; i++)
                 {
-                    for (int j = count-1; j >= 0; j--)
-                    {
-                        if (!mapSmall.Contains(tempRet[j]))
-                        {
-                            int swap = tempRet[j];
-                            tempRet[j] = array[i];
-                            retFinalSwapInternal.Add((int[])tempRet.Clone());
-                            map.Add(array[i]);
-                            tempRet[j] = swap;
-                            mapSmall.Add(tempRet[j]);
-                        }
-                    }
+                    tempRet.Add(array[i + baseIndex]);
+                    isSameAsPrevious = tempRet[i] == previous[i] ? isSameAsPrevious + 1 : isSameAsPrevious;
                 }
 
-                mapSmall.Clear();
+                if (isSameAsPrevious == count)
+                    continue;
+
+                previous = new List<int>(tempRet);
+                retFinalSwapInternal.Add(new List<int>(tempRet));
+                mapSwapIn.Clear();
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (!mapSwapIn.Contains(array[i]))
+                    {
+                        for (int j = count - 1; j >= 0; j--)
+                        {
+                            if (!mapSwapOut.Contains(tempRet[j]))
+                            {
+                                int swap = tempRet[j];
+                                tempRet[j] = array[i];
+                                retFinalSwapInternal.Add(new List<int>(tempRet));
+                                tempRet[j] = swap;
+                                mapSwapOut.Add(tempRet[j]);
+                            }
+                        }
+                    }
+
+                    mapSwapIn.Add(array[i]);
+                    mapSwapOut.Clear();
+                }
             }
         }
 
@@ -210,7 +245,7 @@ namespace Coding
                 Console.WriteLine(set.ToArray());
             }
 
-            int[] array = {10, 1, 2, 7, 6, 1, 5, 7, 7, 7};
+            int[] array = { 10, 1, 2, 7, 6, 1, 5, 7, 7, 7, 1, 1, 1 };
             List<int> list = array.ToList<int>();
             list.Sort();
             array = list.ToArray();
@@ -223,8 +258,9 @@ namespace Coding
                 Console.WriteLine();
             }
 
+            Console.WriteLine("**********************************");
             GetSubCombinatoinSwap(array, 8);
-                    
+
 
             foreach (int[] set in retFinalSwap)
             {
