@@ -45,6 +45,7 @@
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="FullPermutation.cs" />
     <Compile Include="H2O.cs" />
+    <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="MaxSubProduction.cs" />
     <Compile Include="MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />

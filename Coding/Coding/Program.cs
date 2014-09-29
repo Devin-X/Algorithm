@@ -22,11 +22,13 @@ namespace Coding
             //MaxSubProduction.TestMaxSubProduction();
             //Combination.TestFullCombination();
             //SubSet.TestSubSet();
-            Triangle.TestTriangle();
+            //Triangle.TestTriangle();
 
-            Parethesis.TestValidParathesisString();
+            //Parethesis.TestValidParathesisString();
 
-            UniqueBST.TestNumOfUniqueBST();
+            //UniqueBST.TestNumOfUniqueBST();
+
+            MaxNumOfCars.TestMaxNumOfCars();
         }
     }
 }
