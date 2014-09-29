@@ -39,29 +39,29 @@ namespace Coding
         public static int MaxNum = int.MinValue;
 
         //This funtion will sort the tickets in the accending order using the entry time
-        //private static Ticket[] SortTicketByEntryTime(Ticket[] tickets)
-        //{
-        //    List<Ticket> temp = new List<Ticket>(tickets);
-        //    List<Ticket> Sorted = temp.OrderBy(t => t.EntryTime).ToList();
-        //    foreach (Ticket ticket in Sorted)
-        //    {
-        //        Console.Write("{0}, {1}", ticket.EntryTime, ticket.ExitTime);
-        //    }
+        private static Ticket[] SortTicketByEntryTime(Ticket[] tickets)
+        {
+            List<Ticket> temp = new List<Ticket>(tickets);
+            List<Ticket> Sorted = temp.OrderBy(t => t.EntryTime).ToList();
+            foreach (Ticket ticket in Sorted)
+            {
+                Console.Write("{0}, {1}", ticket.EntryTime, ticket.ExitTime);
+            }
 
-        //    return Sorted.ToArray();
-        //}
+            return Sorted.ToArray();
+        }
 
-        //private static Ticket[] SortTicketByEntryTime(Ticket[] tickets)
-        //{
-        //    List<Ticket> temp = new List<Ticket>(tickets);
-        //    List<Ticket> Sorted = temp.OrderBy(t => t.ExitTime).ToList();
-        //    foreach (Ticket ticket in Sorted)
-        //    {
-        //        Console.Write("{0}, {1}", ticket.EntryTime, ticket.ExitTime);
-        //    }
+        private static Ticket[] SortTicketByEntryTime(Ticket[] tickets)
+        {
+            List<Ticket> temp = new List<Ticket>(tickets);
+            List<Ticket> Sorted = temp.OrderBy(t => t.ExitTime).ToList();
+            foreach (Ticket ticket in Sorted)
+            {
+                Console.Write("{0}, {1}", ticket.EntryTime, ticket.ExitTime);
+            }
 
-        //    return Sorted.ToArray();
-        //}
+            return Sorted.ToArray();
+        }
 
         public static int GetMaxNumOfCars(int[] entryTime, int[] exitTime)
         {
