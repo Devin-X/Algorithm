@@ -21,7 +21,12 @@ namespace Coding
             //Permutation.TestFullPermutation();
             //MaxSubProduction.TestMaxSubProduction();
             //Combination.TestFullCombination();
-            SubSet.TestSubSet();
+            //SubSet.TestSubSet();
+            Triangle.TestTriangle();
+
+            Parethesis.TestValidParathesisString();
+
+            UniqueBST.TestNumOfUniqueBST();
         }
     }
 }

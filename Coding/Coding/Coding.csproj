@@ -48,11 +48,14 @@
     <Compile Include="MaxSubProduction.cs" />
     <Compile Include="MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />
+    <Compile Include="Parethesis.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseWordsInString.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="SubSet.cs" />
+    <Compile Include="Triangle.cs" />
+    <Compile Include="UniqueBST.cs" />
     <Compile Include="WordsLadderLength.cs" />
   </ItemGroup>
   <ItemGroup>
