@@ -27,7 +27,7 @@ namespace Coding
             }
         }
 
-        public static void HearpSortUp(int[] array)
+        public static void HeapSortUp(int[] array)
         {
             HeapifyShiftUp(array);
             int start = 0;
@@ -126,7 +126,7 @@ namespace Coding
         public static void Test()
         {
             int[] a = { 4, 5, 6, 1, 2, 10, 4, 8, 3, 11, 1, 0 };
-            HearpSortUp(a);
+            HeapSortUp(a);
 
             foreach (int i in a)
             {
