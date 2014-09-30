@@ -32,11 +32,16 @@ namespace Coding
             HeapifyShiftUp(array);
             int start = 0;
             int end = array.Length - 1;
-            while(start < array.Length)
+            while (start < end)
             {
-                Swap(array, start, end);
-                start++;
+                Swap(array, start, end--);
                 ShiftUp(array, start, end);
+                int temp = 1;
+                while (temp <= end)
+                {
+                    ShiftUp(array, start, 1);
+                    temp++;
+                }
             }
         }
 
@@ -100,7 +105,7 @@ namespace Coding
             int child = end;
             while(parent >= start)
             {
-                parent = (parent - 1) / 2;
+                parent = (child - 1) / 2;
                 if(array[parent] < array[child])
                 {
                     Swap(array, parent, child);
