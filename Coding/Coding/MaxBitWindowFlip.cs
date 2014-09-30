@@ -11,6 +11,12 @@ namespace Coding
         public static int _maxWindow = int.MinValue;
         public static int _L = 0;
         public static int _R = 0;
+        public static void Reset()
+        {
+            _maxWindow = int.MinValue;
+            _L = 0;
+            _R = 0;
+        }
 
         public static int GetMaxWindow(int[] array)
         {
@@ -25,11 +31,12 @@ namespace Coding
                     numOfOne++;
                 }
                 else
-                    t++;
-
-                if(t < 0)
                 {
-                    _L = i;
+                    t++;
+                }
+
+                if(t <= 0)
+                {
                     t = 0;
                 }
                 else
@@ -37,11 +44,14 @@ namespace Coding
                     if (_maxWindow < t)
                     {
                         _maxWindow = t;
-                        _L = i - t;
+                        _L = i - t - 1;
+                        _L = _L > 0 ? _L : 0;
+                        _R = i;
                     }
                 }
             }
 
+            Console.WriteLine("[{0}, {1}]", _L, _R);
             return _maxWindow + numOfOne;
         }
 
@@ -50,6 +60,14 @@ namespace Coding
         {
             int[] a =  {1, 0, 0, 1, 0, 0, 1 };
             Console.WriteLine(GetMaxWindow(a));
+
+            Reset();
+            int[] b = { 0,0,0,1,0,0,1,0,1,1 };
+            Console.WriteLine(GetMaxWindow(b));
+
+            Reset();
+            int[] c = { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 };
+            Console.WriteLine(GetMaxWindow(c));
         }
     }
 }
