@@ -51,7 +51,7 @@ namespace Coding
             return Sorted.ToArray();
         }
 
-        private static Ticket[] SortTicketByEntryTime(Ticket[] tickets)
+        private static Ticket[] SortTicketByExitTime(Ticket[] tickets)
         {
             List<Ticket> temp = new List<Ticket>(tickets);
             List<Ticket> Sorted = temp.OrderBy(t => t.ExitTime).ToList();

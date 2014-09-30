@@ -29,6 +29,7 @@ namespace Coding
             //UniqueBST.TestNumOfUniqueBST();
 
             MaxNumOfCars.TestMaxNumOfCars();
+            Sorting.Test();
         }
     }
 }
