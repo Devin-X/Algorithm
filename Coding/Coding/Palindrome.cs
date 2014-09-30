@@ -8,6 +8,11 @@ namespace Coding
 {
     public class Palindrome
     {
+        /// <summary>
+        /// http://collabedit.com/27afr
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static bool IsPalindrom(string s)
         {
             StringBuilder sTemp = new StringBuilder(s.ToLower());
