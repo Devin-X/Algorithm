@@ -98,24 +98,13 @@ namespace Coding
         {
             int parent = (end - 1) / 2;
             int child = end;
-            int toSwap = child;
-
             while(parent >= start)
             {
+                parent = (parent - 1) / 2;
                 if(array[parent] < array[child])
                 {
-                    toSwap = child;
-                }
-                if(array[toSwap] < array[child-1])
-                {
-                    toSwap = child - 1;
-                }
-
-                if (array[toSwap] != array[parent])
-                {
-                    Swap(array, parent, toSwap);
-                    toSwap = parent;
-                    parent = (parent-1)/2;
+                    Swap(array, parent, child);
+                    child = parent;
                 }
                 else
                     return;
