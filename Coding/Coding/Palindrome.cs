@@ -50,7 +50,25 @@ namespace Coding
             return true;
         }
 
-        private static int _maxPalindrome = 1;
+        public static int _maxPalindrome = int.MaxValue;
+
+        public static int GetLeastNumToConvertDP(string s, int start, int end)
+        {
+            if (start >= end)
+                return 0;
+
+            if (s[start] == s[end])
+            {
+                _maxPalindrome = Math.Min(_maxPalindrome, GetLeastNumToConvertDP(s, start+1, end-1));
+            }
+            else
+            {
+                _maxPalindrome = Math.Min(_maxPalindrome, GetLeastNumToConvertDP(s, start+1, end) + 1);
+                _maxPalindrome = Math.Min(_maxPalindrome, GetLeastNumToConvertDP(s, start, end-1) + 1);
+            }
+
+            return _maxPalindrome;
+        }
 
         public static int GetLeastNumToConvert(string s)
         {
@@ -59,7 +77,7 @@ namespace Coding
 
             int[] leastNum = new int[s.Length];
 
-            for (int j = s.Length; j > 0; j--) 
+            for (int j = s.Length; j > 0; j--)
             {
                 for (int i = 0; i <= s.Length - j; i++)
                 {
@@ -84,7 +102,7 @@ namespace Coding
 
             if (i == 0)
             {
-                while(end > i + j-1)
+                while (end > i + j - 1)
                 {
                     sb.Append(s[end--]);
                 }
@@ -93,14 +111,14 @@ namespace Coding
                 return sb.ToString();
             }
 
-            if(end == i + j-1)
+            if (end == i + j - 1)
             {
                 sb.Append(s);
-                while(start < i)
+                while (start < i)
                 {
                     sb.Append(s[start++]);
                 }
-                
+
                 return sb.ToString();
             }
 
@@ -146,20 +164,28 @@ namespace Coding
         public static void Test()
         {
             string s = "ab";
-            //Console.WriteLine(s);
+            _maxPalindrome = int.MaxValue;
+            Console.WriteLine(s);
             //Console.WriteLine(GetLeastNumToConvert(s));
+            Console.WriteLine(GetLeastNumToConvertDP(s, 0, s.Length-1));
 
             s = "abbbb";
-            Console.WriteLine(s); 
-            Console.WriteLine(GetLeastNumToConvert(s));
+            _maxPalindrome = int.MaxValue;
+            Console.WriteLine(s);
+            //Console.WriteLine(GetLeastNumToConvert(s));
+            Console.WriteLine(GetLeastNumToConvertDP(s, 0, s.Length - 1));
 
             s = "a";
+            _maxPalindrome = int.MaxValue;
             Console.WriteLine(s);
-            Console.WriteLine(GetLeastNumToConvert(s));
+            //Console.WriteLine(GetLeastNumToConvert(s));
+            Console.WriteLine(GetLeastNumToConvertDP(s, 0, s.Length - 1));
 
             s = "abacadaeaf";
+            _maxPalindrome = int.MaxValue;
             Console.WriteLine(s);
-            Console.WriteLine(GetLeastNumToConvert(s));
+            //Console.WriteLine(GetLeastNumToConvert(s));
+            Console.WriteLine(GetLeastNumToConvertDP(s, 0, s.Length - 1));
         }
     }
 }
