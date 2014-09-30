@@ -30,6 +30,8 @@ namespace Coding
 
             MaxNumOfCars.TestMaxNumOfCars();
             Sorting.Test();
+
+            Palindrome.Test();
         }
     }
 }
