@@ -32,6 +32,7 @@ namespace Coding
             Sorting.Test();
 
             Palindrome.Test();
+            MaxBitWindowFlip.Test();
         }
     }
 }
