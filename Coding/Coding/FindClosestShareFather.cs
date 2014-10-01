@@ -21,35 +21,35 @@ namespace Coding
     //}
     class FindClosestShareFather
     {
-        public static TreeNode _mostCurrentRoot = null;
-        public static TreeNode _aParent = null;
-        public static TreeNode _bParenet = null;
-        public static TreeNode GetClosestShareFather(TreeNode root, TreeNode a, TreeNode b)
+        public static NodeWithRight _mostCurrentRoot = null;
+        public static NodeWithRight _aParent = null;
+        public static NodeWithRight _bParenet = null;
+        public static NodeWithRight GetClosestShareFather(NodeWithRight root, NodeWithRight a, NodeWithRight b)
         {
-            if(root == null || root.left == null && root.right == null)
+            if(root == null || root.lSon == null && root.rSon == null)
             {
                 return null;
             }
 
-            if (root.left == a || root.right == a)
+            if (root.lSon == a || root.rSon == a)
             {
                 _aParent = root;
             }
 
-            if (root.right == b || root.left == b)
+            if (root.rSon == b || root.lSon == b)
             {
                 _bParenet = root;
             }
 
-            GetClosestShareFather(root.left, a, b);
-            GetClosestShareFather(root.right, a, b);
+            GetClosestShareFather(root.lSon, a, b);
+            GetClosestShareFather(root.rSon, a, b);
 
-            if(_aParent == root.left || _aParent == root.right)
+            if(_aParent == root.lSon || _aParent == root.rSon)
             {
                 _aParent = root;
             }
 
-            if(_bParenet == root.left || _bParenet == root.right)
+            if(_bParenet == root.lSon || _bParenet == root.rSon)
             {
                 _bParenet = root;
             }
@@ -66,16 +66,16 @@ namespace Coding
        
         public static void TestclosestFather()
         {
-            TreeNode node1 = new TreeNode(1, null, null);
-            TreeNode node2 = new TreeNode(2, null, node1);
-            TreeNode node3 = new TreeNode(3, null, null);
-            TreeNode node4 = new TreeNode(4, node2, node3);
-            TreeNode node5 = new TreeNode(5, null, null);
-            TreeNode node6 = new TreeNode(6, node5, null);
-            TreeNode root = new TreeNode(7, node4, node6);
+            NodeWithRight node1 = new NodeWithRight(1, null, null);
+            NodeWithRight node2 = new NodeWithRight(2, null, node1);
+            NodeWithRight node3 = new NodeWithRight(3, null, null);
+            NodeWithRight node4 = new NodeWithRight(4, node2, node3);
+            NodeWithRight node5 = new NodeWithRight(5, null, null);
+            NodeWithRight node6 = new NodeWithRight(6, node5, null);
+            NodeWithRight root = new NodeWithRight(7, node4, node6);
 
             GetClosestShareFather(root, node4, node6);
-            Console.WriteLine(_mostCurrentRoot.val);
+            Console.WriteLine(_mostCurrentRoot._value);
         }
     }
 }

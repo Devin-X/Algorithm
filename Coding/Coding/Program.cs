@@ -34,6 +34,8 @@ namespace Coding
             Palindrome.Test();
             MaxBitWindowFlip.Test();
             HighestInterval.Test();
+
+            TreeNextRightPointers.Test();
         }
     }
 }

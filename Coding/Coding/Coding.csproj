@@ -59,6 +59,7 @@
     <Compile Include="Sorting.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="SubSet.cs" />
+    <Compile Include="TreeNextRightPointers.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="UniqueBST.cs" />
     <Compile Include="WordsLadderLength.cs" />

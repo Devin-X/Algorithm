@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Coding
 {
-    public class TreeNode
+    public class Node
     {
         public int val;
-        public TreeNode left;
-        public TreeNode right;
+        public Node left;
+        public Node right;
 
-        public TreeNode (int value, TreeNode l, TreeNode r)
+        public Node(int value, Node l, Node r)
         {
             val = value;
             left = l;
@@ -23,7 +23,7 @@ namespace Coding
     public class MaxTreeNodePathSum
     {
         public static int _maxSum = int.MinValue;
-        public static int FindMaxPathSum(TreeNode root)
+        public static int FindMaxPathSum(Node root)
         {
             int maxSum = int.MinValue;
             int leftSum = 0;
@@ -34,13 +34,13 @@ namespace Coding
                 return maxSum;
             }
 
-            if(root.left == null && root.right == null)
+            if (root.left == null && root.right == null)
             {
                 _maxSum = Math.Max(_maxSum, root.val);
                 return root.val;// > 0 ? root.val : 0;
             }
 
-            if(root.left != null)
+            if (root.left != null)
             {
                 leftSum = FindMaxPathSum(root.left);
                 maxSum = Math.Max(root.val, leftSum + root.val);
@@ -61,13 +61,13 @@ namespace Coding
 
         public static void TestFindMaxPath()
         {
-            TreeNode node6 = new TreeNode(-1, null, null);
-            TreeNode node1 = new TreeNode(1, null, node6);
-            TreeNode node2 = new TreeNode(3, null, null);
-            TreeNode node3 = new TreeNode(-2, node1, node2);
-            TreeNode node4 = new TreeNode(-2, null, null);
-            TreeNode node5 = new TreeNode(-3, node4, null);
-            TreeNode root = new TreeNode(-1, node3, node5);
+            Node node6 = new Node(-1, null, null);
+            Node node1 = new Node(1, null, node6);
+            Node node2 = new Node(3, null, null);
+            Node node3 = new Node(-2, node1, node2);
+            Node node4 = new Node(-2, null, null);
+            Node node5 = new Node(-3, node4, null);
+            Node root = new Node(-1, node3, node5);
 
             Console.WriteLine(FindMaxPathSum(root));
             Console.WriteLine(_maxSum);
