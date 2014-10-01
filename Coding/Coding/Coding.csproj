@@ -42,9 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combination.cs" />
+    <Compile Include="Divideby235.cs" />
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="FullPermutation.cs" />
     <Compile Include="H2O.cs" />
+    <Compile Include="HighestInterval.cs" />
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="MaxSubProduction.cs" />

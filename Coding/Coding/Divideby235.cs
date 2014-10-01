@@ -18,7 +18,7 @@ namespace Coding
         //    List<int> list = new List<int>(array);
         //    list.Sort();
         //    int sum = 0;
-        //    foreach(int a in list)
+        //    foreach (int a in list)
         //    {
         //        sum += a;
         //    }
