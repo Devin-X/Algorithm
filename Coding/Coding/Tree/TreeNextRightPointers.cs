@@ -77,6 +77,60 @@ namespace Coding
             }
         }
 
+        /// <summary>
+        /// for this implementation, I am not going to make the tree a complete binary tree
+        /// </summary>
+        /// <param name="root"></param>
+        public static List<NodeWithRight> BFSTree(NodeWithRight root)
+        {
+            int h = 1;
+            int count = 0;
+            List<NodeWithRight> result = new List<NodeWithRight>();
+            List<int> levelEdge = new List<int>();
+            NodeWithRight current;
+            result.Add(root);
+            root.rightBrother = null;
+            int index = 0;
+            count++;
+
+            while(index < result.Count)
+            {
+                if( count == (Math.Pow(2, h) - 1))
+                {
+                    result.Add(null);
+                    h++;
+                }
+
+                current = result[index++];
+                if (current != null)
+                {
+                    if (current.lSon != null)
+                    {
+                        result.Add(current.lSon);
+                    }
+                    if (current.rSon != null)
+                    {
+                        result.Add(current.rSon);
+                    }
+
+                    count += 2;
+                }
+            }
+            result.Add(null);
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                if(result[i]== null)
+                {
+                    continue;
+                }
+
+                result[i].rightBrother = result[i + 1];
+            }
+
+            return result;
+        }
+
         public static void Test()
         {
             NodeWithRight l2 = new NodeWithRight(4, null, null);
@@ -90,6 +144,18 @@ namespace Coding
             CompleteTheTree(root);
 
             foreach(NodeWithRight node in ret)
+            {
+                if (node != null)
+                {
+                    Console.Write("{0} ---> ", node._value);
+                    Console.WriteLine(node.rightBrother == null ? "null" : node.rightBrother._value.ToString());
+                }
+            }
+
+
+            List<NodeWithRight> bfst = BFSTree(root);
+
+            foreach (NodeWithRight node in bfst)
             {
                 if (node != null)
                 {
