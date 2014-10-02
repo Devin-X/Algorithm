@@ -68,7 +68,7 @@ namespace Coding
                 }
 
                 if (maxValue < localMax)
-                {
+                { 
                     maxValue = localMax;
                     retIndex = lastTimeIndex;
                 }
