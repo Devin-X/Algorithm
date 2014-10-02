@@ -19,12 +19,13 @@ namespace Coding
         public static void GetLadderLength(string start, string end)
         {
             _wordLength = start.Length;
-            _dict.Add("hot", 0);
-            _dict.Add("dot", 0);
-            _dict.Add("dog", 0);
-            _dict.Add("lot", 0);
-            _dict.Add("log", 0);
+            _dict.Add("aaa", 0);
+            _dict.Add("bbc", 0);
+            _dict.Add("cbc", 0);
+            _dict.Add("bac", 0);
+            _dict.Add("cbd", 0);
             _dict.Add("cog", 0);
+            _dict.Add("hog", 0);
 
             foreach (KeyValuePair<string, int> p in _dict)
             {

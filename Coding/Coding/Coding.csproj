@@ -50,6 +50,7 @@
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="MaxSubProduction.cs" />
+    <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />
     <Compile Include="Parethesis.cs" />
