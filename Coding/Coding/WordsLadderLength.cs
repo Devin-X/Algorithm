@@ -13,10 +13,16 @@ namespace Coding
         private static int _result = int.MaxValue;
         private static int _wordLength = 0;
         private static List<string> _bestResult = new List<string>();
-
         private static List<string> _intermideateResult = new List<string>();
 
-        public static void GetLadderLength(string start, string end)
+
+        public static List<List<string>>  FindWordLadder(string start, string end)
+        {
+
+        }
+
+
+        public static void TestGetLadderLength(string start, string end)
         {
             _wordLength = start.Length;
             _dict.Add("aaa", 0);
@@ -87,10 +93,6 @@ namespace Coding
                                 {
                                     Console.WriteLine(word);
                                 }
-
-                                //_bestResult.Remove(s);
-                                //_dict.Add(start, 0);
-                                //return;
                             }
 
                             _dict.Add(start, 0);

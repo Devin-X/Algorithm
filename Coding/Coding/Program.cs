@@ -12,7 +12,7 @@ namespace Coding
         {
             //H2O.Simulate();
             //WordsLadderLength.GetLadderLength("hot", "cog");
-            WordsLadderLength.GetLadderLength("abc", "cbd");
+            WordsLadderLength.TestGetLadderLength("abc", "cbd");
 
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
