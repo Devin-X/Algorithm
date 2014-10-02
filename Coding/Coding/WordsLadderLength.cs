@@ -16,6 +16,7 @@ namespace Coding
         private static List<string> _intermideateResult = new List<string>();
 
 
+        public static List<string> _tempResult = new List<string>();
         public static List<List<string>>  FindWordLadder(string start, string end)
         {
 
