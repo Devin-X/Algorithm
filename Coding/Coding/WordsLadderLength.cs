@@ -12,66 +12,55 @@ namespace Coding
         public static List<string> _treeStack = new List<string>();
         public static List<List<string>> _levelList = new List<List<string>>();
         public static List<List<string>> _finalList = new List<List<string>>();
-        public static int _height = 1;
+        //public static int _height = 1;
         public static int _minLenghBFS = int.MaxValue;
         public static int index = 0;
         public static int FindWordLadder(string start, string end)
         {
-            _treeStack.Remove(start);
-
-            for (int i = 0; i < start.Length; i++)
+            while (_treeStack.Count > 0)
             {
-                for (int j = 0; j < 26; j++)
-                {
-                    char[] a = start.ToCharArray();
-                    a[i] = (char)('a' + j);
-                    string temp = new string(a);
-                    if (_dictionary.Contains(temp))
-                    {
-                        List<string> ret;
-                        if (_levelList.Count > 0)
-                        {
-                            ret = new List<string>(_levelList[index]);
-                        }
-                        else
-                        {
-                            ret = new List<string>();
-                            ret.Add(start);
-                        }
+                string s = _treeStack[0];
+                _treeStack.Remove(s);
+                _dictionary.Remove(s);
+                //FindWordLadder(s, end);
+                //_dictionary.Add(s);
+                //_dictionary.Add(start);
 
-                        ret.Add(temp);
-                        _levelList.Add(ret);
-                        _treeStack.Add(temp);
-                        if (temp.CompareTo(end) == 0)
+                for (int i = 0; i < s.Length; i++)
+                {
+                    for (int j = 0; j < 26; j++)
+                    {
+                        char[] a = s.ToCharArray();
+                        a[i] = (char)('a' + j);
+                        string temp = new string(a);
+                        if (_dictionary.Contains(temp))
                         {
-                            if (_minLenghBFS < _height)
-                                return _minLenghBFS;
-                            _minLenghBFS = _height;
-                            _finalList.Add(ret);
+                            List<string> ret;
+                            if (_levelList.Count > 0)
+                            {
+                                ret = new List<string>(_levelList[index]);
+                            }
+                            else
+                            {
+                                ret = new List<string>();
+                                ret.Add(s);
+                            }
+
+                            ret.Add(temp);
+                            _levelList.Add(ret);
+                            _treeStack.Add(temp);
+                            if (temp.CompareTo(end) == 0)
+                            {
+                                if (_minLenghBFS < ret.Count)
+                                    return _minLenghBFS;
+                                _minLenghBFS = ret.Count;
+                                _finalList.Add(ret);
+                            }
                         }
                     }
                 }
-            }
-
-            _treeStack.Add("||");
-
-            _dictionary.Remove(start);
-            if (_treeStack.Count > 0)
-            {
-                string s = _treeStack[0];
-                if(s.CompareTo("||") == 0)
-                {
-                    //This is the end of the last layer. 
-                    _treeStack.Remove("||");
-                    s = _treeStack[0];
-                    _height++;
-                }
 
                 index++;
-                _dictionary.Remove(s);
-                FindWordLadder(s, end);
-                _dictionary.Add(s);
-                _dictionary.Add(start);
             }
 
             return _minLenghBFS;
@@ -81,7 +70,7 @@ namespace Coding
         public static void TestGetLadderLength()
         {
             _treeStack.Add("abc");
-            _treeStack.Add("||");
+            //_treeStack.Add("||");
             _levelList.Add(new List<string>());
             _dictionary.Add("aaa");
             _dictionary.Add("bbc");
