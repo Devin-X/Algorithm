@@ -8,14 +8,12 @@ namespace Coding
 {
     public class WordsLadderLength
     {
-        public static HashSet<string> _dictionary = new HashSet<string>();
         public static List<string> _treeStack = new List<string>();
         public static List<List<string>> _levelList = new List<List<string>>();
         public static List<List<string>> _finalList = new List<List<string>>();
-        //public static int _height = 1;
         public static int _minLenghBFS = int.MaxValue;
         public static int index = 0;
-        public static int FindWordLadder(string start, string end)
+        public static List<List<string>> FindWordLadder(string start, string end, HashSet<string> _dictionary)
         {
             while (_treeStack.Count > 0)
             {
@@ -52,7 +50,7 @@ namespace Coding
                             if (temp.CompareTo(end) == 0)
                             {
                                 if (_minLenghBFS < ret.Count)
-                                    return _minLenghBFS;
+                                    return _finalList;
                                 _minLenghBFS = ret.Count;
                                 _finalList.Add(ret);
                             }
@@ -63,7 +61,7 @@ namespace Coding
                 index++;
             }
 
-            return _minLenghBFS;
+            return _finalList;
         }
 
 
@@ -72,6 +70,7 @@ namespace Coding
             _treeStack.Add("abc");
             //_treeStack.Add("||");
             _levelList.Add(new List<string>());
+            HashSet<string> _dictionary = new HashSet<string>();
             _dictionary.Add("aaa");
             _dictionary.Add("bbc");
             _dictionary.Add("cbc");
@@ -79,7 +78,7 @@ namespace Coding
             _dictionary.Add("cbd");
             _dictionary.Add("cog");
             _dictionary.Add("hog");
-            Console.WriteLine(FindWordLadder("abc", "cbd"));
+            Console.WriteLine(FindWordLadder("abc", "cbd", _dictionary));
 
             foreach (List<string> ls in _finalList)
             {
