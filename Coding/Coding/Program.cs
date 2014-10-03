@@ -29,14 +29,14 @@ namespace Coding
 
             //UniqueBST.TestNumOfUniqueBST();
 
-            MaxNumOfCars.TestMaxNumOfCars();
-            Sorting.Test();
+            //MaxNumOfCars.TestMaxNumOfCars();
+            //Sorting.Test();
 
-            Palindrome.Test();
-            MaxBitWindowFlip.Test();
-            HighestInterval.Test();
+            //Palindrome.Test();
+            //MaxBitWindowFlip.Test();
+            //HighestInterval.Test();
 
-            TreeNextRightPointers.Test();
+            //TreeNextRightPointers.Test();
         }
     }
 }
