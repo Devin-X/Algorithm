@@ -8,27 +8,16 @@ namespace Coding
 {
     public class WordsLadderLength
     {
-        private static Dictionary<string, int> _dict = new Dictionary<string, int>();
-        private static Dictionary<string, int> _resultSet = new Dictionary<string, int>();
-        private static int _result = int.MaxValue;
-        private static int _wordLength = 0;
-        private static List<string> _bestResult = new List<string>();
-        private static List<string> _intermideateResult = new List<string>();
-
-
         public static HashSet<string> _dictionary = new HashSet<string>();
-        public static Dictionary<string, List<string>> _allPathsDict = new Dictionary<string, List<string>>();
-        public static List<string> _tempResult = new List<string>();
-        public static List<string> _levelNodes = new List<string>();
+        public static List<string> _treeStack = new List<string>();
         public static List<List<string>> _levelList = new List<List<string>>();
-        public static int _minLenCache = 0;
+        public static List<List<string>> _finalList = new List<List<string>>();
+        public static int _height = 1;
         public static int _minLenghBFS = int.MaxValue;
         public static int index = 0;
         public static int FindWordLadder(string start, string end)
         {
-            _levelNodes.Remove(start);
-            List<string> toRemove = _levelList[0];
-            _levelList.Remove(toRemove);
+            _treeStack.Remove(start);
 
             for (int i = 0; i < start.Length; i++)
             {
@@ -52,24 +41,34 @@ namespace Coding
 
                         ret.Add(temp);
                         _levelList.Add(ret);
-                        _levelNodes.Add(temp);
+                        _treeStack.Add(temp);
                         if (temp.CompareTo(end) == 0)
                         {
-                            if (_minLenghBFS < _minLenCache)
+                            if (_minLenghBFS < _height)
                                 return _minLenghBFS;
-                            _minLenghBFS = _minLenCache;
+                            _minLenghBFS = _height;
+                            _finalList.Add(ret);
                         }
                     }
                 }
             }
 
+            _treeStack.Add("||");
+
             _dictionary.Remove(start);
-            if (_levelNodes.Count > 0)
+            if (_treeStack.Count > 0)
             {
-                string s = _levelNodes[0];
-                _dictionary.Remove(s);
-                _minLenCache++;
+                string s = _treeStack[0];
+                if(s.CompareTo("||") == 0)
+                {
+                    //This is the end of the last layer. 
+                    _treeStack.Remove("||");
+                    s = _treeStack[0];
+                    _height++;
+                }
+
                 index++;
+                _dictionary.Remove(s);
                 FindWordLadder(s, end);
                 _dictionary.Add(s);
                 _dictionary.Add(start);
@@ -79,7 +78,45 @@ namespace Coding
         }
 
 
-        public static void TestGetLadderLength(string start, string end)
+        public static void TestGetLadderLength()
+        {
+            _treeStack.Add("abc");
+            _treeStack.Add("||");
+            _levelList.Add(new List<string>());
+            _dictionary.Add("aaa");
+            _dictionary.Add("bbc");
+            _dictionary.Add("cbc");
+            _dictionary.Add("bac");
+            _dictionary.Add("cbd");
+            _dictionary.Add("cog");
+            _dictionary.Add("hog");
+            Console.WriteLine(FindWordLadder("abc", "cbd"));
+
+            foreach (List<string> ls in _finalList)
+            {
+                foreach(string word in ls)
+                {
+                    Console.Write("{0}--->", word);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+    }
+
+
+    public class WordLadderVersion1
+    {
+
+
+        private static Dictionary<string, int> _dict = new Dictionary<string, int>();
+        private static Dictionary<string, int> _resultSet = new Dictionary<string, int>();
+        private static int _result = int.MaxValue;
+        private static int _wordLength = 0;
+        private static List<string> _bestResult = new List<string>();
+        private static List<string> _intermideateResult = new List<string>();
+        public static void TestGetLadderLenthVersion1(string start, string end)
         {
             _wordLength = start.Length;
             _dict.Add("aaa", 0);
@@ -106,17 +143,6 @@ namespace Coding
             {
                 Console.WriteLine(word);
             }
-
-            _levelNodes.Add(start);
-            _levelList.Add(new List<string>());
-            _dictionary.Add("aaa");
-            _dictionary.Add("bbc");
-            _dictionary.Add("cbc");
-            _dictionary.Add("bac");
-            _dictionary.Add("cbd");
-            _dictionary.Add("cog");
-            _dictionary.Add("hog");
-            Console.WriteLine(FindWordLadder(start, end));
         }
 
         private static void SearchLadderLength(string start, string end)
@@ -171,3 +197,5 @@ namespace Coding
         }
     }
 }
+
+
