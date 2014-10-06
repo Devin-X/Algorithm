@@ -37,6 +37,9 @@ namespace Coding
             //HighestInterval.Test();
 
             //TreeNextRightPointers.Test();
+            GroupNumbers.Test();
+            MakeChange.Test();
+            FirstMissingInteger.Test();
         }
     }
 }
