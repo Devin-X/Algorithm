@@ -8,19 +8,24 @@ namespace Coding
 {
     public class WordsLadderLength
     {
-        public static List<string> _treeStack = new List<string>();
         public static List<List<string>> _levelList = new List<List<string>>();
         public static List<List<string>> _finalList = new List<List<string>>();
-        public static int _minLenghBFS = int.MaxValue;
+
+        public static Queue<string> _queue = new Queue<string>();
+        public static Queue<string> _next = new Queue<string>();
+        public static int _minLenghBFS = 1;
         public static int index = 0;
         public static List<List<string>> FindWordLadder(string start, string end, HashSet<string> _dictionary)
         {
-            _treeStack.Add(start);
-            while (_treeStack.Count > 0)
+            _queue.Enqueue(start);
+            HashSet<string> visited = new HashSet<string>();
+            List<string> startList = new List<string>();
+            startList.Add(start);
+            _levelList.Add(startList);
+            while (_queue.Any())
             {
-                string s = _treeStack[0];
-                _treeStack.Remove(s);
-                _dictionary.Remove(s);
+                string s = _queue.Dequeue();
+                visited.Add(s);
 
                 for (int i = 0; i < s.Length; i++)
                 {
@@ -29,31 +34,32 @@ namespace Coding
                         char[] a = s.ToCharArray();
                         a[i] = (char)('a' + j);
                         string temp = new string(a);
-                        if (_dictionary.Contains(temp))
+                        if (_dictionary.Contains(temp) && !visited.Contains(temp))
                         {
                             List<string> ret;
-                            if (_levelList.Count > 0)
-                            {
-                                ret = new List<string>(_levelList[index]);
-                            }
-                            else
-                            {
-                                ret = new List<string>();
-                                ret.Add(s);
-                            }
+                            ret = new List<string>(_levelList[index]);
 
                             ret.Add(temp);
                             _levelList.Add(ret);
-                            _treeStack.Add(temp);
+                            _next.Enqueue(temp);
                             if (temp.CompareTo(end) == 0)
                             {
-                                if (_minLenghBFS < ret.Count)
-                                    return _finalList;
-                                _minLenghBFS = ret.Count;
+                                visited.Remove(end);
                                 _finalList.Add(ret);
+                                continue;
                             }
                         }
                     }
+                }
+
+                if (!_queue.Any() && _next.Any())
+                {
+                    _queue = _next;
+                    _minLenghBFS++;
+                    HashSet<string> visitedNext = new HashSet<string>(_next.ToArray());
+                    //Console.WriteLine(string.Join("-", _next));
+                    _next = new Queue<string>();
+                    visited.UnionWith(visitedNext);
                 }
 
                 index++;
@@ -76,23 +82,19 @@ namespace Coding
             //_dictionary.Add("cbd");
             //_dictionary.Add("cog");
             //_dictionary.Add("hog");
-            Console.WriteLine(FindWordLadder("gape", "mild", _dictionary));
+            Console.WriteLine(FindWordLadder("nape", "mild", _dictionary));
+            //Console.WriteLine(FindWordLadder("hit", "cog", _dictionary));
 
-            foreach (List<string> ls in _finalList)
+            foreach(List<string>  ls in _finalList)
             {
-                foreach(string word in ls)
-                {
-                    Console.Write("{0}--->", word);
-                }
-
-                Console.WriteLine();
+                Console.WriteLine(string.Join("-->", ls));
             }
         }
 
 
         public static HashSet<string> InitData()
         {
-            
+
             string[] data = {"dose", "ends", "dine", "jars", "prow", "soap", "guns", "hops", "cray", "hove",
                 "ella", "hour", "lens", "jive", "wiry", "earl", "mara", "part", "flue", "putt",
                "rory", "bull", "york", "ruts", "lily", "vamp", "bask", "peer", "boat", "dens",
@@ -126,11 +128,9 @@ namespace Coding
                 "love", "lode", "duds", "bled", "juts", "gabs", "fink", "rock", "pant", "wipe",
                 "pele", "suez", "nina", "ring", "okra", "warm", "lyle", "gape", "bead", "lead",
                 "jane", "oink", "ware", "zibo", "inns", "mope", "hang", "made", "fobs", "gamy",
-                "fort", "peak", "gill", "dino", "dina", "tier"};
+                "fort", "peak", "gill", "dino", "dina", "tier", "hot","dot","dog","lot","log", "cog"};
 
             HashSet<string> _dictionary = new HashSet<string>(data);
-
-            Console.WriteLine(string.Join(",", data));
             return _dictionary;
         }
     }

@@ -13,7 +13,6 @@ namespace Coding
             //H2O.Simulate();
             //WordsLadderLength.GetLadderLength("hot", "cog");
             WordsLadderLength.TestGetLadderLength();
-
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
@@ -24,18 +23,13 @@ namespace Coding
             //Combination.TestFullCombination();
             //SubSet.TestSubSet();
             //Triangle.TestTriangle();
-
             //Parethesis.TestValidParathesisString();
-
             //UniqueBST.TestNumOfUniqueBST();
-
             //MaxNumOfCars.TestMaxNumOfCars();
             //Sorting.Test();
-
             //Palindrome.Test();
             //MaxBitWindowFlip.Test();
             //HighestInterval.Test();
-
             //TreeNextRightPointers.Test();
             GroupNumbers.Test();
             MakeChange.Test();
