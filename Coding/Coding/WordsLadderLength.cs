@@ -129,6 +129,8 @@ namespace Coding
                 "fort", "peak", "gill", "dino", "dina", "tier"};
 
             HashSet<string> _dictionary = new HashSet<string>(data);
+
+            Console.WriteLine(string.Join(",", data));
             return _dictionary;
         }
     }
