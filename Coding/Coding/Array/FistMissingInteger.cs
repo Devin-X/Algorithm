@@ -10,41 +10,42 @@ namespace Coding
     {
         public static int FindFirstMissingInteger(int[] array)
         {
-            int min = int.MaxValue;
-            int max = int.MinValue;
-            int count = 0;
-            int sum = 0;
+            int index = 0;
 
             for(int i = 0; i < array.Length; i++)
             {
-                if (array[i] >= 0)
+                if (array[i] == i + 1)
+                    continue;
+
+                if(array[i] > 0 && array[i] <= array.Length)
                 {
-                    count++;
-                    sum += array[i];
-                    if (array[i] > max )
-                        max = array[i];
-                    if (array[i] < min )
-                        min = array[i];
+                    int temp = array[i];
+                    array[i] = array[temp -1];
+                    array[temp-1] = temp;
+                    i--;
                 }
             }
 
-            if (count == 0)
-                return 1;
-
-            if(max-min == count - 1)
+            for(index = 0; index < array.Length; index++)
             {
-                return min > 1 ? 1 : max + 1;
+                if(index != array[index]-1)
+                {
+                    break;
+                }
             }
 
-            return (max + min) * (count +1)/ 2 - sum;
+            if (index == array.Length)
+                return array.Length+1;
+
+            return index + 1;
         }
 
         public static void Test()
         {
-            int[] a = { -1 };
+            int[] a = { -1, -2};
             Console.WriteLine("First missing integer is {0}", FindFirstMissingInteger(a));
 
-            int[] b = { 2 };
+            int[] b = { 2, 3, 4, 1, 5, 6, 7 };
             Console.WriteLine("First missing integer is {0}", FindFirstMissingInteger(b));
 
             int[] c = { 3, 4, -1, 1 };

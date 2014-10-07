@@ -41,12 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array\FistMissingInteger.cs" />
+    <Compile Include="Array\GroupNumbers.cs" />
     <Compile Include="Combi-Permu\Combination.cs" />
     <Compile Include="Divideby235.cs" />
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="Combi-Permu\FullPermutation.cs" />
     <Compile Include="H2O.cs" />
     <Compile Include="HighestInterval.cs" />
+    <Compile Include="MakeChange.cs" />
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="MaxSubProduction.cs" />
