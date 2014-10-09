@@ -34,6 +34,7 @@ namespace Coding
             GroupNumbers.Test();
             MakeChange.Test();
             FirstMissingInteger.Test();
+            MaxAccendingSubSeq.Test();
         }
     }
 }

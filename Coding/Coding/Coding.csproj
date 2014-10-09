@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Array\FistMissingInteger.cs" />
     <Compile Include="Array\GroupNumbers.cs" />
+    <Compile Include="Array\MaxAccendingSubSeq.cs" />
     <Compile Include="Combi-Permu\Combination.cs" />
     <Compile Include="Divideby235.cs" />
     <Compile Include="FindClosestShareFather.cs" />
