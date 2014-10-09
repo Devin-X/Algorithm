@@ -31,6 +31,30 @@ namespace Coding
             }
         }
 
+        public static int Fullpermutation(string s, int start)
+        {
+            if (start == s.Length)
+            {
+                Console.WriteLine(s);
+                return 0;
+            }
+
+            char[] cArray = s.ToCharArray();
+
+            for (int i = start; i < cArray.Length; i++)
+            {
+                char temp = cArray[i];
+                cArray[i] = cArray[start];
+                cArray[start] = temp;
+                string ss = new string(cArray);
+                Fullpermutation(ss, start + 1);
+                temp = cArray[i];
+                cArray[i] = cArray[start];
+                cArray[start] = temp;
+            }
+
+            return 0;
+        }
         public static void FullCombination(ref char[] str)
         {
             if (combinationStartIndex == str.Length)
@@ -152,9 +176,11 @@ namespace Coding
         public static void TestFullPermutation()
         {
             char[] str = "abcd".ToCharArray();
-            FullPermutation(ref str);
+            //FullPermutation(ref str);
             //FullCombination(ref str);
-
+            Console.WriteLine("Above is the full permutatin for {0} --> !!{1}", "abcd", Fullpermutation("abcd", 0));
+            Console.WriteLine("Above is the full permutatin for {0} --> !!{1}", "ab", Fullpermutation("ab", 0));
+            Console.WriteLine("Above is the full permutatin for {0} --> !!{1}", "abc", Fullpermutation("abc", 0));
 
             //str = "1112".ToCharArray();
             //UniquePermutations(ref str);
