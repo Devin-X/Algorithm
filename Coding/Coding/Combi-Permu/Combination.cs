@@ -76,23 +76,23 @@ namespace Coding
         /// <summary>
         /// The str is alredy sorted, as assumption
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="array"></param>
         /// <param name="target"></param>
-        public static List<List<int>> FullCombinationSum(int[] str, int target)
+        public static List<List<int>> FullCombinationSum(int[] array, int target)
         {
             if (retII.Count == 0)
             {
                 retII.Add(new List<int>());
             }
 
-            if (combinationStartIndexII == str.Length)
+            if (combinationStartIndexII == array.Length)
                 return retFinal;
 
             List<List<int>> tempList = new List<List<int>>();
             foreach (List<int> set in retII)
             {
                 List<int> temp = new List<int>(set.ToArray());
-                temp.Add(str[combinationStartIndexII]);
+                temp.Add(array[combinationStartIndexII]);
                 tempList.Add(temp);
             }
 
@@ -102,10 +102,10 @@ namespace Coding
             }
 
             combinationStartIndexII++;
-            FullCombinationSum(str, target);
+            FullCombinationSum(array, target);
 
             HashSet<int> unique = new HashSet<int>();
-            if (combinationStartIndexII == str.Length && retFinal.Count == 0)
+            if (combinationStartIndexII == array.Length && retFinal.Count == 0)
             {
                 foreach (List<int> list in retII)
                 {

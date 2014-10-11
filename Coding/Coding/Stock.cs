@@ -68,6 +68,11 @@ namespace Coding
             return maxProfit; ;
         }
 
+        /// <summary>
+        /// 给定一个数组prices，表示第 i 天的股价，你只能依次进行两次交易（买入-卖出-买入-卖出），请确定买入和卖出的时机，使收益最大。
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
         public static double LimitedMaxProfitTraderON(double[] prices)
         {
             // This is the O(n) solution.

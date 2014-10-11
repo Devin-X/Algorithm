@@ -35,6 +35,8 @@ namespace Coding
             MakeChange.Test();
             FirstMissingInteger.Test();
             MaxAccendingSubSeq.Test();
+
+            CloneGraphI.Test();
         }
     }
 }
