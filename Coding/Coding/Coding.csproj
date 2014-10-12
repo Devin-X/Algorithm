@@ -44,7 +44,7 @@
     <Compile Include="Array\FistMissingInteger.cs" />
     <Compile Include="Array\GroupNumbers.cs" />
     <Compile Include="Array\MaxAccendingSubSeq.cs" />
-    <Compile Include="CloneGraphI.cs" />
+    <Compile Include="Graph\CloneGraphI.cs" />
     <Compile Include="Combi-Permu\Combination.cs" />
     <Compile Include="Divideby235.cs" />
     <Compile Include="FindClosestShareFather.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="Array\MaxSubProduction.cs" />
+    <Compile Include="SortLinkedList.cs" />
     <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />

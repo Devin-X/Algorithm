@@ -37,6 +37,8 @@ namespace Coding
             MaxAccendingSubSeq.Test();
 
             CloneGraphI.Test();
+
+            SortLinkedList.Test();
         }
     }
 }
