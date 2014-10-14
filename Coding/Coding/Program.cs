@@ -39,6 +39,7 @@ namespace Coding
             CloneGraphI.Test();
 
             SortLinkedList.Test();
+            WordBreaker.Test();
         }
     }
 }

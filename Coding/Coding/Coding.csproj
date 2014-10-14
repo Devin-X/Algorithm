@@ -69,6 +69,7 @@
     <Compile Include="Tree\TreeNextRightPointers.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="UniqueBST.cs" />
+    <Compile Include="WordBreaker.cs" />
     <Compile Include="WordsLadderLength.cs" />
   </ItemGroup>
   <ItemGroup>
