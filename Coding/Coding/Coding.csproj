@@ -49,6 +49,7 @@
     <Compile Include="Divideby235.cs" />
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="Combi-Permu\FullPermutation.cs" />
+    <Compile Include="Graph\FindConnectedGraph.cs" />
     <Compile Include="H2O.cs" />
     <Compile Include="HighestInterval.cs" />
     <Compile Include="MakeChange.cs" />
