@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array\FindMaxSubArraySumWithDuplicate.cs" />
     <Compile Include="Array\FistMissingInteger.cs" />
     <Compile Include="Array\GroupNumbers.cs" />
     <Compile Include="Array\MaxAccendingSubSeq.cs" />
