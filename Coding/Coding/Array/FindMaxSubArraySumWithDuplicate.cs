@@ -16,46 +16,52 @@ namespace Coding
         public static int GetMaxSum(int[] array)
         {
             Dictionary<int, int> dupCache = new Dictionary<int, int>();
-            HashSet<int> duphash = new HashSet<int>();
-            int[] sumCache = new int[array.Length];
+            int[] dpCache = new int[array.Length];
             int maxSum = 0;
 
-            for(int i = 0 ; i < array.Length; i++)
-            {
-                maxSum += array[i];
-                sumCache[i] = maxSum;
-            }
-            maxSum = 0;
+            dpCache[0] = array[0];
 
             for(int i = 1; i < array.Length; i++)
             {
                 if(dupCache.ContainsKey(array[i]))
                 {
-                    int index;
-                    dupCache.TryGetValue(array[i], out index);
-                    if (!duphash.Contains(array[i]))
+                    int count;
+                    dupCache.TryGetValue(array[i], out count);
+                    if(count == 1)
                     {
-                        //the current integer is duplicate
-                        sumCache[i] = Math.Max((sumCache[i-1] - array[i]), (sumCache[i] - sumCache[index]));
-                        duphash.Add(array[i]);
+                        if(array[i] >= dpCache[i-1] - array[i])
+                        {
+                            dpCache[i] = array[i];
+                            dupCache.Clear();
+                            dupCache.Add(array[i], 1);
+                        }else
+                        {
+                            dpCache[i] = dpCache[i-1] - array[i];
+                            dupCache[array[i]]++;
+                        }
                     }
                     else
                     {
-                        //the current integer is more than duplicate
-                        sumCache[i] = Math.Max((sumCache[i-1]), (sumCache[i] - sumCache[index]));
-                        //duphash.Add(array[i]);
+                        if(array[i] >= dpCache[i-1])
+                        {
+                            dpCache[i] = array[i];
+                            dupCache.Clear();
+                            dupCache.Add(array[i], 1);
+                        }
+                        else
+                        {
+                            dpCache[i] = dpCache[i - 1];
+                            dupCache[array[i]]++;
+                        }
                     }
-
-                    dupCache[array[i]] = index;
-
                 }
                 else
                 {
-                    sumCache[i] = sumCache[i-1] + array[i];
-                    dupCache.Add(array[i], i);
+                    dpCache[i] = dpCache[i-1] + array[i];
+                    dupCache.Add(array[i], 1);
                 }
                 
-                maxSum = Math.Max(maxSum, sumCache[i]);
+                maxSum = Math.Max(maxSum, dpCache[i]);
             }
 
             return maxSum;
@@ -65,11 +71,20 @@ namespace Coding
         {
             int[] a = new int[]{ 100, 8, 1, 3, 8, 8};
             int[] b = new int[] { 2, 8, 1, 3, 8, 8 };
+            int[] c = new int[] { 1, 2, 3, 2, 2 };
+            int[] d = new int[] { 1, 2, 3, 3, 2, 2, 4};
+            int[] e = new int[] { 100, 2, 3, 3, 2, 2 };
 
             Console.WriteLine(string.Join(",", a));
             Console.WriteLine(GetMaxSum(a));
             Console.WriteLine(string.Join(",", b));
             Console.WriteLine(GetMaxSum(b));
+            Console.WriteLine(string.Join(",", c));
+            Console.WriteLine(GetMaxSum(c));
+            Console.WriteLine(string.Join(",", d));
+            Console.WriteLine(GetMaxSum(d));
+            Console.WriteLine(string.Join(",", e));
+            Console.WriteLine(GetMaxSum(e));
         }
     }
 }
