@@ -53,6 +53,7 @@
     <Compile Include="Graph\FindConnectedGraph.cs" />
     <Compile Include="H2O.cs" />
     <Compile Include="HighestInterval.cs" />
+    <Compile Include="goog\KSwap.cs" />
     <Compile Include="MakeChange.cs" />
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
