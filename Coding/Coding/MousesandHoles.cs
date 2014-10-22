@@ -65,25 +65,33 @@ namespace Coding
                     int ib = im;
                     int back = -1;
                     int forward = -1;
-                    while(ib > 0 && l[ib].isMouse && !l[ib].isVisited)
+                    while(ib > 0)
                     {
+                        if( !l[ib].isMouse && !l[ib].isVisited)
+                        {
+                            break;
+                        }
                         ib--;
                     }
 
                     if(ib > 0)
                     {
-                        back = Math.Abs(l[im].data - l[ib].data);
+                        back = l[im].data > l[ib].data ? l[im].data - l[ib].data : l[ib].data - l[im].data;
                     }
 
                     int iforward = im;
-                    while (iforward < l.Count && l[iforward].isMouse && !l[iforward].isVisited)
+                    while (iforward < l.Count )
                     {
+                        if( !l[iforward].isMouse && !l[iforward].isVisited)
+                        {
+                            break;
+                        }
                         iforward++;
                     }
 
                     if (iforward < l.Count)
                     {
-                        forward = Math.Abs(l[im].data - l[iforward].data);
+                        forward = l[im].data > l[iforward].data ? l[im].data - l[iforward].data : l[iforward].data - l[im].data;
                     }
                     
                     if(forward == -1)
@@ -125,7 +133,7 @@ namespace Coding
             int[] h3 = { 3, 1, 2, -1 };
 
             int[] m4 = { 1, 2, 3 };
-            int[] h4 = { -4, -3, -2, -1, 0, 1, 2 };
+            int[] h4 = { -4, -3, -2, 1 };
 
             int[] m5 = { 1, 2, 9 };
             int[] h5 = { -3, -2, 5, 6, 7, 11 };
