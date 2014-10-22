@@ -10,6 +10,7 @@ namespace Coding
     {
         static void Main(string[] args)
         {
+            MousesandHoles.Test();
             FindMaxSubArraySumWithDuplicate.Test();
             FindConnectedGraph.Test();
             //H2O.Simulate();

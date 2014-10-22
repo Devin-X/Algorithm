@@ -58,6 +58,7 @@
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="Array\MaxSubProduction.cs" />
+    <Compile Include="MousesandHoles.cs" />
     <Compile Include="SortLinkedList.cs" />
     <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />
