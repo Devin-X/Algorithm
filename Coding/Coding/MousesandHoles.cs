@@ -35,54 +35,35 @@ namespace Coding
 
     public class MousesandHoles
     {
-        public static int GetMinDistance(int[] mouses, int[] holes)
+        private static int FindMax(List<Slot> l)
         {
             int max = int.MinValue;
-            List<Slot> l = new List<Slot>();
-            foreach (int i in mouses)
-            {
-                l.Add(new Slot(i, true));
-            }
-            foreach(int i in holes)
-            {
-                l.Add(new Slot(i, false));
-            }
-
-            if (mouses[mouses.Length - 1] > holes[holes.Length/2 - 1])
-            {
-                l = l.OrderByDescending(S => S.data).ToList();
-            }
-            else
-            {
-                l = l.OrderBy(S => S.data).ToList();
-            }
-
             int im = 0;
-            while(im < l.Count)
+            while (im < l.Count)
             {
-                if(l[im].isMouse)
+                if (l[im].isMouse)
                 {
                     int ib = im;
                     int back = -1;
                     int forward = -1;
-                    while(ib >= 0)
+                    while (ib >= 0)
                     {
-                        if( !l[ib].isMouse && !l[ib].isVisited)
+                        if (!l[ib].isMouse && !l[ib].isVisited)
                         {
                             break;
                         }
                         ib--;
                     }
 
-                    if(ib >= 0)
+                    if (ib >= 0)
                     {
                         back = l[im].data > l[ib].data ? l[im].data - l[ib].data : l[ib].data - l[im].data;
                     }
 
                     int iforward = im;
-                    while (iforward < l.Count )
+                    while (iforward < l.Count)
                     {
-                        if( !l[iforward].isMouse && !l[iforward].isVisited)
+                        if (!l[iforward].isMouse && !l[iforward].isVisited)
                         {
                             break;
                         }
@@ -93,8 +74,8 @@ namespace Coding
                     {
                         forward = l[im].data > l[iforward].data ? l[im].data - l[iforward].data : l[iforward].data - l[im].data;
                     }
-                    
-                    if(forward == -1)
+
+                    if (forward == -1)
                     {
                         max = Math.Max(max, back);
                         l[ib].isVisited = true;
@@ -103,23 +84,49 @@ namespace Coding
                     {
                         max = Math.Max(max, forward);
                         l[iforward].isVisited = true;
-                    }else
-                    if(back < forward)
-                    {
-                        max = Math.Max(max, back);
-                        l[ib].isVisited = true;
                     }
                     else
-                    {
-                        max = Math.Max(max, forward);
-                        l[iforward].isVisited = true;
-                    }
+                        if (back < forward)
+                        {
+                            max = Math.Max(max, back);
+                            l[ib].isVisited = true;
+                        }
+                        else
+                        {
+                            max = Math.Max(max, forward);
+                            l[iforward].isVisited = true;
+                        }
                 }
 
                 im++;
             }
-
             return max;
+        }
+        public static int GetMinDistance(int[] mouses, int[] holes)
+        {
+            int ret = 0;
+            List<Slot> l = new List<Slot>();
+            foreach (int i in mouses)
+            {
+                l.Add(new Slot(i, true));
+            }
+            foreach(int i in holes)
+            {
+                l.Add(new Slot(i, false));
+            }
+
+            List<Slot> lDesc = new List<Slot>();
+            l = l.OrderByDescending(S => S.data).ToList();
+            foreach (Slot s in l)
+                lDesc.Add(new Slot(s.data, s.isMouse));
+            List<Slot> lAcces = new List<Slot>();
+            l = l.OrderBy(S => S.data).ToList();
+            foreach (Slot s in l)
+                lAcces.Add(new Slot(s.data, s.isMouse));
+            int a = FindMax(lDesc);
+            int b = FindMax(lAcces);
+
+            return a > b ? b : a;
         }
 
         public static void Test()
@@ -135,8 +142,8 @@ namespace Coding
             int[] m4 = { 1, 2, 3 };
             int[] h4 = { -5, -4, -3, -2, -1, 5 };
 
-            int[] m5 = {1, 5, 10};
-            int[] h5 = { 0, 3, 6, 11};
+            int[] m5 = {1,4,7,10};
+            int[] h5 = { -100, 2, 5, 8, 20 };
 
             Console.WriteLine(string.Join(",", m1));
             Console.WriteLine(string.Join(",", h1));
@@ -147,7 +154,7 @@ namespace Coding
 
             Console.WriteLine(string.Join(",", m3));
             Console.WriteLine(string.Join(",", h3));
-            Console.WriteLine(GetMinDistance(m2, h3));
+            Console.WriteLine(GetMinDistance(m3, h3));
 
             Console.WriteLine(string.Join(",", m4));
             Console.WriteLine(string.Join(",", h4));
