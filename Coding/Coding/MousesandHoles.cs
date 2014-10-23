@@ -48,7 +48,7 @@ namespace Coding
                 l.Add(new Slot(i, false));
             }
 
-            if (mouses[mouses.Length - 1] > holes[holes.Length - 1])
+            if (mouses[mouses.Length - 1] > holes[holes.Length/2 - 1])
             {
                 l = l.OrderByDescending(S => S.data).ToList();
             }
@@ -65,7 +65,7 @@ namespace Coding
                     int ib = im;
                     int back = -1;
                     int forward = -1;
-                    while(ib > 0)
+                    while(ib >= 0)
                     {
                         if( !l[ib].isMouse && !l[ib].isVisited)
                         {
@@ -74,7 +74,7 @@ namespace Coding
                         ib--;
                     }
 
-                    if(ib > 0)
+                    if(ib >= 0)
                     {
                         back = l[im].data > l[ib].data ? l[im].data - l[ib].data : l[ib].data - l[im].data;
                     }
@@ -133,10 +133,10 @@ namespace Coding
             int[] h3 = { 3, 1, 2, -1 };
 
             int[] m4 = { 1, 2, 3 };
-            int[] h4 = { -4, -3, -2, 1 };
+            int[] h4 = { -5, -4, -3, -2, -1, 5 };
 
-            int[] m5 = { 1, 2, 9 };
-            int[] h5 = { -3, -2, 5, 6, 7, 11 };
+            int[] m5 = {1, 5, 10};
+            int[] h5 = { 0, 3, 6, 11};
 
             Console.WriteLine(string.Join(",", m1));
             Console.WriteLine(string.Join(",", h1));
