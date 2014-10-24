@@ -129,6 +129,24 @@ namespace Coding
             return a > b ? b : a;
         }
 
+        public static int GetMinDistanceCombiSolution(int[] mouses, int[] holes)
+        {
+            int ret = int.MaxValue;
+            List<int> l = new List<int>();
+            int i = 0;
+            for (; i < mouses.Length; i++)
+                l.Add(holes[i]);
+            while(i < holes.Length)
+            {
+                l.Add(holes[i]);
+                ret = Math.Min(ret, GetMinDistance(mouses, l.ToArray()));
+                l.Remove(holes[i - mouses.Length]);
+                i++;
+            }
+
+            return ret;
+        }
+
         public static void Test()
         {
             int[] m1 = { 1, 2, 3 };
@@ -145,24 +163,31 @@ namespace Coding
             int[] m5 = {1,4,7,10};
             int[] h5 = { -100, 2, 5, 8, 20 };
 
+            int[] m7 = { 64, 82, 95, 152, 166 };
+            int[] h7 = { 9, 25, 28, 36, 54, 118, 119, 172, 189, 195 };
+
             Console.WriteLine(string.Join(",", m1));
             Console.WriteLine(string.Join(",", h1));
-            Console.WriteLine(GetMinDistance(m1, h1));
+            Console.WriteLine(GetMinDistanceCombiSolution(m1, h1));
             Console.WriteLine(string.Join(",", m2));
             Console.WriteLine(string.Join(",", h2));
-            Console.WriteLine(GetMinDistance(m2, h2));
+            Console.WriteLine(GetMinDistanceCombiSolution(m2, h2));
 
             Console.WriteLine(string.Join(",", m3));
             Console.WriteLine(string.Join(",", h3));
-            Console.WriteLine(GetMinDistance(m3, h3));
+            Console.WriteLine(GetMinDistanceCombiSolution(m3, h3));
 
             Console.WriteLine(string.Join(",", m4));
             Console.WriteLine(string.Join(",", h4));
-            Console.WriteLine(GetMinDistance(m4, h4));
+            Console.WriteLine(GetMinDistanceCombiSolution(m4, h4));
 
             Console.WriteLine(string.Join(",", m5));
             Console.WriteLine(string.Join(",", h5));
-            Console.WriteLine(GetMinDistance(m5, h5));
+            Console.WriteLine(GetMinDistanceCombiSolution(m5, h5));
+
+            Console.WriteLine(string.Join(",", m7));
+            Console.WriteLine(string.Join(",", h7));
+            Console.WriteLine(GetMinDistanceCombiSolution(m7, h7));
         }
     }
 }
