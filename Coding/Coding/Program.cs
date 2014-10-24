@@ -41,7 +41,7 @@ namespace Coding
 
             CloneGraphI.Test();
 
-            SortLinkedList.Test();
+            //SortLinkedList.Test();
             WordBreaker.Test();
 
             

@@ -35,117 +35,40 @@ namespace Coding
 
     public class MousesandHoles
     {
-        private static int FindMax(List<Slot> l)
+        public static int GetMinDistanceDP(int[] mouses, int[] holes)
         {
-            int max = int.MinValue;
-            int im = 0;
-            while (im < l.Count)
+            if (mouses == null || holes == null)
+                return 0;
+            Array.Sort(mouses);
+            Array.Sort(holes);
+
+            int[,] dp = new int[mouses.Length, holes.Length];
+            dp[0,0] = Math.Abs(mouses[0]-holes[0]);
+            int min = dp[0,0];
+
+            for(int i = 0; i < holes.Length; i++)
             {
-                if (l[im].isMouse)
+                dp[0, i] = min = Math.Min(min, Math.Abs(mouses[0]-holes[i]));
+            }
+
+            for(int i = 1; i < mouses.Length; i++)
+            {
+                dp[i, i] = Math.Max(dp[i-1, i-1], Math.Abs(mouses[i]-holes[i]));
+            }
+
+            for(int i =1; i < mouses.Length; i++)
+            {
+                for(int j = i+1; j < mouses.Length; j++)
                 {
-                    int ib = im;
-                    int back = -1;
-                    int forward = -1;
-                    while (ib >= 0)
-                    {
-                        if (!l[ib].isMouse && !l[ib].isVisited)
-                        {
-                            break;
-                        }
-                        ib--;
-                    }
-
-                    if (ib >= 0)
-                    {
-                        back = l[im].data > l[ib].data ? l[im].data - l[ib].data : l[ib].data - l[im].data;
-                    }
-
-                    int iforward = im;
-                    while (iforward < l.Count)
-                    {
-                        if (!l[iforward].isMouse && !l[iforward].isVisited)
-                        {
-                            break;
-                        }
-                        iforward++;
-                    }
-
-                    if (iforward < l.Count)
-                    {
-                        forward = l[im].data > l[iforward].data ? l[im].data - l[iforward].data : l[iforward].data - l[im].data;
-                    }
-
-                    if (forward == -1)
-                    {
-                        max = Math.Max(max, back);
-                        l[ib].isVisited = true;
-                    }
-                    else if (back == -1)
-                    {
-                        max = Math.Max(max, forward);
-                        l[iforward].isVisited = true;
-                    }
-                    else
-                        if (back < forward)
-                        {
-                            max = Math.Max(max, back);
-                            l[ib].isVisited = true;
-                        }
-                        else
-                        {
-                            max = Math.Max(max, forward);
-                            l[iforward].isVisited = true;
-                        }
+                    dp[i, j] = Math.Min(dp[i,j-1], Math.Max(dp[i-1,j-1], Math.Abs(mouses[i]-holes[j])));
                 }
-
-                im++;
-            }
-            return max;
-        }
-        public static int GetMinDistance(int[] mouses, int[] holes)
-        {
-            int ret = 0;
-            List<Slot> l = new List<Slot>();
-            foreach (int i in mouses)
-            {
-                l.Add(new Slot(i, true));
-            }
-            foreach(int i in holes)
-            {
-                l.Add(new Slot(i, false));
             }
 
-            List<Slot> lDesc = new List<Slot>();
-            l = l.OrderByDescending(S => S.data).ToList();
-            foreach (Slot s in l)
-                lDesc.Add(new Slot(s.data, s.isMouse));
-            List<Slot> lAcces = new List<Slot>();
-            l = l.OrderBy(S => S.data).ToList();
-            foreach (Slot s in l)
-                lAcces.Add(new Slot(s.data, s.isMouse));
-            int a = FindMax(lDesc);
-            int b = FindMax(lAcces);
-
-            return a > b ? b : a;
+            return dp[mouses.Length-1,holes.Length-1];
+        
         }
 
-        public static int GetMinDistanceCombiSolution(int[] mouses, int[] holes)
-        {
-            int ret = int.MaxValue;
-            List<int> l = new List<int>();
-            int i = 0;
-            for (; i < mouses.Length; i++)
-                l.Add(holes[i]);
-            while(i < holes.Length)
-            {
-                l.Add(holes[i]);
-                ret = Math.Min(ret, GetMinDistance(mouses, l.ToArray()));
-                l.Remove(holes[i - mouses.Length]);
-                i++;
-            }
-
-            return ret;
-        }
+        
 
         public static void Test()
         {
@@ -168,26 +91,139 @@ namespace Coding
 
             Console.WriteLine(string.Join(",", m1));
             Console.WriteLine(string.Join(",", h1));
-            Console.WriteLine(GetMinDistanceCombiSolution(m1, h1));
+            Console.WriteLine(GetMinDistanceDP(m1, h1));
             Console.WriteLine(string.Join(",", m2));
             Console.WriteLine(string.Join(",", h2));
-            Console.WriteLine(GetMinDistanceCombiSolution(m2, h2));
+            Console.WriteLine(GetMinDistanceDP(m2, h2));
 
             Console.WriteLine(string.Join(",", m3));
             Console.WriteLine(string.Join(",", h3));
-            Console.WriteLine(GetMinDistanceCombiSolution(m3, h3));
+            Console.WriteLine(GetMinDistanceDP(m3, h3));
 
             Console.WriteLine(string.Join(",", m4));
             Console.WriteLine(string.Join(",", h4));
-            Console.WriteLine(GetMinDistanceCombiSolution(m4, h4));
+            Console.WriteLine(GetMinDistanceDP(m4, h4));
 
             Console.WriteLine(string.Join(",", m5));
             Console.WriteLine(string.Join(",", h5));
-            Console.WriteLine(GetMinDistanceCombiSolution(m5, h5));
+            Console.WriteLine(GetMinDistanceDP(m5, h5));
 
             Console.WriteLine(string.Join(",", m7));
             Console.WriteLine(string.Join(",", h7));
-            Console.WriteLine(GetMinDistanceCombiSolution(m7, h7));
+            Console.WriteLine(GetMinDistanceDP(m7, h7));
         }
     }
+
+
+    //private static int FindMax(List<Slot> l)
+    //    {
+    //        int max = int.MinValue;
+    //        int im = 0;
+    //        while (im < l.Count)
+    //        {
+    //            if (l[im].isMouse)
+    //            {
+    //                int ib = im;
+    //                int back = -1;
+    //                int forward = -1;
+    //                while (ib >= 0)
+    //                {
+    //                    if (!l[ib].isMouse && !l[ib].isVisited)
+    //                    {
+    //                        break;
+    //                    }
+    //                    ib--;
+    //                }
+
+    //                if (ib >= 0)
+    //                {
+    //                    back = l[im].data > l[ib].data ? l[im].data - l[ib].data : l[ib].data - l[im].data;
+    //                }
+
+    //                int iforward = im;
+    //                while (iforward < l.Count)
+    //                {
+    //                    if (!l[iforward].isMouse && !l[iforward].isVisited)
+    //                    {
+    //                        break;
+    //                    }
+    //                    iforward++;
+    //                }
+
+    //                if (iforward < l.Count)
+    //                {
+    //                    forward = l[im].data > l[iforward].data ? l[im].data - l[iforward].data : l[iforward].data - l[im].data;
+    //                }
+
+    //                if (forward == -1)
+    //                {
+    //                    max = Math.Max(max, back);
+    //                    l[ib].isVisited = true;
+    //                }
+    //                else if (back == -1)
+    //                {
+    //                    max = Math.Max(max, forward);
+    //                    l[iforward].isVisited = true;
+    //                }
+    //                else
+    //                    if (back < forward)
+    //                    {
+    //                        max = Math.Max(max, back);
+    //                        l[ib].isVisited = true;
+    //                    }
+    //                    else
+    //                    {
+    //                        max = Math.Max(max, forward);
+    //                        l[iforward].isVisited = true;
+    //                    }
+    //            }
+
+    //            im++;
+    //        }
+    //        return max;
+    //    }
+    //    public static int GetMinDistance(int[] mouses, int[] holes)
+    //    {
+    //        int ret = 0;
+    //        List<Slot> l = new List<Slot>();
+    //        foreach (int i in mouses)
+    //        {
+    //            l.Add(new Slot(i, true));
+    //        }
+    //        foreach(int i in holes)
+    //        {
+    //            l.Add(new Slot(i, false));
+    //        }
+
+    //        List<Slot> lDesc = new List<Slot>();
+    //        l = l.OrderByDescending(S => S.data).ToList();
+    //        foreach (Slot s in l)
+    //            lDesc.Add(new Slot(s.data, s.isMouse));
+    //        List<Slot> lAcces = new List<Slot>();
+    //        l = l.OrderBy(S => S.data).ToList();
+    //        foreach (Slot s in l)
+    //            lAcces.Add(new Slot(s.data, s.isMouse));
+    //        int a = FindMax(lDesc);
+    //        int b = FindMax(lAcces);
+
+    //        return a > b ? b : a;
+    //    }
+
+    //    public static int GetMinDistanceCombiSolution(int[] mouses, int[] holes)
+    //    {
+    //        int ret = int.MaxValue;
+    //        List<int> l = new List<int>();
+    //        int i = 0;
+    //        for (; i < mouses.Length; i++)
+    //            l.Add(holes[i]);
+    //        while(i < holes.Length)
+    //        {
+    //            l.Add(holes[i]);
+    //            ret = Math.Min(ret, GetMinDistance(mouses, l.ToArray()));
+    //            l.Remove(holes[i - mouses.Length]);
+    //            i++;
+    //        }
+
+    //        return ret;
+    //    }
 }
