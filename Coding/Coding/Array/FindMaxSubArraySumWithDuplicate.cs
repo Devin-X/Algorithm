@@ -74,6 +74,7 @@ namespace Coding
             int[] c = new int[] { 1, 2, 3, 2, 2 };
             int[] d = new int[] { 1, 2, 3, 3, 2, 2, 4};
             int[] e = new int[] { 100, 2, 3, 3, 2, 2 };
+            int[] f = new int[] { 11, 5, 7, 4, 11, 7, 4, 2, 2, 5, 9, 4, 5, 11, 5, 1};
 
             Console.WriteLine(string.Join(",", a));
             Console.WriteLine(GetMaxSum(a));
@@ -85,6 +86,8 @@ namespace Coding
             Console.WriteLine(GetMaxSum(d));
             Console.WriteLine(string.Join(",", e));
             Console.WriteLine(GetMaxSum(e));
+            Console.WriteLine(string.Join(",", f));
+            Console.WriteLine(GetMaxSum(f));
         }
     }
 }
