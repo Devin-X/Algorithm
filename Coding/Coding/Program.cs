@@ -10,7 +10,8 @@ namespace Coding
     {
         static void Main(string[] args)
         {
-            FindMaxSubArraySumWithDuplicate.Test();
+            MousesandHoles.Test();
+            //FindMaxSubArraySumWithDuplicate.Test();
             FindConnectedGraph.Test();
             //H2O.Simulate();
             //WordsLadderLength.GetLadderLength("hot", "cog");
@@ -40,7 +41,7 @@ namespace Coding
 
             CloneGraphI.Test();
 
-            SortLinkedList.Test();
+            //SortLinkedList.Test();
             WordBreaker.Test();
 
             
