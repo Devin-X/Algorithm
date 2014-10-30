@@ -44,7 +44,7 @@ namespace Coding
             //SortLinkedList.Test();
             WordBreaker.Test();
 
-            
+            CombineMaxSolution.Test();
         }
     }
 }
