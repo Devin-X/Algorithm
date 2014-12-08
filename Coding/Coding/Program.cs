@@ -10,9 +10,8 @@ namespace Coding
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
+            WebRequestTest.Test();
             //MousesandHoles.Test();
-=======
             Regex pattern = new Regex("(x)(n--[0-9a-z]*)-([0-9a-f]{14})-([0-9a-z]+\\.)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
             string ret;
@@ -38,7 +37,6 @@ namespace Coding
 
 
             MousesandHoles.Test();
->>>>>>> 44ebd96754514b93800ad18e9ee377651d5cccc7
             //FindMaxSubArraySumWithDuplicate.Test();
             //FindConnectedGraph.Test();
             //H2O.Simulate();
