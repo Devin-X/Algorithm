@@ -3,14 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Text.RegularExpressions;
 namespace Coding
 {
     class Program
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
             //MousesandHoles.Test();
+=======
+            Regex pattern = new Regex("(x)(n--[0-9a-z]*)-([0-9a-f]{14})-([0-9a-z]+\\.)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+            string ret;
+            string replacement = "|2|-app-|4";
+            Match m = pattern.Match("xn--ca-f585de7457e969-fxb.sharepoint.com");
+            string[] groups = replacement.Split('|');
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in groups)
+            {
+                int gIndex = 0;
+                if (int.TryParse(s, out gIndex))
+                {
+                    sb.Append(m.Groups[gIndex]);
+                }
+                else
+                {
+                    sb.Append(s);
+                }
+            }
+
+            ret = sb.ToString();
+
+
+
+            MousesandHoles.Test();
+>>>>>>> 44ebd96754514b93800ad18e9ee377651d5cccc7
             //FindMaxSubArraySumWithDuplicate.Test();
             //FindConnectedGraph.Test();
             //H2O.Simulate();
