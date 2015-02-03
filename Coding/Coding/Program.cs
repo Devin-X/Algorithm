@@ -10,6 +10,8 @@ namespace Coding
     {
         static void Main(string[] args)
         {
+            WebRequestTest.Test();
+            //MousesandHoles.Test();
             Regex pattern = new Regex("(x)(n--[0-9a-z]*)-([0-9a-f]{14})-([0-9a-z]+\\.)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
             string ret;
@@ -40,16 +42,16 @@ namespace Coding
 
             MousesandHoles.Test();
             //FindMaxSubArraySumWithDuplicate.Test();
-            FindConnectedGraph.Test();
+            //FindConnectedGraph.Test();
             //H2O.Simulate();
             //WordsLadderLength.GetLadderLength("hot", "cog");
-            WordsLadderLength.TestGetLadderLength();
+            //WordsLadderLength.TestGetLadderLength();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
             //MaxTreeNodePathSum.TestFindMaxPath();
             //FindClosestShareFather.TestclosestFather();
-            Permutation.TestFullPermutation();
+            //Permutation.TestFullPermutation();
             //MaxSubProduction.TestMaxSubProduction();
             //Combination.TestFullCombination();
             //SubSet.TestSubSet();
@@ -62,17 +64,17 @@ namespace Coding
             //MaxBitWindowFlip.Test();
             //HighestInterval.Test();
             //TreeNextRightPointers.Test();
-            GroupNumbers.Test();
-            MakeChange.Test();
-            FirstMissingInteger.Test();
+            //GroupNumbers.Test();
+            //MakeChange.Test();
+            //FirstMissingInteger.Test();
             MaxAccendingSubSeq.Test();
 
-            CloneGraphI.Test();
+            //CloneGraphI.Test();
 
             //SortLinkedList.Test();
-            WordBreaker.Test();
+            //WordBreaker.Test();
 
-            CombineMaxSolution.Test();
+            //CombineMaxSolution.Test();
         }
     }
 }
