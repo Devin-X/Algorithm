@@ -14,7 +14,11 @@ namespace Coding
 
             string ret;
             string replacement = "|2|-app-|4";
-            Match m = pattern.Match("xn--ca-f585de7457e969-fxb.sharepoint.com");
+            Match m = pattern.Match("n--ca-f585de7457e969-fxb.sharepoint.com");
+            if (m.Success)
+            {
+                Console.WriteLine("success");
+            }
             string[] groups = replacement.Split('|');
             StringBuilder sb = new StringBuilder();
             foreach (string s in groups)
