@@ -52,17 +52,6 @@ namespace Coding
                 {
                     depth--;
                     index++;
-                    if (depth == 0)
-                    {
-                        foreach(string ss in tempResult)
-                        {
-                            finalResult.Add(ss);
-                        }
-
-                        
-                        return finalResult;
-                    }
-
                     return tempResult;
                 }
                 else if (s[index] == ',' && depth == 1)
@@ -111,6 +100,14 @@ namespace Coding
                     tempResult = ttResult;
 
                     continue;
+                }
+            }
+
+            if (depth == 0)
+            {
+                foreach (string ss in tempResult)
+                {
+                    finalResult.Add(ss);
                 }
             }
 
