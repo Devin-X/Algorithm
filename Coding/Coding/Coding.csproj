@@ -46,6 +46,7 @@
     <Compile Include="Array\GroupNumbers.cs" />
     <Compile Include="Array\MaxAccendingSubSeq.cs" />
     <Compile Include="CombineMax.cs" />
+    <Compile Include="goog\BASH_Brace.cs" />
     <Compile Include="Graph\CloneGraphI.cs" />
     <Compile Include="Combi-Permu\Combination.cs" />
     <Compile Include="Divideby235.cs" />
