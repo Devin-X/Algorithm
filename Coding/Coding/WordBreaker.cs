@@ -53,11 +53,11 @@ namespace Coding
             if(totalLen == len)
             {
                 Console.WriteLine(string.Join(",", allResults));
-                allResults.Remove(allResults[allResults.Count - 1]);
             }
 
             if (s == "")
                 return true;
+
             if (dpcache == null)
             {
                 dpcache = new int[len];
@@ -84,7 +84,7 @@ namespace Coding
                     totalLen += i;
                     wordBreakII(s.Substring(i), len);
                     totalLen -= i;
-                    allResults.Remove(s.Substring(0, i));
+                    allResults.RemoveAt(allResults.Count-1);
                 }
             }
 
@@ -93,7 +93,7 @@ namespace Coding
 
         public static void Test()
         {
-            string[] data = { "a", "b", "bbb", "bbbb", "le", "et", "leet", "cod", "e","dde", "co", "de", "aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
+            string[] data = { "a", "b", "bbb", "bbbb", "l", "t", "c", "o", "d", "le", "et", "leet", "cod", "e","dde", "co", "de", "aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
             dict = new HashSet<string>(data);
             Console.WriteLine();
             Console.WriteLine("{0}", wordBreak("bb", 2));
