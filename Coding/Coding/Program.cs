@@ -21,6 +21,7 @@ namespace Coding
             //H2O.Simulate();
             WordsLadderLength.TestGetLadderLength();
             UniquePath.Test();
+            MinPath.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
