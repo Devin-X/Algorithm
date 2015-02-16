@@ -20,6 +20,7 @@ namespace Coding
             //FindConnectedGraph.Test();
             //H2O.Simulate();
             WordsLadderLength.TestGetLadderLength();
+            UniquePath.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();

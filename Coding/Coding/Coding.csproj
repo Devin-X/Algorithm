@@ -71,14 +71,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseWordsInString.cs" />
     <Compile Include="Sorting.cs" />
-    <Compile Include="Stock.cs" />
+    <Compile Include="DP\Stock.cs" />
     <Compile Include="SubSet.cs" />
     <Compile Include="Tree\TreeNextRightPointers.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="UniqueBST.cs" />
+    <Compile Include="DP\UniquePath.cs" />
     <Compile Include="WebRequestTest.cs" />
-    <Compile Include="WordBreaker.cs" />
-    <Compile Include="WordsLadderLength.cs" />
+    <Compile Include="DP\WordBreaker.cs" />
+    <Compile Include="Graph\WordsLadderLength.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
