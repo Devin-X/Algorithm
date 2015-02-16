@@ -13,7 +13,7 @@ namespace Coding
 
             //MousesandHoles.Test();
             BASH_Brace.Test();
-
+            Calculator.Test();
 
             //MousesandHoles.Test();
             //FindMaxSubArraySumWithDuplicate.Test();
@@ -47,7 +47,7 @@ namespace Coding
             //CloneGraphI.Test();
 
             //SortLinkedList.Test();
-            //WordBreaker.Test();
+            WordBreaker.Test();
 
             //CombineMaxSolution.Test();
         }
