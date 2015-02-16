@@ -46,10 +46,16 @@ namespace Coding
             return false;
         }
 
-        private static List<string> temp = new List<string>();
+        private static List<string> allResults = new List<string>();
         private static int totalLen = 0;
         public static bool wordBreakII(string s, int len)
         {
+            if(totalLen == len)
+            {
+                Console.WriteLine(string.Join(",", allResults));
+                allResults.Remove(allResults[allResults.Count - 1]);
+            }
+
             if (s == "")
                 return true;
             if (dpcache == null)
@@ -74,25 +80,11 @@ namespace Coding
             {
                 if (dict.Contains(s.Substring(0, i)) && dpcache[len - s.Length + i - 1 ] != -1)
                 {
-                    temp.Add(s.Substring(0, i));
+                    allResults.Add(s.Substring(0, i));
                     totalLen += i;
-                    bool ret = wordBreakII(s.Substring(i), len);
-                    if (ret)
-                    {
-                        totalLen -= i;
-                        if (totalLen > 0)
-                            return true;
-                        else
-                        {
-                            Console.WriteLine(string.Join(",", temp));
-                            temp.Clear();
-                            temp.Add(s.Substring(0, i));
-                            totalLen += i;
-                        }
-                    }
-
+                    wordBreakII(s.Substring(i), len);
                     totalLen -= i;
-                    temp.Remove(s.Substring(0, i));
+                    allResults.Remove(s.Substring(0, i));
                 }
             }
 
@@ -101,7 +93,7 @@ namespace Coding
 
         public static void Test()
         {
-            string[] data = { "a", "b", "bbb", "bbbb", "leet", "cod", "e","dde", "co", "de", "aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
+            string[] data = { "a", "b", "bbb", "bbbb", "le", "et", "leet", "cod", "e","dde", "co", "de", "aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
             dict = new HashSet<string>(data);
             Console.WriteLine();
             Console.WriteLine("{0}", wordBreak("bb", 2));
