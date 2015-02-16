@@ -19,9 +19,7 @@ namespace Coding
         {
             _queue.Enqueue(start);
             HashSet<string> visited = new HashSet<string>();
-            List<string> startList = new List<string>();
-            startList.Add(start);
-            _levelList.Add(startList);
+            _levelList.Add(new List<string> { start });
             while (_queue.Any())
             {
                 string s = _queue.Dequeue();
@@ -30,7 +28,7 @@ namespace Coding
                 for (int i = 0; i < s.Length; i++)
                 {
                     for (int j = 0; j < 26; j++)
-                    {
+                    {   
                         char[] a = s.ToCharArray();
                         a[i] = (char)('a' + j);
                         string temp = new string(a);
@@ -57,7 +55,6 @@ namespace Coding
                     _queue = _next;
                     _minLenghBFS++;
                     HashSet<string> visitedNext = new HashSet<string>(_next.ToArray());
-                    //Console.WriteLine(string.Join("-", _next));
                     _next = new Queue<string>();
                     visited.UnionWith(visitedNext);
                 }
@@ -82,7 +79,7 @@ namespace Coding
             //_dictionary.Add("cbd");
             //_dictionary.Add("cog");
             //_dictionary.Add("hog");
-            Console.WriteLine(FindWordLadder("nape", "mild", _dictionary));
+            FindWordLadder("nape", "mild", _dictionary);
             //Console.WriteLine(FindWordLadder("hit", "cog", _dictionary));
 
             foreach(List<string>  ls in _finalList)

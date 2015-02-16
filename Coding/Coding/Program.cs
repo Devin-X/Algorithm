@@ -19,8 +19,7 @@ namespace Coding
             //FindMaxSubArraySumWithDuplicate.Test();
             //FindConnectedGraph.Test();
             //H2O.Simulate();
-            //WordsLadderLength.GetLadderLength("hot", "cog");
-            //WordsLadderLength.TestGetLadderLength();
+            WordsLadderLength.TestGetLadderLength();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
