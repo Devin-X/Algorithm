@@ -10,9 +10,9 @@ namespace Coding
     {
         static void Main(string[] args)
         {
-
+            Triangle.TestTriangle();
             //MousesandHoles.Test();
-            UniqueBST.TestNumOfUniqueBST();
+            //UniqueBST.Test();
             BASH_Brace.Test();
             Calculator.Test();
 

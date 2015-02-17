@@ -165,7 +165,7 @@ namespace Coding
         //}
 
 
-        public static void TestNumOfUniqueBST()
+        public static void Test()
         {
             Console.WriteLine(numOfUniqueBST(3));
             Console.WriteLine(numOfUniqueBST(1));
