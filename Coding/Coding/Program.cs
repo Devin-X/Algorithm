@@ -12,6 +12,7 @@ namespace Coding
         {
 
             //MousesandHoles.Test();
+            UniqueBST.TestNumOfUniqueBST();
             BASH_Brace.Test();
             Calculator.Test();
 

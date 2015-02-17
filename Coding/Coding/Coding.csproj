@@ -75,8 +75,8 @@
     <Compile Include="DP\Stock.cs" />
     <Compile Include="SubSet.cs" />
     <Compile Include="Tree\TreeNextRightPointers.cs" />
-    <Compile Include="Triangle.cs" />
-    <Compile Include="UniqueBST.cs" />
+    <Compile Include="DP\Triangle.cs" />
+    <Compile Include="DP\UniqueBST.cs" />
     <Compile Include="DP\UniquePath.cs" />
     <Compile Include="WebRequestTest.cs" />
     <Compile Include="DP\WordBreaker.cs" />
