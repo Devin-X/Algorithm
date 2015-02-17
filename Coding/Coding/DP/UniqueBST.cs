@@ -31,10 +31,22 @@ namespace Coding
             left = l;
             right = r;
         }
+
     }
+
 
     class UniqueBST
     {
+        public static UBSTNode DeepCopyIncrease(UBSTNode n, int d)
+        {
+            if (n == null)
+                return null;
+            UBSTNode newRoot = new UBSTNode(n._d+d, null, null);
+            newRoot.left = DeepCopyIncrease(n.left, d);
+            newRoot.right = DeepCopyIncrease(n.right, d);
+            return newRoot;
+        }
+
         public static int numOfUniqueBST(int n)
         {
             if (n == 1)
@@ -51,100 +63,106 @@ namespace Coding
             return sum;
         }
 
-        public static Dictionary<int, Dictionary<int, List<UBSTNode>>> dict = new Dictionary<int, Dictionary<int, List<UBSTNode>>>();
+
+        public static Dictionary<int, List<UBSTNode>> _dict = new Dictionary<int, List<UBSTNode>>();
         public static List<UBSTNode> generateTrees(int n)
         {
-            return generateSubTrees(n, 1);
-        }
+            List<UBSTNode> ls = new List<UBSTNode>();
+            ls.Add(null);
+            _dict[0] = ls;
 
-        public static List<UBSTNode> generateSubTrees(int n, int start)
-        {
-            Dictionary<int, List<UBSTNode>> subDcit = new Dictionary<int, List<UBSTNode>>();
-            if (n == 0)
+            ls = new List<UBSTNode>();
+            ls.Add(new UBSTNode(1, null, null));
+            _dict[1] = ls;
+
+
+            for(int i = 2; i <= n; i ++)
             {
-                UBSTNode root = new UBSTNode(0, null, null);
-                List<UBSTNode> lNode = new List<UBSTNode>();
-                lNode.Add(root);
-                return lNode;
-            }
-            if (n == 1)
-            {
-                UBSTNode root = new UBSTNode(start, null, null);
-                List<UBSTNode> lNode = new List<UBSTNode>();
-                lNode.Add(root);
-                return lNode;
-            }
-
-            if (n == 2)
-            {
-                UBSTNode root = new UBSTNode(start, null, new UBSTNode(start + 1, null, null));
-                List<UBSTNode> lNode = new List<UBSTNode>();
-                lNode.Add(root);
-                root = new UBSTNode(start + 1, new UBSTNode(start, null, null), null);
-                lNode.Add(root);
-                return lNode;
-            }
-
-
-            if (dict.TryGetValue(n, out subDcit))
-                if (subDcit.ContainsKey(start))
+                ls = new List<UBSTNode>();
+                for(int j = 1; j <=i; j++)
                 {
-                    return subDcit[start];
-                }
-
-            List<UBSTNode> nodes = new List<UBSTNode>();
-
-            for (int i = 0; i < n; i++)
-            {
-                List<UBSTNode> leftSons;
-                if (dict.ContainsKey(i) && dict[i].ContainsKey(1))
-                {
-                    leftSons = dict[i][1];
-                }
-                else
-                {
-                    leftSons = generateSubTrees(i, 1);
-                }
-
-                List<UBSTNode> rightSons;
-                if (dict.ContainsKey(n-i-1) && dict[n-i-1].ContainsKey(i+2))
-                {
-                    rightSons = dict[n - i - 1][i+2];
-                }
-                else
-                {
-                    rightSons = generateSubTrees(n - i - 1, i + 2);
-                }
-
-                if (!dict.ContainsKey(i))
-                {
-                    Dictionary<int, List<UBSTNode>> d = new Dictionary<int, List<UBSTNode>>();
-                    d[1] = leftSons;
-                    dict[i] = d;
-                }
-                if(!dict.ContainsKey(n-i-1))
-                {
-                    Dictionary<int, List<UBSTNode>> d = new Dictionary<int, List<UBSTNode>>();
-                    d[i+2] = rightSons;
-                    dict[n-i-1] = d;
-                }
-
-                foreach (UBSTNode ln in leftSons)
-                {
-                    foreach (UBSTNode rn in rightSons)
+                    foreach (UBSTNode left in _dict[j - 1])
                     {
-                        UBSTNode newRoot = new UBSTNode(i + 1, null, null);
-                        newRoot.left = ln;
-                        newRoot.right = rn;
-                        nodes.Add(newRoot);
+                        foreach (UBSTNode right in _dict[i - j])
+                        {
+                            UBSTNode nRoot = new UBSTNode(j, null, null);
+                            nRoot.left = left;
+                            nRoot.right = DeepCopyIncrease(right, j);
+                            ls.Add(nRoot);
+                        }
                     }
                 }
 
-
+                _dict[i] = ls;
             }
 
-            return nodes;
+            return _dict[n];
         }
+
+        //public static List<UBSTNode> generateSubTrees(int n, int start)
+        //{
+
+
+
+        //    if (dict.TryGetValue(n, out subDcit))
+        //        if (subDcit.ContainsKey(start))
+        //        {
+        //            return subDcit[start];
+        //        }
+
+        //    List<UBSTNode> nodes = new List<UBSTNode>();
+
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        List<UBSTNode> leftSons;
+        //        if (dict.ContainsKey(i) && dict[i].ContainsKey(1))
+        //        {
+        //            leftSons = dict[i][1];
+        //        }
+        //        else
+        //        {
+        //            leftSons = generateSubTrees(i, 1);
+        //        }
+
+        //        List<UBSTNode> rightSons;
+        //        if (dict.ContainsKey(n-i-1) && dict[n-i-1].ContainsKey(i+2))
+        //        {
+        //            rightSons = dict[n - i - 1][i+2];
+        //        }
+        //        else
+        //        {
+        //            rightSons = generateSubTrees(n - i - 1, i + 2);
+        //        }
+
+        //        if (!dict.ContainsKey(i))
+        //        {
+        //            Dictionary<int, List<UBSTNode>> d = new Dictionary<int, List<UBSTNode>>();
+        //            d[1] = leftSons;
+        //            dict[i] = d;
+        //        }
+        //        if(!dict.ContainsKey(n-i-1))
+        //        {
+        //            Dictionary<int, List<UBSTNode>> d = new Dictionary<int, List<UBSTNode>>();
+        //            d[i+2] = rightSons;
+        //            dict[n-i-1] = d;
+        //        }
+
+        //        foreach (UBSTNode ln in leftSons)
+        //        {
+        //            foreach (UBSTNode rn in rightSons)
+        //            {
+        //                UBSTNode newRoot = new UBSTNode(i + 1, null, null);
+        //                newRoot.left = ln;
+        //                newRoot.right = rn;
+        //                nodes.Add(newRoot);
+        //            }
+        //        }
+
+
+        //    }
+
+        //    return nodes;
+        //}
 
 
         public static void TestNumOfUniqueBST()
