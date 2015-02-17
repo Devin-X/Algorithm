@@ -46,6 +46,9 @@
     <Compile Include="Array\GroupNumbers.cs" />
     <Compile Include="Array\MaxAccendingSubSeq.cs" />
     <Compile Include="CombineMax.cs" />
+    <Compile Include="Array\getMaxSubArraySum.cs" />
+    <Compile Include="DP\DecodingWays.cs" />
+    <Compile Include="DP\Interleave.cs" />
     <Compile Include="goog\BASH_Brace.cs" />
     <Compile Include="goog\Calculator.cs" />
     <Compile Include="Graph\CloneGraphI.cs" />

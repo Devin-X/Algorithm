@@ -12,6 +12,7 @@ namespace Coding
 
         public static int GetMaxSubProductionFast(int[] array)
         {
+            Console.WriteLine(string.Join(",", array));
             int leftMax = int.MinValue;
             int rightMax = int.MinValue;
             max = int.MinValue;
@@ -28,14 +29,12 @@ namespace Coding
                 if(array[i] == 0)
                 {
                     totalLeft = 1;
-                    max = Math.Max(max, array[i]);
                     hasZeroleft = true;
                 }
 
                 if (array[array.Length-1-i] == 0)
                 {
                     totalRight = 1;
-                    max = Math.Max(max, array[i]);
                     hasZeroRight = true;
                 }
 
@@ -53,6 +52,28 @@ namespace Coding
 
                 max = Math.Max(max, Math.Max(rightMax, leftMax));
                 max = Math.Max(max, array[i]);
+            }
+
+            return max;
+        }
+
+        public static int GetMaxSubProductionDP(int[] array)
+        {
+            if(array.Length == 1)
+                return array[0];
+
+            int[] b = array.ToArray();
+            int max = int.MinValue;
+
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i-1] == 0)
+                    continue;
+                array[i] = Math.Max(array[i]*(array[i - 1]), array[i]);
+                b[i] = Math.Min(b[i] * b[i - 1], b[i]);
+
+                max = Math.Max(max, array[i]);
+                max = Math.Max(max, b[i]);
             }
 
             return max;
@@ -89,10 +110,6 @@ namespace Coding
 
         public static void TestMaxSubProduction()
         {
-            //int[] array = {-2, 0, -3, 0, -4};
-            //Console.WriteLine(GetMaxSubProduction(array));
-
-            //Console.WriteLine(GetMaxSubProductionFast(array));
             int[] array = {-1, 2, 3, 0, 4, 5, 0, -3, -6};
             Console.WriteLine(GetMaxSubProductionFast(array));
 
@@ -102,10 +119,10 @@ namespace Coding
             int[] array2 = { -2 };
             Console.WriteLine(GetMaxSubProductionFast(array2));
 
-            int[] array3 = { -1, 2, 3, 0, 4, 5, 0, -3, -6 };
+            int[] array3 = { -1, 2, 3, -8, 4, 5, 0, -3, -6 };
             Console.WriteLine(GetMaxSubProductionFast(array3));
 
-            int[] array4 = { -1, 2, 3, 0, 4, 5, 0, -3, -6 };
+            int[] array4 = { -1, 2, 0, 3, -8, 4, 5, -1, 0, -3, -6, 0, 1000};
             Console.WriteLine(GetMaxSubProductionFast(array4));
         }
     }

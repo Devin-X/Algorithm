@@ -11,10 +11,13 @@ namespace Coding
         static void Main(string[] args)
         {
             Triangle.TestTriangle();
+            MaxSumOfSubArray.Test();
             //MousesandHoles.Test();
             //UniqueBST.Test();
             BASH_Brace.Test();
             Calculator.Test();
+            MaxSubProduction.TestMaxSubProduction();
+            DecodingWays.Test();
 
             //MousesandHoles.Test();
             //FindMaxSubArraySumWithDuplicate.Test();
@@ -23,6 +26,8 @@ namespace Coding
             WordsLadderLength.TestGetLadderLength();
             UniquePath.Test();
             MinPath.Test();
+
+            Interleave.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
@@ -44,12 +49,12 @@ namespace Coding
             //GroupNumbers.Test();
             //MakeChange.Test();
             //FirstMissingInteger.Test();
-            MaxAccendingSubSeq.Test();
+            //MaxAccendingSubSeq.Test();
 
             //CloneGraphI.Test();
 
             //SortLinkedList.Test();
-            WordBreaker.Test();
+            //WordBreaker.Test();
 
             //CombineMaxSolution.Test();
         }
