@@ -52,7 +52,7 @@ namespace Coding
                 else
                 {
                     dpCache[s1.Length, s2.Length] = -1;
-                    return true;
+                    return false;
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Coding
                 else
                 {
                     dpCache[s1.Length, s2.Length] = -1;
-                    return true;
+                    return false;
                 }
             }
 
@@ -133,8 +133,7 @@ namespace Coding
 
             Console.WriteLine(string.Format("{0}",
 IsInterLeaveCaller("aabcc123456789", "dbbca123456789", "aadbbcbcac123456781234567899")));
-            Console.WriteLine(string.Format("{0}",
-IsInterLeaveCaller("aabcczzzzzzzzzzzzzzzzzzzz", "dbbcazzzzzzzzzzzzzzzzzzzz", "aadbbcbcaczzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzza")));
+            Console.WriteLine(string.Format("{0}", IsInterLeaveCaller("ccccccccccccccccccccccccccccccccccccccccccccccacccccccccccccccccccca", "ccccccccccccccccccccccccccccccccca", "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccacccccccccccccccccccccccccccccccccacccccccccccccccccab")));
 
 
             Console.WriteLine(string.Format("{0}",
