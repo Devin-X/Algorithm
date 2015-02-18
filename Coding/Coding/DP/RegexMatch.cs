@@ -44,8 +44,8 @@ namespace Coding
                             dpCache[i, j] = dpCache[i - 1, j] | dpCache[i - 1, j - 1] | dpCache[i, j - 1];
                             
                         }
-                        else if(j==1)
-                            dpCache[i, j] = true;
+                        //else if(j==1)
+                        //    dpCache[i, j] = true;
                         else
                         {
                             dpCache[i, j] = dpCache[i - 1, j - 1] || dpCache[i, j - 1];
