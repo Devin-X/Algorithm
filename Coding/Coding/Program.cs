@@ -32,6 +32,7 @@ namespace Coding
             DistinctSubSequences.Test();
             PrintParathesies.Test();
             MaxRectangle.Test();
+            RegexMatch.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
