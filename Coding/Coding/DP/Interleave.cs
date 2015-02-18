@@ -37,10 +37,10 @@ namespace Coding
             if (s3.Length != s1.Length + s2.Length)
                 return false;
 
-            //if (dpCache[s1.Length, s2.Length] == 1)
-            //    return true;
-            //else if (dpCache[s1.Length, s2.Length] == -1)
-            //    return false;
+            if (dpCache[s1.Length, s2.Length] == 1)
+                return true;
+            else if (dpCache[s1.Length, s2.Length] == -1)
+                return false;
 
             if (s1 == string.Empty)
             {
@@ -133,7 +133,10 @@ namespace Coding
 
             Console.WriteLine(string.Format("{0}",
 IsInterLeaveCaller("aabcc123456789", "dbbca123456789", "aadbbcbcac123456781234567899")));
-            Console.WriteLine(string.Format("{0}", IsInterLeaveCaller("ccccccccccccccccccccccccccccccccccccccccccccccacccccccccccccccccccca", "ccccccccccccccccccccccccccccccccca", "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccacccccccccccccccccccccccccccccccccacccccccccccccccccab")));
+            Console.WriteLine(string.Format("{0}",
+                IsInterLeaveCaller("1111111111222222222211111111112222222222a",
+                "1111111111222222222211111111112222222222a",
+                "11111111111111111111222222222222222222221111111111111111111122222222222222222222ab")));
 
 
             Console.WriteLine(string.Format("{0}",
