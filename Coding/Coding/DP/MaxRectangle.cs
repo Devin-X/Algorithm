@@ -13,10 +13,92 @@ namespace Coding
     {
         
 
-        public static int getMaxRectangle(int[,] matrix)
+        public static int getMaxRectangle(char[,] matrix)
         {
-            //https://oj.leetcode.com/discuss/20240/share-my-dp-solution 
-            return 0;
+            int len = matrix.GetLength(1);
+            int[] left = new int[matrix.GetLength(1)];
+            int[] right = new int[matrix.GetLength(1)];
+            int[] height = new int[matrix.GetLength(1)];
+            int currentLeft = 0;
+            int currentRight = len;
+
+            for (int i = 0; i < len; i++)
+            {
+                left[i] = 0;
+                right[i] = len;
+                height[i] = 0;
+            }
+
+            int maxArea = 0;
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                currentLeft = 0;
+                currentRight = len;
+
+                for(int j = 0; j < len; j++)
+                {
+                    Console.Write(matrix[i, j] + " ");
+                    if (matrix[i,j] == '1') height[j]++;
+                    else height[j] = 0;
+                }
+                Console.WriteLine();
+
+                for(int j = 0; j < len; j++)
+                {
+                    if(matrix[i,j] == '1') left[j] = Math.Max(left[j], currentLeft);
+                    else { currentLeft = j+1; left[j] = 0; }
+
+                    Console.Write(left[j] + " ");
+                }
+                Console.WriteLine();
+
+                for(int j = len-1; j >= 0; j--)
+                {
+                    if (matrix[i, j] == '1') right[j] = Math.Min(right[j], currentRight);
+                    else { currentRight = j; right[j] = len; }
+                    
+                }
+
+
+                for(int j = 0; j < len; j++)
+                {
+                    Console.Write(right[j] + " ");
+                    maxArea = Math.Max(maxArea, (right[j] - left[j]) * height[j]);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
+            return maxArea;
+        }
+
+        public static void Test()
+        {
+            char[,] matrix = new char[,] { 
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','1','1', '1'},};
+
+            Console.WriteLine(getMaxRectangle(matrix));
+
+
+            matrix = new char[,] { 
+            {'0','1','0','1','1', '1'},
+            {'0','1','0','0','1', '1'},
+            {'0','0','0','1','0', '1'},
+            {'0','1','1','1','1', '0'},
+            {'1','1','0','1','1', '1'},
+            {'1','1','0','1','1', '1'},
+            {'1','1','0','1','1', '1'},};
+
+            Console.WriteLine(getMaxRectangle(matrix));
         }
     }
 }
