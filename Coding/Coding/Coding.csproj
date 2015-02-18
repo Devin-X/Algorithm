@@ -44,11 +44,13 @@
     <Compile Include="Array\FindMaxSubArraySumWithDuplicate.cs" />
     <Compile Include="Array\FistMissingInteger.cs" />
     <Compile Include="Array\GroupNumbers.cs" />
-    <Compile Include="Array\MaxAccendingSubSeq.cs" />
     <Compile Include="CombineMax.cs" />
     <Compile Include="Array\getMaxSubArraySum.cs" />
     <Compile Include="DP\DecodingWays.cs" />
+    <Compile Include="DP\DistinctSubSequences.cs" />
     <Compile Include="DP\Interleave.cs" />
+    <Compile Include="DP\MaxAccendingSubSeq.cs" />
+    <Compile Include="DP\PrintParathesies.cs" />
     <Compile Include="goog\BASH_Brace.cs" />
     <Compile Include="goog\Calculator.cs" />
     <Compile Include="Graph\CloneGraphI.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="H2O.cs" />
     <Compile Include="HighestInterval.cs" />
     <Compile Include="goog\KSwap.cs" />
+    <Compile Include="DP\MaxRectangle.cs" />
     <Compile Include="MakeChange.cs" />
     <Compile Include="MaxBitWindowFlip.cs" />
     <Compile Include="MaxNumOfCars.cs" />

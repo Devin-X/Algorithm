@@ -19,30 +19,43 @@ namespace Coding
                 }
             }
 
-            for (int i = 1; i <= t.Length; i++)
-            {
-                int first = 0;
-                for (int j = 1; j <= s.Length; j++)
-                {
-                    if (s[j-1] == t[i-1])
-                    {
-                        cache[i, j] = cache[i-1, j-1] + cache[i-1, j];
-                        if (cache[i, j] == 0)
-                            cache[i, j] = 1;
+            int first = s.IndexOf(t[0]);
+            if (first < 0) return 0;
+            s = s.Substring(first);
 
-                        if (first == 0)
-                            first = j;
+            for (int j = 1; j <= s.Length; j++)
+            {
+                if (s[j - 1] == t[0])
+                    cache[1, j] = cache[1, j - 1] + 1;
+                else
+                    cache[1, j] = cache[1, j - 1];
+            }
+
+            for (int i = 2; i <= t.Length; i++)
+            {
+                for (int j = i; j <= s.Length; j++)
+                {
+                    if (s[j - 1] == t[i - 1])
+                    {
+                        cache[i, j] = cache[i, j - 1] + cache[i - 1, j - 1];
                     }
                     else
                     {
-                        cache[i, j] = cache[i - 1, j-1];
+                        cache[i, j] = cache[i, j - 1];
                     }
                 }
-
-                s = s.Substring(first+1);
             }
 
-            return cache[0,0];
+            for (int i = 0; i <= t.Length; i++)
+            {
+                for (int j = 0; j <= s.Length; j++)
+                {
+                    Console.Write(cache[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            return cache[t.Length, s.Length];
         }
 
         public static void Test()
@@ -63,6 +76,10 @@ namespace Coding
 
             s = "rabbbitiittt";
             t = "rabbit";
+            Console.WriteLine(string.Format("{0} <==> {1}, Num: {2}", s, t, numDistinct(s, t)));
+
+            s = "aaabbbitiittt";
+            t = "abbit";
             Console.WriteLine(string.Format("{0} <==> {1}, Num: {2}", s, t, numDistinct(s, t)));
         }
     }
