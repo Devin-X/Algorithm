@@ -51,6 +51,7 @@
     <Compile Include="DP\Interleave.cs" />
     <Compile Include="DP\MaxAccendingSubSeq.cs" />
     <Compile Include="DP\PrintParathesies.cs" />
+    <Compile Include="DP\RegexMatch.cs" />
     <Compile Include="goog\BASH_Brace.cs" />
     <Compile Include="goog\Calculator.cs" />
     <Compile Include="Graph\CloneGraphI.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="MaxNumOfCars.cs" />
     <Compile Include="Array\MaxSubProduction.cs" />
     <Compile Include="DP\MinPath.cs" />
-    <Compile Include="MousesandHoles.cs" />
+    <Compile Include="DP\MousesandHoles.cs" />
     <Compile Include="SortLinkedList.cs" />
     <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />
