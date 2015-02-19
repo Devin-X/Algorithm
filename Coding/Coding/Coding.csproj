@@ -71,6 +71,7 @@
     <Compile Include="DP\MinPath.cs" />
     <Compile Include="DP\MousesandHoles.cs" />
     <Compile Include="SortLinkedList.cs" />
+    <Compile Include="SumRootToLeafNumbers.cs" />
     <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />
     <Compile Include="Palindrome.cs" />

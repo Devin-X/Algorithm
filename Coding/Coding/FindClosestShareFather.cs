@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Coding
 {
-    //public class TreeNode
-    //{
-    //    public int val;
-    //    public TreeNode left;
-    //    public TreeNode right;
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
 
-    //    public TreeNode(int value, TreeNode l, TreeNode r)
-    //    {
-    //        val = value;
-    //        left = l;
-    //        right = r;
-    //    }
-    //}
+        public TreeNode(int value, TreeNode l, TreeNode r)
+        {
+            val = value;
+            left = l;
+            right = r;
+        }
+    }
     class FindClosestShareFather
     {
         public static NodeWithRight _mostCurrentRoot = null;

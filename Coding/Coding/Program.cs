@@ -33,6 +33,8 @@ namespace Coding
             PrintParathesies.Test();
             MaxRectangle.Test();
             RegexMatch.Test();
+            SumRootToLeafNumbers.Test();
+            ValidateBST.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();
