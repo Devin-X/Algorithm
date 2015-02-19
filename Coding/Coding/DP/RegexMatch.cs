@@ -29,13 +29,9 @@ namespace Coding
             {
                 for (int j = 1; j <= express.Length ; j++)
                 {
-                    if (express[j - 1] == source[i - 1])
+                    if (express[j - 1] == source[i - 1] || express[j-1] == '?')
                     {
                         dpCache[i, j] = dpCache[i - 1,j - 1];
-                    }
-                    else if(express[j-1] == '?')
-                    {
-                        dpCache[i, j] = dpCache[i - 1, j - 1];
                     }
                     else if(express[j-1] == '*')
                     {
@@ -44,13 +40,11 @@ namespace Coding
                             dpCache[i, j] = dpCache[i - 1, j] | dpCache[i - 1, j - 1] | dpCache[i, j - 1];
                             
                         }
-                        //else if(j==1)
-                        //    dpCache[i, j] = true;
                         else
                         {
                             dpCache[i, j] = dpCache[i - 1, j - 1] || dpCache[i, j - 1];
                         }
-                    }  
+                    }
                 }  
             } 
 
@@ -67,16 +61,16 @@ namespace Coding
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
             source = "ab";
+            expre = "a*bb";
+            Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
+
+            source = "ab";
             expre = "a*b*";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
-            source = "aaa";
-            expre = "aa";
-            Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
-
-            source = "aa";
-            expre = "*";
+            source = "akb";
+            expre = "a*b";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
             source = "aa";
