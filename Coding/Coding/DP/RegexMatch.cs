@@ -73,17 +73,20 @@ namespace Coding
             expre = "a*b";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
-            source = "aa";
-            expre = "a*";
+            source = "abefcdgiescdfimde";
+            expre = "ab*cd?i*de";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
-            source = "aa";
-            expre = "?*";
+            source = "abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb";
+            expre = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
 
             source = "aab";
             expre = "c*a*b";
             Console.WriteLine(string.Format("{0} --> {1} : {2}", source, expre, isMatch(source, expre)));
+
+
+  
         }
     }
 }
