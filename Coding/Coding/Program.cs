@@ -35,35 +35,7 @@ namespace Coding
             RegexMatch.Test();
             SumRootToLeafNumbers.Test();
             ValidateBST.Test();
-            //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
-            //Stock.TestMaxProfit();
-            //ReverseWordsInString.TestReverseWordsInString();
-            //MaxTreeNodePathSum.TestFindMaxPath();
-            //FindClosestShareFather.TestclosestFather();
-            //Permutation.TestFullPermutation();
-            //MaxSubProduction.TestMaxSubProduction();
-            //Combination.TestFullCombination();
-            //SubSet.TestSubSet();
-            //Triangle.TestTriangle();
-            //Parethesis.TestValidParathesisString();
-            //UniqueBST.TestNumOfUniqueBST();
-            //MaxNumOfCars.TestMaxNumOfCars();
-            //Sorting.Test();
-            //Palindrome.Test();
-            //MaxBitWindowFlip.Test();
-            //HighestInterval.Test();
-            //TreeNextRightPointers.Test();
-            //GroupNumbers.Test();
-            //MakeChange.Test();
-            //FirstMissingInteger.Test();
-            //MaxAccendingSubSeq.Test();
-
-            //CloneGraphI.Test();
-
-            //SortLinkedList.Test();
-            //WordBreaker.Test();
-
-            //CombineMaxSolution.Test();
+            MaxBitWindowFlip.Test();
         }
     }
 }
