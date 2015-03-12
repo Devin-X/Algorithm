@@ -35,6 +35,7 @@ namespace Coding
             RegexMatch.Test();
             SumRootToLeafNumbers.Test();
             ValidateBST.Test();
+            MaxBitWindowFlip.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();

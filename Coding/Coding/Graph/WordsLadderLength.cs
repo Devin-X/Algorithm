@@ -27,9 +27,9 @@ namespace Coding
 
                 for (int i = 0; i < s.Length; i++)
                 {
+                    char[] a = s.ToCharArray();
                     for (int j = 0; j < 26; j++)
                     {   
-                        char[] a = s.ToCharArray();
                         a[i] = (char)('a' + j);
                         string temp = new string(a);
                         if (_dictionary.Contains(temp) && !visited.Contains(temp))

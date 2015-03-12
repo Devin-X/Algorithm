@@ -47,6 +47,7 @@ namespace Coding
                         _L = i - t - 1;
                         _L = _L > 0 ? _L : 0;
                         _R = i;
+                        Console.WriteLine("[{0}, {1}]", _L, _R);
                     }
                 }
             }
@@ -59,14 +60,17 @@ namespace Coding
         public static void Test()
         {
             int[] a =  {1, 0, 0, 1, 0, 0, 1 };
+            Console.WriteLine(string.Join(",", a));
             Console.WriteLine(GetMaxWindow(a));
 
             Reset();
             int[] b = { 0,0,0,1,0,0,1,0,1,1 };
+            Console.WriteLine(string.Join(",", b));
             Console.WriteLine(GetMaxWindow(b));
 
             Reset();
-            int[] c = { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 };
+            int[] c = { 0, 0, 1, 1, 1, 1, 0, 0,0,0,0, 1, 0, 1 };
+            Console.WriteLine(string.Join(",", c));
             Console.WriteLine(GetMaxWindow(c));
         }
     }
