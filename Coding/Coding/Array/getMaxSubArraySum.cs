@@ -8,15 +8,17 @@ namespace Coding
 {
     class MaxSumOfSubArray
     {
-        public static int maxSubArray(int[] array)
+        public static int maxSubArray(int[] A)
         {
-            Console.WriteLine(string.Join(",", array));
-            int max = int.MinValue;
-            for (int i = 1; i < array.Length; i++)
+            Console.WriteLine(string.Join(",", A));
+            if (A.Length == 0)
+                return 0;
+            int max = A[0];
+            for (int i = 1; i < A.Length; i++)
             {
-                array[i] = Math.Max(array[i - 1] + array[i], array[i]);
+                A[i] = Math.Max(A[i - 1] + A[i], A[i]);
 
-                max = Math.Max(max, array[i]);
+                max = Math.Max(max, A[i]);
             }
 
             return max;

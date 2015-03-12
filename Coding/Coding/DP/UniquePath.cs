@@ -46,53 +46,58 @@ namespace Coding
 
         }
 
-        public static int uniquePathsII(int[,] matrix, int m, int n)
+        //public static int uniquePathsII(int[,] matrix, int m, int n)
+        public int UniquePathsWithObstacles(int[,] obstacleGrid)
         {
-            if (matrix[0, 0] == 1)
+            if (obstacleGrid[0, 0] == 1)
                 return 0;
 
+            int m = obstacleGrid.GetLength(0);
+            int n = obstacleGrid.GetLength(1);
 
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    Console.Write(matrix[i, j]);
+                    if (m == 1 && obstacleGrid[i, j] == 1 || n == 1 && obstacleGrid[i, j] == 1) return 0;
+                    Console.Write(obstacleGrid[i, j]);
                     Console.Write(" ");
-                    if (matrix[i, j] == 1)
+                    if (obstacleGrid[i, j] == 1)
                     {
-                        matrix[i, j] = int.MinValue;
+                        obstacleGrid[i, j] = int.MinValue;
                     }
                 }
 
                 Console.WriteLine();
             }
 
-            matrix[0, 0] = 1;
+            obstacleGrid[0, 0] = 1;
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if(matrix[i,j] == int.MinValue)
+                    if (obstacleGrid[i, j] == int.MinValue && i == m - 1 && j == n - 1) return 0;
+                    if (obstacleGrid[i, j] == int.MinValue)
                         continue;
                     if (i - 1 >= 0)
                     {
-                        if (matrix[i - 1, j] != int.MinValue)
+                        if (obstacleGrid[i - 1, j] != int.MinValue)
                         {
-                            matrix[i, j] += matrix[i - 1, j];
+                            obstacleGrid[i, j] += obstacleGrid[i - 1, j];
                         }
                     }
 
                     if (j - 1 >= 0)
                     {
-                        if (matrix[i, j - 1] != int.MinValue)
+                        if (obstacleGrid[i, j - 1] != int.MinValue)
                         {
-                            matrix[i, j] += matrix[i, j - 1];
+                            obstacleGrid[i, j] += obstacleGrid[i, j - 1];
                         }
                     }
                 }
             }
 
-            return matrix[m - 1, n - 1];
+            return obstacleGrid[m - 1, n - 1];
         }
 
         public static void Test()
@@ -107,21 +112,21 @@ namespace Coding
             Console.WriteLine(string.Format("{0} * {1}  --> {2}", 100, 100, uniquePaths(100, 100)));
 
             int[,] matrix = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
-            
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, uniquePathsII(matrix, 3, 3)));
+
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
 
             matrix = new int[3, 3] { { 0, 0, 1 }, { 0, 1, 0 }, { 1, 0, 0 } };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, uniquePathsII(matrix, 3, 3)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
 
             matrix = new int[3, 3] { { 0, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, uniquePathsII(matrix, 3, 3)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
 
 
             matrix = new int[3, 4] { { 0, 0, 0, 0 }, { 0, 1, 0, 0}, { 0, 0, 0, 0} };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 4, uniquePathsII(matrix, 3, 4)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 4, UniquePathsWithObstacles(matrix, 3, 4)));
         }
     }
 }
