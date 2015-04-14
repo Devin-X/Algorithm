@@ -49,7 +49,7 @@ namespace Coding
         }
 
         //public static int uniquePathsII(int[,] matrix, int m, int n)
-        public int UniquePathsWithObstacles(int[,] obstacleGrid)
+        public static int UniquePathsWithObstacles(int[,] obstacleGrid)
         {
             if (obstacleGrid[0, 0] == 1)
                 return 0;
@@ -115,20 +115,20 @@ namespace Coding
 
             int[,] matrix = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix)));
 
             matrix = new int[3, 3] { { 0, 0, 1 }, { 0, 1, 0 }, { 1, 0, 0 } };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix)));
 
             matrix = new int[3, 3] { { 0, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix, 3, 3)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 3, UniquePathsWithObstacles(matrix)));
 
 
             matrix = new int[3, 4] { { 0, 0, 0, 0 }, { 0, 1, 0, 0}, { 0, 0, 0, 0} };
 
-            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 4, UniquePathsWithObstacles(matrix, 3, 4)));
+            Console.WriteLine(string.Format("{0} * {1}  --> {2}", 3, 4, UniquePathsWithObstacles(matrix)));
         }
     }
 }
