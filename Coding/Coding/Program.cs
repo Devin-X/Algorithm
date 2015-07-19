@@ -10,32 +10,33 @@ namespace Coding
     {
         static void Main(string[] args)
         {
-            Triangle.TestTriangle();
-            MaxSumOfSubArray.Test();
+            MaxSlidingWindowSolution.Test();
+            //Triangle.TestTriangle();
+            //MaxSumOfSubArray.Test();
             //MousesandHoles.Test();
             //UniqueBST.Test();
-            BASH_Brace.Test();
-            Calculator.Test();
-            MaxSubProduction.TestMaxSubProduction();
-            DecodingWays.Test();
+            //BASH_Brace.Test();
+            //Calculator.Test();
+            //MaxSubProduction.TestMaxSubProduction();
+            //DecodingWays.Test();
 
             //MousesandHoles.Test();
             //FindMaxSubArraySumWithDuplicate.Test();
             //FindConnectedGraph.Test();
             //H2O.Simulate();
-            WordsLadderLength.TestGetLadderLength();
-            UniquePath.Test();
-            MinPath.Test();
+            //WordsLadderLength.TestGetLadderLength();
+            //UniquePath.Test();
+            //MinPath.Test();
 
-            Interleave.Test();
+            //Interleave.Test();
 
-            DistinctSubSequences.Test();
-            PrintParathesies.Test();
-            MaxRectangle.Test();
-            RegexMatch.Test();
-            SumRootToLeafNumbers.Test();
-            ValidateBST.Test();
-            MaxBitWindowFlip.Test();
+            //DistinctSubSequences.Test();
+            //PrintParathesies.Test();
+            //MaxRectangle.Test();
+            //RegexMatch.Test();
+            //SumRootToLeafNumbers.Test();
+            //ValidateBST.Test();
+            //MaxBitWindowFlip.Test();
             //Console.WriteLine(Palindrome.IsPalindrom("a b c d e f gGrF!,ED C B A"));
             //Stock.TestMaxProfit();
             //ReverseWordsInString.TestReverseWordsInString();

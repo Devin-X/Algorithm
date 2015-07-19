@@ -70,6 +70,7 @@
     <Compile Include="Array\MaxSubProduction.cs" />
     <Compile Include="DP\MinPath.cs" />
     <Compile Include="DP\MousesandHoles.cs" />
+    <Compile Include="MaxSlidingWindow.cs" />
     <Compile Include="SortLinkedList.cs" />
     <Compile Include="SumRootToLeafNumbers.cs" />
     <Compile Include="Tree\IsBST.cs" />
