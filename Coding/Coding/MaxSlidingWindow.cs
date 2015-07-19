@@ -22,12 +22,9 @@ namespace Coding
 
             int[] ret = new int[nums.Length- k + 1];
 
-            for(int i = 0; i < ret.Length; i++)
-            {
-                ret[i] = int.MinValue;
-            }
+            int step = 0;
 
-            for (int i = 0; i < k; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 kSet.Add(nums[i]);
                 if (dict.ContainsKey(nums[i]))
@@ -38,26 +35,10 @@ namespace Coding
                 {
                     dict.Add(nums[i], 1);
                 }
-            }
-
-            ret[0] = kSet.Max;
-
-            int step = 1;
-
-            for (int i = k; i < nums.Length; i++)
-            {
-                if (dict.ContainsKey(nums[i]))
-                {
-                    dict[nums[i]]++;
-                }
-                else
-                {
-                    dict.Add(nums[i], 1);
-                }
+                if (i < k)
+                    continue;
 
                 kSet.Remove(nums[i - k]);
-                kSet.Add(nums[i]);
-
                 dict[nums[i - k]]--;
                 if (dict[nums[i - k]] >= 1)
                 {

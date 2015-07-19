@@ -44,6 +44,7 @@
     <Compile Include="Array\FindMaxSubArraySumWithDuplicate.cs" />
     <Compile Include="Array\FistMissingInteger.cs" />
     <Compile Include="Array\GroupNumbers.cs" />
+    <Compile Include="Array\MinWindowString.cs" />
     <Compile Include="CombineMax.cs" />
     <Compile Include="Array\getMaxSubArraySum.cs" />
     <Compile Include="DP\DecodingWays.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="DP\MousesandHoles.cs" />
     <Compile Include="MaxSlidingWindow.cs" />
     <Compile Include="SortLinkedList.cs" />
+    <Compile Include="Stack\MinStack.cs" />
     <Compile Include="SumRootToLeafNumbers.cs" />
     <Compile Include="Tree\IsBST.cs" />
     <Compile Include="Tree\MaxTreeNodePathSum.cs" />

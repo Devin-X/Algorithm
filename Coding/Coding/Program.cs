@@ -11,6 +11,15 @@ namespace Coding
         static void Main(string[] args)
         {
             MaxSlidingWindowSolution.Test();
+            MinWindowString.Test();
+            //MinStack ms = new MinStack();
+            //ms.Push(-2);
+            //ms.Push(0);
+            //ms.Push(-1);
+            //Console.WriteLine(ms.GetMin());
+            //Console.WriteLine(ms.Top());
+            //ms.Pop();
+            //Console.WriteLine(ms.GetMin());
             //Triangle.TestTriangle();
             //MaxSumOfSubArray.Test();
             //MousesandHoles.Test();
