@@ -50,6 +50,7 @@
     <Compile Include="ClassDefinition.cs" />
     <Compile Include="CombineMax.cs" />
     <Compile Include="Array\getMaxSubArraySum.cs" />
+    <Compile Include="CountDigitOne.cs" />
     <Compile Include="DP\DecodingWays.cs" />
     <Compile Include="DP\DistinctSubSequences.cs" />
     <Compile Include="DP\Interleave.cs" />
