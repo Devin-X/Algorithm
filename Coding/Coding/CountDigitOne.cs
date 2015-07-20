@@ -10,22 +10,22 @@ namespace Coding
     {
         public static int CountDigitOne(int n)
         {
-            if (n <= 0)
-                return 0;
-            int cache = 1;
-            for (int i = 1; i < n; i++)
+            int count = 0;
+            for (long k = 1; k <= n; k *= 10)
             {
-                if (i > 1 && i < 9)
-                    i = 9;
-                if (i > 20 && i < 100)
-                    
-
-                int t = Count(i + 1);
-                if (t > 0)
-                    cache += t;
+                long r = n / k, m = n % k;
+                count +=(int)((r + 8) / 10 * k + (r % 10 == 1 ? m + 1 : 0));
+                Console.WriteLine("r: {0}, m: {1}, count : {2}", r, m, count);
             }
 
-            return cache;
+            return count;
+        }
+
+        public static void Test()
+        {
+            Console.WriteLine("{0} count ot => {1}", 1, CountDigitOne(1));
+            Console.WriteLine("{0} count ot => {1}", 11, CountDigitOne(11));
+            Console.WriteLine("{0} count ot => {1}", 55, CountDigitOne(55));
         }
 
         public static int Count(int n)

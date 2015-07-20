@@ -16,6 +16,7 @@ namespace Coding
             MaxSlidingWindowSolution.Test();
             MinWindowString.Test();
             LCABST.Test();
+            CountDigitOneSolution.Test();
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);
