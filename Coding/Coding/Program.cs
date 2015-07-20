@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Coding.Array;
+using Coding.Tree;
+
 namespace Coding
 {
     class Program
@@ -12,6 +15,7 @@ namespace Coding
         {
             MaxSlidingWindowSolution.Test();
             MinWindowString.Test();
+            LCABST.Test();
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

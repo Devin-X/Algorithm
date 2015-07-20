@@ -6,20 +6,10 @@ using System.Threading.Tasks;
 
 namespace Coding
 {
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int x)
-        {
-            this.val = x;
-            next = null;
-        }
-    }
+
 
     public class SortLinkedList
     {
-
         public static ListNode MergeSortLinkList(ListNode head)
         {
             if (head == null || head.next == null)

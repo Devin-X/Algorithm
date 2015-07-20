@@ -39,8 +39,8 @@ namespace Coding
         {
             if (mouses == null || holes == null)
                 return 0;
-            Array.Sort(mouses);
-            Array.Sort(holes);
+            System.Array.Sort(mouses);
+            System.Array.Sort(holes);
 
             int[,] dp = new int[mouses.Length, holes.Length];
             dp[0,0] = Math.Abs(mouses[0]-holes[0]);
