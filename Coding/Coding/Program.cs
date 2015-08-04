@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Net;
 using Coding.Array;
 using Coding.Tree;
 
@@ -16,6 +17,12 @@ namespace Coding
             MaxSlidingWindowSolution.Test();
             MinWindowString.Test();
             LCABST.Test();
+            IPAddress ip = new IPAddress(600);
+
+            byte[] bytes = ip.GetAddressBytes();
+
+            IPAddress ip2 = new IPAddress(bytes);
+
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

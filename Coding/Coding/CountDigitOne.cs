@@ -8,37 +8,37 @@ namespace Coding
 {
     public class CountDigitOneSolution
     {
-        public static int CountDigitOne(int n)
-        {
-            if (n <= 0)
-                return 0;
-            int cache = 1;
-            for (int i = 1; i < n; i++)
-            {
-                if (i > 1 && i < 9)
-                    i = 9;
-                if (i > 20 && i < 100)
+        //public static int CountDigitOne(int n)
+        //{
+        //    if (n <= 0)
+        //        return 0;
+        //    int cache = 1;
+        //    for (int i = 1; i < n; i++)
+        //    {
+        //        if (i > 1 && i < 9)
+        //            i = 9;
+        //        if (i > 20 && i < 100)
                     
 
-                int t = Count(i + 1);
-                if (t > 0)
-                    cache += t;
-            }
+        //        int t = Count(i + 1);
+        //        if (t > 0)
+        //            cache += t;
+        //    }
 
-            return cache;
-        }
+        //    return cache;
+        //}
 
-        public static int Count(int n)
-        {
-            int ret = 0;
-            while (n > 0)
-            {
-                if (n%10 == 1)
-                    ret++;
-                n = n/10;
-            }
+        //public static int Count(int n)
+        //{
+        //    int ret = 0;
+        //    while (n > 0)
+        //    {
+        //        if (n%10 == 1)
+        //            ret++;
+        //        n = n/10;
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
     }
 }
