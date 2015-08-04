@@ -70,6 +70,7 @@
     <Compile Include="HighestInterval.cs" />
     <Compile Include="goog\KSwap.cs" />
     <Compile Include="DP\MaxRectangle.cs" />
+    <Compile Include="InsertIntervalSolution.cs" />
     <Compile Include="LinkList.cs" />
     <Compile Include="MakeChange.cs" />
     <Compile Include="MaxBitWindowFlip.cs" />
