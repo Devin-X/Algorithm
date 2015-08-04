@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,7 +66,6 @@
     <Compile Include="FindClosestShareFather.cs" />
     <Compile Include="Combi-Permu\FullPermutation.cs" />
     <Compile Include="Graph\FindConnectedGraph.cs" />
-    <Compile Include="Graph\GraphSerialization.cs" />
     <Compile Include="H2O.cs" />
     <Compile Include="HighestInterval.cs" />
     <Compile Include="goog\KSwap.cs" />
