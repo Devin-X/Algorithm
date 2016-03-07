@@ -8,37 +8,37 @@ namespace Coding
 {
     public class CountDigitOneSolution
     {
-        public static int CountDigitOne(int n)
-        {
-            int count = 0;
-            for (long k = 1; k <= n; k *= 10)
-            {
-                long r = n / k, m = n % k;
-                count +=(int)((r + 8) / 10 * k + (r % 10 == 1 ? m + 1 : 0));
-                Console.WriteLine("r: {0}, m: {1}, count : {2}", r, m, count);
-            }
+        //public static int CountDigitOne(int n)
+        //{
+        //    if (n <= 0)
+        //        return 0;
+        //    int cache = 1;
+        //    for (int i = 1; i < n; i++)
+        //    {
+        //        if (i > 1 && i < 9)
+        //            i = 9;
+        //        if (i > 20 && i < 100)
+                    
 
-            return count;
-        }
+        //        int t = Count(i + 1);
+        //        if (t > 0)
+        //            cache += t;
+        //    }
 
-        public static void Test()
-        {
-            Console.WriteLine("{0} count ot => {1}", 1, CountDigitOne(1));
-            Console.WriteLine("{0} count ot => {1}", 11, CountDigitOne(11));
-            Console.WriteLine("{0} count ot => {1}", 55, CountDigitOne(55));
-        }
+        //    return cache;
+        //}
 
-        public static int Count(int n)
-        {
-            int ret = 0;
-            while (n > 0)
-            {
-                if (n%10 == 1)
-                    ret++;
-                n = n/10;
-            }
+        //public static int Count(int n)
+        //{
+        //    int ret = 0;
+        //    while (n > 0)
+        //    {
+        //        if (n%10 == 1)
+        //            ret++;
+        //        n = n/10;
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
     }
 }
