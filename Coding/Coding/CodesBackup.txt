@@ -8,3 +8,591 @@ public class Solution {
         return maxP3 % n == 0;
     }
 }
+
+
+public class Solution {
+    
+    public bool CanWinNim(int n) {
+        int[] array = new int[n];
+        for(int i = 0; i < n; i++){
+            array[i] = 0;
+        }
+        
+        return !CanWinHelper(n-1, ref array) || !CanWinHelper(n-2, ref array) || !CanWinHelper(n-3, ref array);
+    }
+    
+    private bool CanWinHelper(int n, ref int[] array){
+        if(n<=0)
+            return false;
+        if(array[n-1] != 0)
+            return array[n-1] > 0;
+        if(!CanWinHelper(n-1, ref array) || !CanWinHelper(n-2, ref array) || !CanWinHelper(n-3, ref array)){
+            array[n-1] = 1;
+            return true;
+        }
+        
+        array[n-1] = -1;
+        return false;
+    }
+}
+
+
+public class Solution {
+    
+    public bool CanWinNim(int n) {
+        bool[] cache = new bool[4];
+        if(n < 3) return true;
+        for(int i = 0; i < 3; i++){
+            cache[i] = true;
+        }
+        
+        for(int i = 3; i < n; i++){
+            if(cache[0] && cache[1] && cache[2]){
+                cache[3] = false;
+            }
+            else{
+                cache[3] = true;
+            }
+            
+            cache[0] = cache[1];
+            cache[1] = cache[2];
+            cache[2] = cache[3];
+        }
+        
+        return cache[3];
+    }
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode InvertTree(TreeNode root) {
+        if(root==null) return root;
+        
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        InvertTree(root.left);
+        InvertTree(root.right);
+        return root;
+    }
+}
+
+
+
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements. 
+
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0]. 
+
+Note:
+
+1.You must do this in-place without making a copy of the array.
+2.Minimize the total number of operations.
+
+
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+
+
+
+Subscribe to see which companies asked this question
+
+
+Show Tags
+ 
+
+Show Similar Problems
+ 
+
+
+
+
+Have you met this question in a real interview?  
+Yes 
+ 
+No 
+
+public class Solution {
+    public void MoveZeroes(int[] nums) {
+        int countOfZeros = 0;
+        for(int i = 0; i < nums.Length; i++){
+            nums[i-countOfZeros] = nums[i];
+            if(nums[i] == 0) countOfZeros ++;
+        }
+        for(; countOfZeros > 0; countOfZeros--){
+            nums[nums.Length-countOfZeros] = 0;
+        }
+    }
+}
+
+
+Given two binary trees, write a function to check if they are equal or not. 
+
+Two binary trees are considered equal if they are structurally identical and the nodes have the same value. 
+
+
+
+Subscribe to see which companies asked this question
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null) return true;
+        if(p == null || q == null) return false;
+        if(p.val == q.val){
+            return IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+        }else{
+            return false;
+        }
+    }
+}
+
+Given two strings s and t, write a function to determine if t is an anagram of s.
+
+For example,
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false. 
+
+Note:
+ You may assume the string contains only lowercase alphabets.
+
+Follow up:
+ What if the inputs contain unicode characters? How would you adapt your solution to such case?
+
+ public class Solution {
+    public bool IsAnagram(string s, string t) {
+        int[] index = new int[26];
+        for(int i = 0; i < 26; i++)index[i] = 0;
+        foreach(char a in s){
+            index[a-'a']++;
+        }
+        foreach(char c in t){
+            index[c-'a']--;
+        }
+        foreach(int i in index){
+            if(i!=0)return false;
+        }
+        return true;
+    }
+}
+
+
+Related to question Excel Sheet Column Title
+
+Given a column title as appear in an Excel sheet, return its corresponding column number.
+
+For example:
+    A -> 1
+    B -> 2
+    C -> 3
+    ...
+    Z -> 26
+    AA -> 27
+    AB -> 28 
+
+
+	public class Solution {
+    public int TitleToNumber(string s) {
+        int ret = 0;
+        foreach(char c in s){
+            ret *= 26;
+            ret += (c-'A'+1);
+        }
+        return ret;
+    }
+}
+
+
+Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct. 
+
+
+
+Subscribe to see which companies asked this question
+
+
+public class Solution {
+    public bool ContainsDuplicate(int[] nums) {
+        HashSet<int> dict = new HashSet<int>();
+        foreach(int i in nums){
+            if(!dict.Add(i))return true;
+        }
+        return false;
+    }
+}
+
+
+
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+
+
+
+Subscribe to see which companies asked this question
+
+
+public class Solution {
+    public int MajorityElement(int[] nums) {
+        Dictionary<int, int> map = new Dictionary<int, int>();
+        int maxCount = 0;
+        int num = 0;
+        foreach(int i in nums){
+            if(map.ContainsKey(i))map[i]++;
+            else map.Add(i, 1);
+            
+            if(map[i]>maxCount){
+                maxCount = map[i];
+                num = i;
+            }
+        }
+        
+        return num;
+    }
+}
+
+
+Reverse a singly linked list.
+
+click to show more hints.
+
+
+
+Subscribe to see which companies asked this question
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if(head == null) return null;
+        ListNode tHead = head;
+        ListNode last = null;
+        while(tHead.next!=null){
+            ListNode temp = tHead.next;
+            tHead.next = last;
+            last = tHead;
+            tHead = temp;
+        }
+        tHead.next = last;
+        return tHead;
+    }
+}
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode MergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head;
+        if(l1 == null)return l2;
+        if(l2 == null)return l1;
+        if(l1.val > l2.val){
+            head = l2;    
+            l2 = l2.next;
+        }
+        else{
+            head = l1;
+            l1 = l1.next;
+        } 
+        ListNode tP = head;
+        
+        while(l1!= null && l2 != null){
+            if(l1.val > l2.val){
+                tP.next = l2;
+                l2 = l2.next;
+                tP = tP.next;
+            }else{
+                tP.next = l1;
+                l1 = l1.next;
+                tP = tP.next;
+            }
+        }
+        
+        if(l2 == null){
+            tP.next = l1;
+        }else{
+            tP.next = l2;
+        }
+        return head;
+    }
+}
+
+
+Implement the following operations of a queue using stacks. 
+• push(x) -- Push element x to the back of queue. 
+• pop() -- Removes the element from in front of queue. 
+• peek() -- Get the front element. 
+• empty() -- Return whether the queue is empty. 
+Notes:
+•You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
+•Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.
+•You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
+
+
+
+
+Subscribe to see which companies asked this question
+
+
+public class Queue {
+    private Stack<int> _front = new Stack<int>();
+    private Stack<int> _rear = new Stack<int>();
+    // Push element x to the back of queue.
+    public void Push(int x) {
+       _rear.Push(x);
+    }
+
+    // Removes the element from front of queue.
+    public void Pop() {
+        if(_front.Count>0) _front.Pop();
+        else{
+                while(_rear.Count>0){
+                int val = _rear.Pop();
+                _front.Push(val);
+            }
+            _front.Pop();
+        }
+    }
+
+    // Get the front element.
+    public int Peek() {
+        if(_front.Count>0)return _front.Peek();   
+        else if(_rear.Count>0){
+            while(_rear.Count>0){
+            int val = _rear.Pop();
+            _front.Push(val);
+            }
+        return _front.Peek();
+        }
+        
+        return 0;
+    }
+
+    // Return whether the queue is empty.
+    public bool Empty() {
+        return _front.Count == 0 && _rear.Count == 0;
+    }
+}
+
+
+
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+
+Credits:
+Special thanks to @ifanchu for adding this problem and creating all test cases. Also thanks to @ts for adding additional test cases.
+
+
+
+Subscribe to see which companies asked this question
+
+
+public class Solution {
+    public int Rob(int[] nums) {
+        int[] ret = new int[nums.Length];
+        if(nums.Length==0)return 0;
+        if(nums.Length==1)return nums[0];
+        if(nums.Length==2)return Math.Max(nums[0],nums[1]);
+        ret[0] = nums[0];
+        ret[1] = Math.Max(nums[0], nums[1]);
+        for(int i = 2; i < nums.Length; i++){
+            ret[i] = Math.Max(ret[i-2]+nums[i], ret[i-1]);
+        }
+        return ret[nums.Length-1];
+    }
+}
+
+
+
+Given a binary tree, determine if it is height-balanced. 
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1. 
+
+
+
+Subscribe to see which companies asked this question
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsBalanced(TreeNode root) {
+        if(root == null) return true;
+        bool isB = true;
+        FromRoot(root, 0, ref isB);
+        return isB;
+    }
+    
+    private int FromRoot(TreeNode root, int dep, ref bool isBalanced){
+        if(root == null) return dep-1;
+        if(!isBalanced) return 0;
+        
+        int left = FromRoot(root.left, dep+1, ref isBalanced);
+        int right = FromRoot(root.right, dep+1, ref isBalanced);
+        
+        if(isBalanced && (left-right > 1 || left-right<-1)) isBalanced = false;
+        return Math.Max(left, right);
+    }
+}
+
+
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree is symmetric: 
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+
+
+But the following is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+
+
+Note:
+ Bonus points if you could solve it both recursively and iteratively. 
+
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+
+
+
+Subscribe to see which companies asked this question
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsSymmetric(TreeNode root) {
+        if(root == null) return true;
+        
+        return IsMirror(root.left, root.right);
+           
+    }
+    
+    private bool IsMirror(TreeNode left, TreeNode right){
+        if(left == null && right == null) return true;
+        if(left == null && right != null ) return false;
+        if(left != null && right == null) return false;
+        if(left.val == right.val){
+            return IsMirror(left.left, right.right) && IsMirror(left.right, right.left);
+        }
+        return false;
+    }
+}	
+
+
+Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+
+For example:
+ Given binary tree {3,9,20,#,#,15,7},
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+
+
+return its bottom-up level order traversal as:
+
+[
+  [15,7],
+  [9,20],
+  [3]
+]
+
+
+
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+
+
+
+Subscribe to see which companies asked this question
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public IList<IList<int>> LevelOrderBottom(TreeNode root) {
+        IList<IList<int>> ret = new List<IList<int>>(0);
+        
+        LevelOrderHelper(root, 0, ret);
+        IList<IList<int>> finalRet =new List<IList<int>>(0);
+        for(int i = ret.Count()-1; i>=0; i--){
+            finalRet.Add(ret[i]);
+        }
+        
+        return finalRet;
+    }
+    
+    private void LevelOrderHelper(TreeNode root, int dep, IList<IList<int>> cache){
+        if(root == null) return;
+        if(cache.Count < dep+1)cache.Add(new List<int>());
+        cache[dep].Add(root.val);
+        LevelOrderHelper(root.left, dep+1, cache);
+        LevelOrderHelper(root.right, dep+1, cache);
+        return;
+    }
+}

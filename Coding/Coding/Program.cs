@@ -30,6 +30,9 @@ namespace Coding
 
             Console.WriteLine(j);
             Console.WriteLine(k);
+
+            IList<IList<int>> test = new List<IList<int>>();
+
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);
