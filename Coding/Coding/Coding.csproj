@@ -79,6 +79,7 @@
     <Compile Include="DP\MinPath.cs" />
     <Compile Include="DP\MousesandHoles.cs" />
     <Compile Include="MaxSlidingWindow.cs" />
+    <Compile Include="PowerOfThree.cs" />
     <Compile Include="QuickSort.cs" />
     <Compile Include="SortLinkedList.cs" />
     <Compile Include="Stack\MinStack.cs" />
@@ -107,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <Content Include="CodesBackup.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

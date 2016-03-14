@@ -17,12 +17,19 @@ namespace Coding
             MaxSlidingWindowSolution.Test();
             MinWindowString.Test();
             LCABST.Test();
-            IPAddress ip = new IPAddress(600);
 
-            byte[] bytes = ip.GetAddressBytes();
+            int k = 1;
+            int j = 0; 
+            while (true)
+            {
+                j++;
+                k *= 3;
+                if (k > int.MaxValue/3)
+                    break;
+            }
 
-            IPAddress ip2 = new IPAddress(bytes);
-
+            Console.WriteLine(j);
+            Console.WriteLine(k);
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

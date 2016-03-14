@@ -8,17 +8,17 @@ namespace Coding
 {
     class QuickSortSlution
     {
-        public static void Main()
-        {
-            int[] array = { 1, 2, 1, 5, 1, 7, 1 };
+        //public static void Main()
+        //{
+        //    int[] array = { 1, 2, 1, 5, 1, 7, 1 };
 
-            QuickSort(array, 0, array.Length - 1);
+        //    QuickSort(array, 0, array.Length - 1);
 
-            foreach (int i in array)
-            {
-                Console.Write("{0} ", i);
-            }
-        }
+        //    foreach (int i in array)
+        //    {
+        //        Console.Write("{0} ", i);
+        //    }
+        //}
 
         public static void QuickSort(int[] array, int start, int end)
         {

@@ -1,0 +1,10 @@
+﻿
+
+public class Solution {
+    public bool IsPowerOfThree(int n) {
+        int maxP3 = 1162261467;
+        if(n > maxP3 || n <= 0 || n > int.MaxValue)
+            return false;
+        return maxP3 % n == 0;
+    }
+}
