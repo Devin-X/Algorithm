@@ -54,6 +54,7 @@
     <Compile Include="CountDigitOne.cs" />
     <Compile Include="DP\DecodingWays.cs" />
     <Compile Include="DP\DistinctSubSequences.cs" />
+    <Compile Include="DP\HouseRobber.cs" />
     <Compile Include="DP\Interleave.cs" />
     <Compile Include="DP\MaxAccendingSubSeq.cs" />
     <Compile Include="DP\PrintParathesies.cs" />

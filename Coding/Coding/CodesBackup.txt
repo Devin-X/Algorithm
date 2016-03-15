@@ -596,3 +596,246 @@ public class Solution {
         return;
     }
 }
+
+Given a sorted linked list, delete all duplicates such that each element appear only once. 
+
+For example,
+ Given 1->1->2, return 1->2.
+ Given 1->1->2->3->3, return 1->2->3. 
+
+
+
+Subscribe to see which companies asked this question
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode DeleteDuplicates(ListNode head) {
+        if(head==null)return null;
+        
+        ListNode t = head;
+        while(t.next!=null){
+            if(t.val == t.next.val) t.next = t.next.next;
+            else t = t.next;
+        }
+        
+        return head;
+    }
+}
+
+
+Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
+
+For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.
+
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+
+ 
+ public class Solution {
+    public int HammingWeight(uint n) {
+        int ret = 0;
+        uint one = 1;
+        while(n>0){
+            if((n & one) == 1) ret++;
+            n = n>>1;
+        }
+        return ret;
+    }
+}
+
+
+Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+
+You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+
+
+
+Example:
+ Given 1->2->3->4->5->NULL,
+ return 1->3->5->2->4->NULL. 
+
+Note:
+ The relative order inside both the even and odd groups should remain as it was in the input. 
+ The first node is considered odd, the second node even and so on ... 
+
+Credits:
+Special thanks to @DjangoUnchained for adding this problem and creating all test cases.
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode OddEvenList(ListNode head) {
+        if(head == null || head.next == null )return head;
+        if(head.next.next == null) return head;
+        ListNode oddH = head;
+        ListNode evenH = head.next;
+        ListNode evenHOri = head.next;
+        ListNode temp = oddH;
+        int i = 0;
+        while(oddH != null && evenH != null){
+            if(i%2 == 0){
+                oddH.next = evenH.next;
+                temp = oddH;
+                oddH = oddH.next;
+                
+            }else{
+                evenH.next = oddH.next;
+                evenH = evenH.next;    
+            }
+            i++;
+        }
+        
+        if(oddH==null) temp.next = evenHOri;
+        if(evenH==null)oddH.next = evenHOri;
+        return head;
+    }
+}
+
+
+You are climbing a stair case. It takes n steps to reach to the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top? 
+
+
+
+Subscribe to see which companies asked this question
+
+
+public class Solution {
+    public int ClimbStairs(int n) {
+        if(n<1)return 0;
+        if(n==1)return 1;
+        if(n==2)return 2;
+        int[] ret = new int[n];
+        ret[0] = 1;
+        ret[1] = 2;
+        for(int i =2; i < n; i++){
+            ret[i] = ret[i-2] + ret[i-1];
+        }
+        return ret[n-1];
+    }
+}
+
+Write a program to check whether a given number is an ugly number. 
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7. 
+
+Note that 1 is typically treated as an ugly number. 
+
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+
+public class Solution {
+    public bool IsUgly(int num) {
+        if(num<=0) return false;
+        if(num==1) return true;
+        if(num%2==0)return IsUgly(num/2);
+        if(num%3==0)return IsUgly(num/3);
+        if(num%5==0)return IsUgly(num/5);
+        if(num%6 == 0 || num%10 == 0 || num%15 == 0)return true;
+        return false;
+    }
+}
+
+Given an array and a value, remove all instances of that value in place and return the new length. 
+
+Do not allocate extra space for another array, you must do this in place with constant memory.
+
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+
+Example:
+ Given input array nums = [3,2,2,3], val = 3 
+
+Your function should return length = 2, with the first two elements of nums being 2.
+
+
+public class Solution {
+    public int RemoveElement(int[] nums, int val) {
+        int cntOfV = 0;
+        int n = nums.Length;
+        for(int i = 0; i < n; i++){
+            nums[i-cntOfV] = nums[i];
+            if(nums[i] == val)cntOfV++;
+        }
+        
+        return n-cntOfV;
+    }
+}
+
+
+Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+
+Do not allocate extra space for another array, you must do this in place with constant memory. 
+
+For example,
+ Given input array nums = [1,1,2], 
+
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length. 
+
+public class Solution {
+    public int RemoveDuplicates(int[] nums) {
+        
+        int cntOfDup = 0;
+        int n = nums.Length;
+        if(n==1 || n == 0) return n;
+        
+        for(int i = 1; i < n; i++){
+            if(nums[i] == nums[i-1]){
+                cntOfDup++;
+            }else{
+                nums[i-cntOfDup] = nums[i];
+            }
+        }
+        
+        return n-cntOfDup;
+    }
+}
+
+
+Given a non-negative number represented as an array of digits, plus one to the number.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+public class Solution {
+    public int[] PlusOne(int[] digits) {
+        int n = digits.Length;
+        int[] ret = new int[digits.Length];
+        bool isUp = true;
+        for(int i = n-1; i >= 0 ; i--){
+            if(isUp){
+                digits[i] = digits[i] + 1;
+                i++;
+                isUp = false;
+            }else if(digits[i] >= 10){
+                ret[i] = digits[i]%10;
+                isUp = true;
+            }else{
+                ret[i] = digits[i];
+            }
+        }
+        
+        if(isUp){
+            int[] newRet = new int[n+1];
+            for(int i= ret.Length-1; i > 0; i--) newRet[i] = ret[i-1];
+            newRet[0] = 1;
+            return newRet;
+        }
+        
+        return ret;
+    }
+}
