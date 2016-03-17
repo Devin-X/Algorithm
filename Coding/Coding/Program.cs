@@ -18,19 +18,11 @@ namespace Coding
             MinWindowString.Test();
             LCABST.Test();
 
-            int k = 1;
-            int j = 0; 
-            while (true)
-            {
-                j++;
-                k *= 3;
-                if (k > int.MaxValue/3)
-                    break;
-            }
-
-            Console.WriteLine(j);
-            Console.WriteLine(k);
-
+            int a = 3;
+            int b = 5;
+            int c = a ^ b;
+            Console.WriteLine(c&(~c+1));
+            Console.WriteLine(c);
             IList<IList<int>> test = new List<IList<int>>();
 
             //MinStack ms = new MinStack();

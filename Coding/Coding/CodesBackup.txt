@@ -839,3 +839,141 @@ public class Solution {
         return ret;
     }
 }
+
+
+
+Given an array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+ Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
+ public class Solution {
+    public int SingleNumber(int[] nums) {
+        int a = nums[0];
+        for(int i = 1; i < nums.Length; i++){
+            a ^= nums[i];
+        }
+        return a;
+    }
+}
+
+
+Given an array of numbers nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. 
+
+For example: 
+
+Given nums = [1, 2, 1, 3, 2, 5], return [3, 5]. 
+
+Note:
+
+1.The order of the result is not important. So in the above example, [5, 3] is also correct.
+2.Your algorithm should run in linear runtime complexity. Could you implement it using only constant space complexity?
+
+public class Solution {
+    public int[] SingleNumber(int[] nums) {
+        
+        int aXb = 0;
+        for(int i = 0; i < nums.Length; i++){
+            aXb ^= nums[i];
+        }
+        
+        int ub = aXb & (~aXb+1);
+        int[] ret = new int[2];
+        for(int i = 0; i < nums.Length; i++){
+            if((nums[i] & ub) > 0) ret[0] ^= nums[i];
+            else ret[1] ^= nums[i];
+        }
+        
+        return ret;
+    }
+}
+
+
+Given an array of n integers where n > 1, nums, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+Solve it without division and in O(n).
+
+For example, given [1,2,3,4], return [24,12,8,6]. 
+
+
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        
+        int n = nums.Length; 
+        if(n<=1)return nums;
+        if(n==2) return new int[]{nums[1], nums[0]};
+        
+        int[] left = new int [n];
+        left[0] = 1;
+        int l = nums[0]; int r =  nums[n-1];
+        
+        for(int i = 1; i < n; i++){
+            left[i] = l;
+            l *= nums[i];
+        }
+        
+        for(int i = n-2; i > 0; i--){
+            left[i] *= r;        
+            r *= nums[i];
+        }
+        
+        left[0] = r;
+        return left;
+    }
+}
+
+Given a string array words, find the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. You may assume that each word will contain only lower case letters. If no such two words exist, return 0. 
+
+Example 1:
+
+
+Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
+ Return 16
+ The two words can be "abcw", "xtfn". 
+
+Example 2:
+
+
+Given ["a", "ab", "abc", "d", "cd", "bcd", "abcd"]
+ Return 4
+ The two words can be "ab", "cd". 
+
+Example 3:
+
+
+Given ["a", "aa", "aaa", "aaaa"]
+ Return 0
+ No such pair of words. 
+
+public class Solution {
+    
+    public int MaxProduct(string[] words) {
+        int[] bits = new int[words.Length];
+        int[] bitMap = new int[26];
+        
+        for(int i = 0 ; i < 26; i++){
+            bitMap[i] = 1<<26-i;
+        }
+        
+        for(int w = 0; w < words.Length; w++){
+            bits[w] = 0;
+            for(int i = 0; i < 26; i++){
+                if(words[w].IndexOf((char)('a'+i)) >= 0){
+                    bits[w] = bits[w] | bitMap[i];
+                }
+            }
+        }
+        
+        int max = 0;
+        for(int i = 0; i < words.Length; i++){
+            for(int j = 0; j < words.Length; j++){
+                if((i!=j)){
+                    if((bits[i] & bits[j]) == 0){
+                        max = Math.Max(max, words[i].Length*words[j].Length);
+                    }
+                }
+            }
+        }
+        
+        return max;
+    }
+}	
