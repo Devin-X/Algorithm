@@ -1060,3 +1060,68 @@ public class Solution {
         return k==x;
     }
 }
+
+
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum. 
+For example:
+ Given the below binary tree and sum = 22,               5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+
+
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+
+
+public class Solution {
+    public bool HasPathSum(TreeNode root, int sum) {
+        if(root == null) return false;
+        int ret = 0;
+        return SumHelper(root, sum, ref ret);
+    }
+    
+    private bool SumHelper(TreeNode root, int sum, ref int ret){
+        ret += root.val;
+        if(root.left == null && root.right == null && sum==ret) return true;
+        
+        
+        if(root.left!=null){
+            if(SumHelper(root.left, sum, ref ret))return true;
+        } 
+        if(root.right!=null){
+            if(SumHelper(root.right, sum, ref ret))return true;
+        }
+        
+        ret -= root.val;
+        return false;
+    }
+}
+
+
+public class Solution {
+    public int MinDepth(TreeNode root) {
+        int level = 1;
+        int min = int.MaxValue;
+        if(root == null)return 0;
+        MDHelper(root, ref level, ref min);
+        
+        return min;
+    }
+    
+    private void MDHelper(TreeNode root, ref int level, ref int min){
+        if(root.left == null && root.right==null){
+            min = Math.Min(min, level);
+            return;
+        }
+        
+        level++;
+        if(root.left!=null)MDHelper(root.left, ref level, ref min);
+        if(root.right!=null)MDHelper(root.right, ref level, ref min);
+        
+        level--;
+        return;
+    }
+}
