@@ -839,3 +839,76 @@ public class Solution {
         return ret;
     }
 }
+
+
+Given numRows, generate the first numRows of Pascal's triangle.
+
+For example, given numRows = 5,
+ Return 
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+
+
+public class Solution {
+    public IList<IList<int>> Generate(int numRows) {
+        if(numRows < 1) return new List<IList<int>>();
+        IList<IList<int>> ret = new List<IList<int>>();
+        ret.Add(new List<int>());
+        ret[0].Add(1);
+        for(int i = 1; i < numRows; i++){
+            ret.Add(new List<int>());
+            ret[i].Add(1);
+            for(int j = 1; j < i; j++){
+                ret[i].Add(ret[i-1][j-1]+ret[i-1][j]);
+            }
+            ret[i].Add(1);
+        }
+        
+        return ret;
+    }
+}
+
+
+public class Solution {
+    public IList<int> GetRow(int rowIndex) {
+        IList<int> ret = new List<int>();
+        IList<int> temp = new List<int>();
+        ret.Add(1);
+        for(int i = 1; i < rowIndex+1; i++){
+            temp.Clear();
+            temp.Add(1);
+            for(int j=1; j < i; j++){
+                temp.Add(ret[j-1]+ret[j]);
+            }
+            temp.Add(1);
+            
+            IList<int> tt = ret;
+            ret = temp;
+            temp = tt;
+        }
+        
+        return ret;
+    }
+}
+
+public class Solution {
+    public IList<IList<int>> LevelOrder(TreeNode root) {
+        IList<IList<int>> ret = new List<IList<int>>();
+        LevelOrderHelper(root, 0, ref ret);
+        return ret;
+    }
+    
+    private void LevelOrderHelper(TreeNode root, int level, ref IList<IList<int>> ret){
+        if(root==null) return;
+        if(ret.Count < level+1) ret.Add(new List<int>());
+        ret[level].Add(root.val);
+        LevelOrderHelper(root.left, level+1, ref ret);
+        LevelOrderHelper(root.right, level+1, ref ret);
+        return;
+    }
+}
