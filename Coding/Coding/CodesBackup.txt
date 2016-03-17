@@ -1046,4 +1046,17 @@ public class Solution {
         return max;
     }
 }	
->>>>>>> 28ac0e90e3e60c09ed80546132725c709403f250
+
+Determine whether an integer is a palindrome. Do this without extra space.
+public class Solution {
+    public bool IsPalindrome(int x) {
+        int t = x;
+        int k = 0;
+        while(t>0){
+            k = k*10 + t%10;
+            t = t/10;
+        }
+        
+        return k==x;
+    }
+}
