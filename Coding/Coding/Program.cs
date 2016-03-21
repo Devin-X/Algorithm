@@ -33,6 +33,42 @@ namespace Coding
 
             IList<IList<int>> test = new List<IList<int>>();
 
+            List<int> _Min = new List<int>();
+            int[] nums = {4,2,0,2,3,2,0};
+            int n = nums.Length;
+
+            for (int end = n - 1; end > 0; end--)
+            {
+                for (int i = end; i >= 0; i--)
+                {
+                    if (nums[i] < nums[end])
+                    {
+                        int temp = nums[i];
+                        nums[i] = nums[end];
+                        nums[end] = temp;
+
+                        Console.WriteLine(string.Join(",", nums));
+                        for (int f = i + 1; f < n; f++)
+                        {
+                            _Min.Add(nums[f]);
+                        }
+
+                        _Min.Sort();
+
+                        //NextPH(nums, i+1, i+1,  min);
+                        for (int f = 0; f + i + 1 < n; f++)
+                        {
+                            nums[f + i + 1] = _Min[f];
+                        }
+
+                        Console.WriteLine(string.Join(",", nums));
+                        return;
+                    }
+                }
+            }
+
+            
+
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

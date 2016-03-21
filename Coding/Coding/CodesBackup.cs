@@ -1125,3 +1125,668 @@ public class Solution {
         return;
     }
 }
+
+public class Solution {
+    public int MissingNumber(int[] nums) {
+        
+        int n = nums.Length;
+        
+        for(int i = 0; i < n; i++){
+            if(i!=nums[i]){
+                int temp = nums[i];
+                if(nums[i] == n){
+                    continue;
+                }else{
+                   nums[i] = nums[nums[i]];
+                   nums[temp] = temp;
+                } 
+                i--;
+            }
+        }
+        
+        for(int i = 0; i < n; i++){
+            if(i!=nums[i])return i;
+        }
+        
+        return n;
+    }
+}
+
+
+public class Solution {
+    public int[] CountBits(int num) {
+        
+        int[] ret = new int[num+1];
+        if(num == 0){
+            ret[0] = 0;
+            return ret;
+        }
+        
+        int level = 1; 
+        for(; level <= num; ){
+            level = level * 2;
+            int j = 0;
+            for(int i = level/2; i < level && i <= num; i++,j++){
+                ret[i] = 1 + ret[j];
+            }
+            
+        }
+        
+        return ret;
+    }
+}
+
+
+
+Given an array of integers, every element appears three times except for one. Find that single one. 
+
+Note:
+ Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
+
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        int mask = 1 << 30;
+        int ret = 0;
+        int count;
+        for(int i = 0; i < 31; i++){
+            count = 0;
+            int k = mask >> i;
+            for(int j = 0; j < nums.Length; j++){
+                if( (nums[j]&k) > 0 ){
+                    count++;
+                }
+            }
+            
+            if(count % 3 != 0) ret |= k;
+        }
+        
+        mask = 1<<31;
+        count = 0;
+        
+        for(int i = 0; i < nums.Length; i++){
+            if((nums[i]&mask) != 0)count++;
+        }
+        
+        if(count%3 != 0) ret |= mask;
+        
+        return ret;
+    }
+}
+
+
+Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+
+For example,
+ Given n = 3, there are a total of 5 unique BST's. 
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+
+
+
+
+
+Subscribe to see which companies asked this question
+
+public class Solution {
+    public int NumTrees(int n) {
+        
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        int[] cache = new int[n+1];
+        cache[0] = 1;
+        cache[1] = 1;
+        cache[2] = 2;
+        for(int i = 3; i <= n; i++){
+            cache[i] = 0;
+            for(int j = 0; j < i; j++){
+                cache[i] += cache[j]*cache[i-j-1];
+            }
+        }
+        
+        return cache[n];
+    }
+}
+
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume no duplicates in the array.
+
+Here are few examples.
+[1,3,5,6], 5 → 2
+[1,3,5,6], 2 → 1
+[1,3,5,6], 7 → 4
+[1,3,5,6], 0 → 0 
+
+
+public class Solution {
+    public int SearchInsert(int[] nums, int target) {
+        int index = QuickFind(nums, 0, nums.Length-1, target);
+        return index;
+    }
+    
+    private int QuickFind(int[] nums, int start, int end, int target){
+        if(start >= end){
+            if(nums[start] < target) return start+1;
+            else if(nums[start] >= target) return start;
+        }
+        int middle = start + (end-start)/2;
+        if(nums[middle] == target) return middle;
+        //if(nums[middle] > target && middle == 0) return 0;
+        //if(nums[middle] < target && middle == nums.Length-1) return nums.Length;
+        //if(nums[middle] < target && nums[middle] > target) return middle+1;
+        if(nums[middle] < target) return QuickFind(nums, middle+1, end, target);
+        else return QuickFind(nums, start, middle-1, target);
+    }
+}
+
+
+Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+public class Solution {
+    public TreeNode SortedArrayToBST(int[] nums) {
+        
+        TreeNode root = GetRoot(nums, 0, nums.Length-1);
+        return root;
+    }
+    
+    private TreeNode GetRoot(int[] nums, int start, int end){
+        if(start>end) return null;
+        int middle = start + (end-start)/2;
+        TreeNode root = new TreeNode(nums[middle]);
+        root.left = GetRoot(nums, start, middle-1);
+        root.right = GetRoot(nums, middle+1, end);
+        return root;
+        
+    } 
+}
+
+
+
+Given a linked list, determine if it has a cycle in it. 
+
+Follow up:
+ Can you solve it without using extra space? 
+
+public class Solution {
+    public bool HasCycle(ListNode head) {
+        ListNode p = head;
+        ListNode pp = head;
+        
+        while(p!= null && pp != null){
+            p = p.next;
+            if(pp.next == null) return false;
+            pp = pp.next.next;
+            
+            if(p == pp)return true;
+        }
+        
+        return false;
+    }
+}
+
+public class Solution {
+    public int KthSmallest(TreeNode root, int k) {
+        
+        bool isB = false;
+        int ret = 0;
+        KHelper(root, ref k, ref isB, ref ret);
+        return ret;
+    }
+    
+    private void KHelper(TreeNode root, ref int k, ref bool isBottom, ref int ret){
+        
+        if(!isBottom && root == null) isBottom = true;
+        if(root == null) return;
+        
+        KHelper(root.left, ref k, ref isBottom, ref ret);
+        if(k==0) return;
+    
+        
+        k--;
+        if(k==0 && isBottom){
+            ret = root.val;
+            return;
+        }
+        
+        KHelper(root.right, ref k, ref isBottom, ref ret);
+        if(k==0) return;
+        
+    }
+}
+
+public class Solution {
+    public IList<string> GenerateParenthesis(int n) {
+        
+        List<string> ret = new List<string>();
+        char[] str = new char[n+n];;
+        int open = 0;
+        int close = 0;
+        
+        int i =0;
+        
+        helper(ret, str, i, open, close, n);
+        
+        return ret;
+        
+    }
+    
+    private void helper(List<string> ret, char[] str, int i, int open, int close, int n){
+        if(open < close || open > n || close > n) return;
+        if(open == n && close == n){
+            ret.Add(new string(str));
+            return;
+        }
+        
+        if(open < n){
+            str[i++] = '(';
+            helper( ret,  str, i, open+1, close, n);
+            i--;
+        }
+        
+        str[i++] = ')';
+        helper( ret,  str, i, open, close+1, n);
+        
+    }
+}
+
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+Find the minimum element.
+
+You may assume no duplicate exists in the array.
+
+public class Solution {
+    public int FindMin(int[] nums) {
+        if(nums == null) return 0;
+        return FHelper(nums, 0, nums.Length-1);
+    }
+    
+    private int FHelper(int[] nums, int start, int end){
+        if(start+1 == end){
+            if(nums[end] < nums[start]) return nums[end];
+            return nums[start];
+        }
+        
+        if(start >= end){
+            if(nums[start]>nums[end]) return nums[end];
+            else return nums[start];
+        }
+        
+        int middle = start + (end-start)/2;
+
+        if(nums[middle]>nums[start] && nums[middle] > nums[end]){
+            return FHelper(nums, middle, end);
+        }
+        
+        return FHelper(nums, start, middle);
+        
+    }
+}
+
+
+The gray code is a binary numeral system where two successive values differ in only one bit.
+
+Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+
+For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
+00 - 0
+01 - 1
+11 - 3
+10 - 2
+
+
+Note:
+ For a given n, a gray code sequence is not uniquely defined. 
+
+For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
+
+For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
+
+
+public class Solution {
+    public IList<int> GrayCode(int n) {
+        HashSet<int> dic = new HashSet<int>();
+        Backtrack(dic, n, (int)Math.Pow(2, n), 0);
+        return dic.ToList<int>();
+    }
+    
+    private void Backtrack(HashSet<int> dic, int n, int sum, int last){
+        if(dic.Count == sum) return;
+        
+        dic.Add(last);
+        for(int i = 0; i < n; i++){
+            int nVal = last ^ 1 << i;
+            if(!dic.Contains(nVal)){
+                Backtrack(dic, n, sum, nVal);
+            }
+        }
+        
+        return;
+    }
+}
+
+
+
+Given a collection of distinct numbers, return all possible permutations. 
+
+For example,
+[1,2,3] have the following permutations:
+[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1]. 
+
+public class Solution {
+    public IList<IList<int>> Permute(int[] nums) {
+        
+        IList<IList<int>> ret = new List<IList<int>>();
+        
+        Backtrack(ret, nums, 0);
+        return ret;
+        
+    }
+    
+    private void Backtrack(IList<IList<int>> ret, int[] nums, int step){
+        if(step == nums.Length) {
+            ret.Add(nums.ToList<int>());
+            return;
+        }
+        
+        for(int i = step; i < nums.Length; i++){
+            int temp = nums[step];
+            nums[step] = nums[i];
+            nums[i] = temp;
+            Backtrack(ret, nums, step+1);
+            temp = nums[step];
+            nums[step ] = nums[i];
+            nums[i] = temp;
+        }
+        
+        return;
+    }
+}
+
+
+
+Given a collection of numbers that might contain duplicates, return all possible unique permutations. 
+
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1]. 
+
+
+public class Solution {
+    public IList<IList<int>> PermuteUnique(int[] nums) {
+        
+        
+        IList<IList<int>> ret = new List<IList<int>>();
+        
+        Backtrack(ret, nums, 0);
+        return ret;
+    }
+    
+    private void Backtrack(IList<IList<int>> ret, int[] nums, int step){
+        if(step == nums.Length) {
+            ret.Add(nums.ToList<int>());
+            return;
+        }
+        
+        HashSet<int> cache = new HashSet<int>();
+        for(int i = step; i < nums.Length; i++){
+            if(!cache.Add(nums[i]))continue;
+            int temp = nums[step];
+            nums[step] = nums[i];
+            nums[i] = temp;
+            Backtrack(ret, nums, step+1);
+            temp = nums[step];
+            nums[step ] = nums[i];
+            nums[i] = temp;
+        }
+        
+        return;
+    }
+}
+
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order(ie, sorted in ascending order). 
+
+The replacement must be in-place, do not allocate extra memory.
+
+Here are some examples.Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+
+
+public class Solution
+{
+
+    private List<int> _Min = new List<int>();
+
+    public void NextPermutation(int[] nums)
+    {
+
+        int n = nums.Length;
+
+        for (int end = n - 1; end >= 0; end--)
+        {
+            for (int i = n - 1; i >= end; i--)
+            {
+                if (nums[i] > nums[end])
+                {
+                    int temp = nums[i];
+                    nums[i] = nums[end];
+                    nums[end] = temp;
+
+                    for (int f = end + 1; f < n; f++)
+                    {
+                        _Min.Add(nums[f]);
+                    }
+
+                    _Min.Sort();
+
+                    //NextPH(nums, i+1, i+1,  min);
+                    for (int f = 0; f + end + 1 < n; f++)
+                    {
+                        nums[f + end + 1] = _Min[f];
+                    }
+                    return;
+                }
+            }
+        }
+
+        Array.Sort(nums);
+        return;
+    }
+}
+
+
+Given a set of candidate numbers(C) and a target number(T), find all unique combinations in C where the candidate numbers sums to T.
+
+The same repeated number may be chosen from C unlimited number of times. 
+
+
+Note:
+
+•All numbers (including target) will be positive integers.
+•Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+•The solution set must not contain duplicate combinations.
+
+
+For example, given candidate set 2,3,6,7 and target 7,
+ A solution set is: 
+[7]
+[2, 2, 3]
+
+
+public class Solution
+{
+    public IList<IList<int>> CombinationSum(int[] candidates, int target)
+    {
+
+        IList<IList<int>> fret = new List<IList<int>>();
+        List<int> ret = new List<int>();
+        Array.Sort(candidates);
+        BT(candidates, ret, fret, target, 0);
+
+        return fret;
+    }
+
+    private void BT(int[] can, List<int> ret, IList<IList<int>> fret, int target, int step)
+    {
+
+        if (target == 0)
+        {
+            List<int> t = ret.ToList<int>();
+            fret.Add(t);
+            return;
+        }
+
+        if (target < 0 || step >= can.Length) return;
+
+        int i = target / can[step];
+        for (int j = 0; j < i; j++) ret.Add(can[step]);
+        for (; i > 0; i--)
+        {
+
+            BT(can, ret, fret, target - i * can[step], step + 1);
+            ret.RemoveAt(ret.Count - 1);
+        }
+
+        BT(can, ret, fret, target, step + 1);
+
+        return;
+    }
+}
+
+
+
+ind all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+
+Ensure that numbers within the set are sorted in ascending order.
+
+
+
+Example 1:
+
+Input: k = 3, n = 7
+
+Output: 
+
+[[1,2,4]]
+
+
+
+
+Example 2:
+
+Input: k = 3, n = 9
+
+Output: 
+
+[[1,2,6], [1,3,5], [2,3,4]]
+
+public class Solution
+{
+    public IList<IList<int>> CombinationSum3(int k, int n)
+    {
+
+        IList<IList<int>> fret = new List<IList<int>>();
+        List<int> ret = new List<int>();
+        int[] can = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        BT(can, ret, fret, n, k, 0);
+
+        return fret;
+    }
+
+    private void BT(int[] can, List<int> ret, IList<IList<int>> fret, int target, int count, int step)
+    {
+
+        if (target == 0 && count == 0)
+        {
+            List<int> t = ret.ToList<int>();
+            fret.Add(t);
+            return;
+        }
+
+        if (target < 0 || step >= can.Length || count < 0) return;
+
+        count -= 1;
+        ret.Add(can[step]);
+
+        BT(can, ret, fret, target - can[step], count, step + 1);
+        ret.RemoveAt(ret.Count - 1);
+        count++;
+
+
+        BT(can, ret, fret, target, count, step + 1);
+
+        return;
+    }
+}
+
+
+
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+
+Note: You can only move either down or right at any point in time.
+
+
+public class Solution
+{
+    public int MinPathSum(int[,] grid)
+    {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                int left = j > 0 ? grid[i, j - 1] + grid[i, j] : grid[i, j];
+                int top = i > 0 ? grid[i - 1, j] + grid[i, j] : grid[i, j];
+
+                if (j == 0) grid[i, j] = top;
+                else if (i == 0) grid[i, j] = left;
+                else grid[i, j] = Math.Min(left, top);
+            }
+        }
+
+        return grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1];
+    }
+}
+
+
+Given a linked list, swap every two adjacent nodes and return its head.
+
+For example,
+ Given 1->2->3->4, you should return the list as 2->1->4->3. 
+
+Your algorithm should use only constant space.You may not modify the values in the list, only nodes itself can be changed. 
+
+public class Solution
+{
+    public ListNode SwapPairs(ListNode head)
+    {
+        if (head == null || head.next == null) return head;
+
+
+        ListNode hN = head.next;
+        ListNode t = head.next.next;
+        head.next = head.next.next;
+        hN.next = head;
+        ListNode nH = hN;
+        ListNode pH = hN.next;
+
+        while (t != null && t.next != null)
+        {
+            hN = t.next;
+            t.next = t.next.next;
+            pH.next = hN;
+            hN.next = t;
+            pH = t;
+            t = t.next;
+        }
+
+        return nH;
+    }
+}
