@@ -1790,3 +1790,198 @@ public class Solution
         return nH;
     }
 }
+
+
+
+Vertex{
+    int value;
+List<Vertex> neighbours;
+}
+
+public Vertex CloneGraph(Vertext a)
+{
+
+    Queue<Vertex> q = new Queue<Vertex>();
+    q.Enqueue(a);
+
+    Vertex a1 = new Vertext(a.value);
+
+    Dictionary<int, Vertext> map = new HashSet<int, Vertext>();
+    map.Add(a1.value, a1);
+
+    //{a}, {aV, a1};
+    //{b}, {[av, a1], [bv, b1]}
+    //{c, d}, {[av, a1], [bv, b1], [cv, c1]. [dv. d1]}
+    //{d}, {[av, a1], [bv, b1], [cv, c1], [dv. d1]}
+    //{}, {[av, a1], [bv, b1], [cv, c1], [dv. d1]}
+    while (q.Any())
+    {
+        Vertex current = q.Dequeue();
+        Vertex cur2;
+        map.TryGetValue(current.value, out cur2);
+
+        foreach (Vertext nb in current.neighbours)
+        {
+
+            if (!map.ContainsKey(nb.value))
+            {
+                Vertex clone = new Vertext(nb.value);
+                cur2.neighbours.Add(clone);
+                q.Enqueue(nb);
+                map.Add(clone.value, clone);
+            }
+            else {
+                Vertext clone;
+                if (map.TryGetValue(nb.value, out clone))
+                {
+                    cur2.neighbors.Add(clone);
+                }
+            }
+        }
+    }
+
+    return a1;
+}
+
+
+
+Implement an iterator over a binary search tree(BST). Your iterator will be initialized with the root node of a BST.
+
+Calling next() will return the next smallest number in the BST.
+
+Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree
+
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+
+public class BSTIterator
+{
+
+    private Stack<TreeNode> _stack = new Stack<TreeNode>();
+
+    public BSTIterator(TreeNode root)
+    {
+
+        TreeNode it = root;
+        while (it != null)
+        {
+            _stack.Push(it);
+            it = it.left;
+        }
+    }
+
+    /** @return whether we have a next smallest number */
+    public bool HasNext()
+    {
+        if (_stack.Count > 0) return true;
+        return false;
+
+    }
+
+    /** @return the next smallest number */
+    public int Next()
+    {
+        if (_stack.Count > 0)
+        {
+            TreeNode f = _stack.Pop();
+            TreeNode it = f.right;
+            while (it != null)
+            {
+                _stack.Push(it);
+                it = it.left;
+            }
+            return f.val;
+        }
+
+        return -1;
+    }
+}
+
+/**
+ * Your BSTIterator will be called like this:
+ * BSTIterator i = new BSTIterator(root);
+ * while (i.HasNext()) v[f()] = i.Next();
+ */
+
+
+public class Solution
+{
+    public bool SearchMatrix(int[,] matrix, int target)
+    {
+
+        int n = matrix.GetLength(0);
+        int m = matrix.GetLength(1);
+
+        int j = BinarySearch(matrix, false, target, 0, m - 1, 0);
+        int i = 0;
+
+        if (j < 0) return false;
+
+        if (j >= m) j = m - 1;
+        if (matrix[0, j] == target) return true;
+
+        i = BinarySearch(matrix, true, target, 0, n - 1, j);
+
+        if (i > 0 && i < n && matrix[i, j] == target) return true;
+
+
+        i = BinarySearch(matrix, true, target, 0, n - 1, 0);
+
+        if (i < 0) return false;
+        if (i >= n) i = n - 1;
+
+        if (matrix[i, 0] == target) return true;
+
+        j = BinarySearch(matrix, false, target, 0, m - 1, i);
+
+        if (j < m && matrix[i, j] == target) return true;
+
+
+        return false;
+
+    }
+
+    private int BinarySearch(int[,] m, bool v, int target, int start, int end, int i)
+    {
+
+        if (start + 1 == end)
+        {
+            if (v)
+            {
+                if (m[start, i] < target && target < m[end, i]) return start;
+                if (m[start, i] > target) return start - 1 > 0 ? 0 : start - 1;
+                if (m[end, i] < target) return end;
+            }
+            else
+            {
+                if (m[i, start] < target && target < m[i, end]) return start;
+                if (m[i, start] > target) return start - 1 > 0 ? 0 : start - 1;
+                if (m[i, end] < target) return end;
+            }
+        }
+
+        if (start == end) return start;
+
+        int middle = start + (end - start) / 2;
+
+        if (v)
+        {
+            if (m[middle, i] < target) return BinarySearch(m, v, target, middle + 1, end, i);
+            else if (m[middle, i] > target) return BinarySearch(m, v, target, start, middle - 1, i);
+            return middle;
+        }
+        else {
+            if (m[i, middle] < target) return BinarySearch(m, v, target, middle + 1, end, i);
+            else if (m[i, middle] > target) return BinarySearch(m, v, target, start, middle - 1, i);
+            return middle;
+        }
+    }
+}
