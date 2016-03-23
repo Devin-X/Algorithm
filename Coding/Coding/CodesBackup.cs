@@ -1905,12 +1905,14 @@ public class BSTIterator
     }
 }
 
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!This is a very bad solution for the problem.
 /**
  * Your BSTIterator will be called like this:
  * BSTIterator i = new BSTIterator(root);
  * while (i.HasNext()) v[f()] = i.Next();
  */
-
 
 public class Solution
 {
@@ -1944,6 +1946,11 @@ public class Solution
 
         if (j < m && matrix[i, j] == target) return true;
 
+        while (--i > 0)
+        {
+            j = BinarySearch(matrix, false, target, 0, m - 1, i);
+            if (j < m && matrix[i, j] == target) return true;
+        }
 
         return false;
 
@@ -1957,13 +1964,13 @@ public class Solution
             if (v)
             {
                 if (m[start, i] < target && target < m[end, i]) return start;
-                if (m[start, i] > target) return start - 1 > 0 ? 0 : start - 1;
+                if (m[start, i] > target) return start - 1 > 0 ? start - 1 : 0;
                 if (m[end, i] < target) return end;
             }
             else
             {
                 if (m[i, start] < target && target < m[i, end]) return start;
-                if (m[i, start] > target) return start - 1 > 0 ? 0 : start - 1;
+                if (m[i, start] > target) return start - 1 > 0 ? start - 1 : 0;
                 if (m[i, end] < target) return end;
             }
         }
@@ -1983,5 +1990,330 @@ public class Solution
             else if (m[i, middle] > target) return BinarySearch(m, v, target, start, middle - 1, i);
             return middle;
         }
+    }
+}
+
+public class Solution
+{
+    public bool SearchMatrix(int[,] matrix, int target)
+    {
+
+        int n = matrix.GetLength(0);
+        int m = matrix.GetLength(1);
+
+        int i = 0;
+        for (; i < m; i++)
+        {
+            if (matrix[0, i] > target) break;
+        }
+
+        if (i == 0) return false;
+
+        while (--i >= 0)
+        {
+            int j = BinarySearch(matrix, target, 0, n - 1, i);
+            if (j < n && j >= 0 && matrix[j, i] == target) return true;
+        }
+
+        return false;
+    }
+
+    private int BinarySearch(int[,] m, int target, int start, int end, int i)
+    {
+
+        if (start > end) return start - 1;
+
+        int middle = start + (end - start) / 2;
+
+        if (m[middle, i] < target) return BinarySearch(m, target, middle + 1, end, i);
+        else if (m[middle, i] > target) return BinarySearch(m, target, start, middle - 1, i);
+        return middle;
+
+    }
+}
+
+
+Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+
+For example,
+ Given n = 3,
+You should return the following matrix: [
+ [ 1, 2, 3 ],
+ [ 8, 9, 4 ],
+ [ 7, 6, 5 ]
+]
+
+
+
+public class Solution
+{
+    public int[,] GenerateMatrix(int n)
+    {
+
+        int[,] ret = new int[n, n];
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                ret[i, j] = 0;
+            }
+        }
+
+        int sq = n * n;
+        bool v = false;
+        bool r = false;
+        int ii = 0;
+        int jj = 0;
+        for (int i = 0; i < sq;)
+        {
+            if (!v)
+            {
+                if (!r)
+                {
+                    while (jj < n && ret[ii, jj] == 0)
+                    {
+                        ret[ii, jj++] = i + 1;
+                        i++;
+                    }
+
+                    jj = jj - 1;
+                    ii++;
+                    v = !v;
+                    continue;
+                }
+                if (r)
+                {
+                    while (jj > -1 && ret[ii, jj] == 0)
+                    {
+                        ret[ii, jj--] = i + 1;
+                        i++;
+                    }
+
+                    jj = jj + 1;
+                    ii--;
+                    v = !v;
+                    continue;
+                }
+
+            }
+            else {
+                if (!r)
+                {
+                    while (ii < n && ret[ii, jj] == 0)
+                    {
+                        ret[ii++, jj] = i + 1;
+                        i++;
+                    }
+                    ii = ii - 1;
+                    jj--;
+                    r = !r;
+                    v = !v;
+                    continue;
+                }
+                if (r)
+                {
+                    while (ii > -1 && ret[ii, jj] == 0)
+                    {
+                        ret[ii--, jj] = i + 1;
+                        i++;
+                    }
+
+                    ii = ii + 1;
+                    jj++;
+                    r = !r;
+                    v = !v;
+                    continue;
+                }
+            }
+
+            if (i == sq - 1) break;
+        }
+
+        return ret;
+    }
+}
+
+
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+Follow up:
+ Could you do this in-place?
+
+
+public class Solution
+{
+    public void Rotate(int[,] matrix)
+    {
+
+        int n = matrix.GetLength(0);
+
+        for (int i = 0; i < (n + 1) / 2; i++)
+        {
+            for (int j = 0; j < n / 2; j++)
+            {
+                int temp = matrix[i, j];
+                matrix[i, j] = matrix[n - j - 1, i];
+                matrix[n - j - 1, i] = matrix[n - 1 - i, n - 1 - j];
+                matrix[n - 1 - i, n - 1 - j] = matrix[j, n - 1 - i];
+                matrix[j, n - 1 - i] = temp;
+            }
+        }
+
+        return;
+    }
+}
+
+
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+For example,
+ If n = 4 and k = 2, a solution is: 
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+public class Solution
+{
+    public IList<IList<int>> Combine(int n, int k)
+    {
+        if (k > n) return null;
+
+        IList<IList<int>> ret = new List<IList<int>>();
+        IList<IList<int>> final = new List<IList<int>>();
+
+        List<int> t = new List<int>();
+        ret.Add(t);
+
+        for (int i = 1; i <= n; i++)
+        {
+            int len = ret.Count;
+            for (int j = 0; j < len; j++)
+            {
+                t = ret[j].ToList<int>();
+                t.Add(i);
+
+                if (t.Count == k)
+                {
+                    final.Add(t);
+                }
+                else {
+                    ret.Add(t);
+                }
+            }
+        }
+
+
+        return final;
+
+    }
+}
+
+
+
+Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators.The valid operators are +, - and*.
+
+Example 1 
+Input: "2-1-1".
+((2-1)-1) = 0
+(2-(1-1)) = 2
+Output: [0, 2]
+
+Example 2 
+Input: "2*3-4*5"
+(2*(3-(4*5))) = -34
+((2*3)-(4*5)) = -14
+((2*(3-4))*5) = -10
+(2*((3-4)*5)) = -10
+(((2*3)-4)*5) = 10
+Output: [-34, -14, -10, -10, 10]
+
+
+public class Solution
+{
+    public IList<int> DiffWaysToCompute(string input)
+    {
+        if (input == null) return null;
+        List<int> nums = new List<int>();
+        List<char> op = new List<char>();
+        Parse(input, nums, op);
+
+        List<int>[,] cache = new List<int>[nums.Count, nums.Count];
+        return Dp(nums, op, 0, nums.Count - 1, cache);
+    }
+
+
+    private void Parse(string input, List<int> nums, List<char> op)
+    {
+
+        StringBuilder sb = new StringBuilder();
+        foreach (char c in input)
+        {
+            if (c == '-' || c == '+' || c == '*')
+            {
+                op.Add(c);
+                nums.Add(int.Parse(sb.ToString()));
+                sb.Clear();
+            }
+            else
+            {
+                sb.Append(c);
+            }
+        }
+
+        nums.Add(int.Parse(sb.ToString()));
+
+
+        return;
+    }
+
+    private List<int> Dp(List<int> nums, List<char> op, int start, int end, List<int>[,] cache)
+    {
+        if (cache[start, end] != null) return cache[start, end];
+        List<int> cur = new List<int>();
+        if (start == end)
+        {
+            cur.Add(nums[start]);
+            cache[start, end] = cur;
+            return cache[start, end];
+        }
+        else {
+            for (int i = start; i < end; i++)
+            {
+                List<int> left = Dp(nums, op, start, i, cache);
+                List<int> right = Dp(nums, op, i + 1, end, cache);
+
+                foreach (int l in left)
+                {
+                    foreach (int r in right)
+                    {
+                        if (op[i] == '-')
+                        {
+                            cur.Add(l - r);
+
+                        }
+                        else if (op[i] == '+')
+                        {
+                            cur.Add(l + r);
+
+                        }
+                        else if (op[i] == '*')
+                        {
+                            cur.Add(l * r);
+                        }
+                    }
+                }
+            }
+
+            cache[start, end] = cur;
+        }
+
+        return cache[start, end];
     }
 }
