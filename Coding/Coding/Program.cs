@@ -12,59 +12,7 @@ namespace Coding
 {
     class Program
     {
-        public static  int MaxArea(int[] height)
-        {
-            int n = height.Length;
-            List<int> copy = new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                copy.Add(height[i]);
-            }
-
-            copy.Sort();
-            int[] ranking = new int[n];
-            int[] reverseIndex = new int[n];
-
-            int max = 0;
-
-            for (int i = 0; i < n; i++)
-            {
-                ranking[i] = bS(copy, 0, n - 1, height[i]);
-                reverseIndex[ranking[i]] = i;
-            }
-
-
-            for (int i = 0; i < n; i++)
-            {
-                int rank = ranking[i];
-                if (rank == 0) continue;
-
-                int shorter = reverseIndex[rank - 1];
-                //taller = reverseIndex[rank+1];
-                //if(i > 0 && i < n-1){
-                //    shorter = reverseIndex[rank-1];
-                //    taller = reverseIndex[rank+1];
-
-                max = Math.Max(max, (height[shorter] * Math.Abs(i - shorter)));
-
-                //}else if(i == 0 || i == n-1){
-                //    max = Maxh.Max(max, )
-
-                //}else if(i == n-1){
-
-            }
-            return max;
-        }
-
-
-        private static  int bS(List<int> copy, int start, int end, int target)
-        {
-            if (start >= end) return start;
-            int middle = start + (end - start) / 2;
-            if (copy[middle] == target) return middle;
-            else if (copy[middle] > target) return bS(copy, start, middle - 1, target);
-            return bS(copy, middle + 1, end, target);
-        }
+        
         static void Main(string[] args)
         {
             MaxSlidingWindowSolution.Test();
@@ -72,8 +20,6 @@ namespace Coding
             LCABST.Test();
 
             int[] height = { 1, 1 };
-
-            MaxArea(height);
 
             //MinStack ms = new MinStack();
             //ms.Push(-2);

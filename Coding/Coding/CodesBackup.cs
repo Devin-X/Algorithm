@@ -2317,3 +2317,111 @@ public class Solution
         return cache[start, end];
     }
 }
+
+
+
+Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+For example,
+
+X X X X
+X O O X
+X X O X
+X O X X
+
+
+
+After running your function, the board should be: 
+X X X X
+X X X X
+X X X X
+X O X X
+
+public class Solution
+{
+    public void Solve(char[,] board)
+    {
+
+        int n = board.GetLength(0);
+        int m = board.GetLength(1);
+
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (board[i, j] == 'O')
+                {
+                    Search(board, i, j, n, m);
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (board[i, j] == 'L')
+                {
+                    board[i, j] = 'O';
+                }
+            }
+        }
+        return;
+    }
+
+    private bool Search(char[,] board, int i, int j, int n, int m)
+    {
+
+        Queue<KeyValuePair<int, int>> q = new Queue<KeyValuePair<int, int>>();
+        Queue<KeyValuePair<int, int>> visited = new Queue<KeyValuePair<int, int>>();
+        q.Enqueue(new KeyValuePair<int, int>(i, j));
+        bool isDead = true;
+        while (q.Any())
+        {
+            KeyValuePair<int, int> p = q.Dequeue();
+            i = p.Key;
+            j = p.Value;
+            if (board[i, j] == 'O')
+            {
+                board[i, j] = '!';
+                if (i == 0 || i == n - 1 || j == 0 || j == m - 1)
+                {
+                    isDead = false;
+                }
+                else {
+                    if (i > 0 && board[i - 1, j] == 'O') q.Enqueue(new KeyValuePair<int, int>(i - 1, j));
+                    else if (i > 0 && board[i - 1, j] == 'L') { board[i, j] = 'L'; isDead = false; }
+                    if (j > 0 && board[i, j - 1] == 'O') q.Enqueue(new KeyValuePair<int, int>(i, j - 1));
+                    else if (j > 0 && board[i, j - 1] == 'L') { board[i, j] = 'L'; isDead = false; }
+                    if (i + 1 < n && board[i + 1, j] == 'O') q.Enqueue(new KeyValuePair<int, int>(i + 1, j));
+                    else if (i + 1 < n && board[i + 1, j] == 'L') { board[i, j] = 'L'; isDead = false; }
+                    if (j + 1 < m && board[i, j + 1] == 'O') q.Enqueue(new KeyValuePair<int, int>(i, j + 1));
+                    else if (j + 1 < m && board[i, j + 1] == 'L') { board[i, j] = 'L'; isDead = false; }
+                }
+            }
+
+            visited.Enqueue(p);
+        }
+
+        if (isDead)
+        {
+            while (visited.Any())
+            {
+                KeyValuePair<int, int> p = visited.Dequeue();
+                board[p.Key, p.Value] = 'X';
+            }
+        }
+        else {
+            while (visited.Any())
+            {
+                KeyValuePair<int, int> p = visited.Dequeue();
+                board[p.Key, p.Value] = 'L';
+            }
+        }
+
+        return isDead;
+    }
+}
