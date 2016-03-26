@@ -207,7 +207,7 @@ For example:
     AB -> 28 
 
 
-	public class Solution {
+    public class Solution {
     public int TitleToNumber(string s) {
         int ret = 0;
         foreach(char c in s){
@@ -2371,5 +2371,170 @@ public class Solution {
             if(nums[i] > mid) return true;
         }
         return false;
+    }
+}
+
+
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place. 
+
+click to show follow up.
+
+Follow up: 
+Did you use extra space?
+ A straight forward solution using O(mn) space is probably a bad idea.
+ A simple improvement uses O(m + n) space, but still not the best solution.
+ Could you devise a constant space solution? 
+
+public class Solution {
+    public void SetZeroes(int[,] matrix) {
+        
+        HashSet<int> rows = new HashSet<int>();
+        HashSet<int> cols = new HashSet<int>();
+        
+        int n = matrix.GetLength(0);
+        int m = matrix.GetLength(1);
+        
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(matrix[i,j] == 0){
+                    rows.Add(i);
+                    cols.Add(j);
+                }
+            }
+        }
+        
+        foreach(int r in rows){
+            for(int j = 0; j < m; j++){
+                matrix[r,j] = 0;
+            }
+        }
+        
+        foreach(int c in cols){
+            for(int i = 0; i < n; i++){
+                matrix[i,c] = 0;
+            }
+        }
+        return;
+    }
+}
+
+
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+Example 1:
+11110
+11010
+11000
+00000
+
+Answer: 1
+
+Example 2:
+11000
+11000
+00100
+00011
+
+Answer: 3
+
+
+public class Solution {
+    public int NumIslands(char[,] grid) {
+        
+        int n = grid.GetLength(0);
+        int m = grid.GetLength(1);
+        int sum = 0;
+        
+        for(int i = 0; i < n; i++){
+            for(int j= 0; j < m; j++){
+                if(grid[i,j] == '1'){
+                    sum += BFS(grid, i, j, n, m);
+                }
+            }
+        }
+        
+        for(int i = 0; i < n; i++){
+            for(int j= 0; j < m; j++){
+                if(grid[i,j] == '2'){
+                    grid[i,j] = '1';
+                }
+            }
+        }
+        
+        return sum;
+    }
+    
+    private int BFS(char[,] grid, int i, int j, int n, int m){
+        
+        Queue<KeyValuePair<int,int>> q = new Queue<KeyValuePair<int,int>>();
+        q.Enqueue(new KeyValuePair<int,int>(i, j));
+        while(q.Any()){
+            KeyValuePair<int,int> top = q.Dequeue();
+            int x = top.Key;
+            int y = top.Value;
+            if(grid[x,y] != '1') continue;
+            
+            if(x>0 && grid[x-1, y] == '1') q.Enqueue(new KeyValuePair<int,int>(x-1, y));
+            if(y>0 && grid[x, y-1] == '1') q.Enqueue(new KeyValuePair<int,int>(x, y-1));
+            if(x < n-1 && grid[x+1, y] == '1') q.Enqueue(new KeyValuePair<int,int>(x+1, y));
+            if(y < m-1 && grid[x, y+1] == '1') q.Enqueue(new KeyValuePair<int,int>(x, y+1));
+            
+            grid[x,y] = '2';
+        }
+        
+        return 1;
+    }
+}
+
+
+
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element. 
+
+For example,
+ Given [3,2,1,5,6,4] and k = 2, return 5. 
+
+Note: 
+ You may assume k is always valid, 1 ≤ k ≤ array's length.
+
+
+public class Solution {
+    public int FindKthLargest(int[] nums, int k) {
+        List<int> kL = new List<int>(k);
+        
+        for(int i = 0; i < k; i++){
+            kL.Add(nums[i]);
+        }
+        
+        kL.Sort();
+        
+        for(int j = k; j < nums.Length; j++){
+            if(nums[j] > kL[0]){
+                QuickAdjust(kL, 0, k-1, nums[j]);
+            }
+        }
+        
+        return kL[0];
+    }
+    
+    
+    private void QuickAdjust(List<int> kL, int start, int end, int target){
+        if(start >= end){
+            if(start > 0 && start < kL.Count){
+                for(int i = 0; i < start; i++){
+                     kL[i] = kL[i+1];
+                }
+            }
+            if(kL[start] < target) kL[start] = target;
+            if(kL[start] > target && start>0) kL[start-1] = target;
+            return;
+        }
+        
+        int middle = start+(end-start)/2;
+        
+        if(target < kL[middle]){
+            QuickAdjust(kL, start, middle-1, target);
+        }else{
+            QuickAdjust(kL, middle+1, end, target);
+        }
     }
 }
