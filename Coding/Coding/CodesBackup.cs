@@ -2872,3 +2872,45 @@ public class Solution {
         return max;
     }
 }
+
+
+
+public class Solution {
+    public ListNode MergeKLists(ListNode[] lists) {
+        return MergeK(lists, 0, lists.Length-1);
+    }
+    
+    private ListNode MergeK(ListNode[] lists, int start, int end){
+        
+        if(start>end) return null;
+        if(start==end) return lists[start];
+        if(start+1 ==end) return Merge(lists[start], lists[end]);
+        
+        int middle = start+ (end-start)/2;
+        
+        ListNode a = MergeK(lists, start, middle);
+        ListNode b = MergeK(lists, middle+1, end);
+        return Merge(a, b);
+    }
+    
+    private ListNode Merge(ListNode a, ListNode b){
+        ListNode head = new ListNode(-1);
+        
+        ListNode ret = head;
+        while(a!= null && b!=null){
+            if(a.val < b.val){
+                head.next = a;
+                a = a.next;
+            }else{
+                head.next = b;
+                b = b.next;
+            }
+            
+            head = head.next;
+        }
+        
+        if(a==null) head.next = b;
+        else head.next = a;
+        return ret.next;
+    }
+}
