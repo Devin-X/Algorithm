@@ -2644,6 +2644,205 @@ public class Solution {
 }
 
 
+Write a program to find the nth super ugly number.
+
+Super ugly numbers are positive numbers whose all prime factors are in the given prime list primes of size k. For example, [1, 2, 4, 7, 8, 13, 14, 16, 19, 26, 28, 32]  is the sequence of the first 12 super ugly numbers given primes = [2, 7, 13, 19] of size 4. 
+
+Note:
+ (1) 1 is a super ugly number for any given primes.
+ (2) The given numbers in primes are in ascending order.
+ (3) 0 < k ≤ 100, 0 < n ≤ 106, 0 < primes[i] < 1000. 
+
+
+    public class Solution
+{
+    public int NthSuperUglyNumber(int n, int[] primes)
+    {
+        int k = primes.Length;
+        int[] ret = new int[n];
+
+        int[] index = new int[k];
+        int[] factor = new int[k];
+
+        for (int i = 0; i < k; i++)
+        {
+            index[i] = 0;
+            factor[i] = primes[i];
+        }
+
+        ret[0] = 1;
+
+        for (int i = 1; i < n; i++)
+        {
+            int min = int.MaxValue;
+
+            for (int j = 0; j < k; j++)
+            {
+                if (min > factor[j]) min = factor[j];
+            }
+
+            ret[i] = min;
+
+            for (int j = 0; j < k; j++)
+            {
+                if (factor[j] == min) factor[j] = primes[j] * ret[++index[j]];
+            }
+        }
+
+        return ret[n - 1];
+    }
+}
+
+Write a program to find the n-th ugly number.
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.
+
+Note that 1 is typically treated as an ugly number.
+
+
+
+public class Solution
+{
+    public int NthUglyNumber(int n)
+    {
+        int[] ret = new int[n];
+
+        ret[0] = 1;
+
+        int i2 = 0; int i3 = 0; int i5 = 0;
+
+        int f1 = 2; int f2 = 3; int f3 = 5;
+
+        for (int i = 1; i < n; i++)
+        {
+
+            int min = int.MaxValue;
+
+            if (min > f1) min = f1;
+            if (min > f2) min = f2;
+            if (min > f3) min = f3;
+
+            ret[i] = min;
+
+            if (min == f1) f1 = 2 * ret[++i2];
+            if (min == f2) f2 = 3 * ret[++i3];
+            if (min == f3) f3 = 5 * ret[++i5];
+        }
+
+        return ret[n - 1];
+    }
+}
+
+
+
+
+public class Solution
+{
+    public int Search(int[] nums, int target)
+    {
+        if (nums.Length == 1) return nums[0] == target ? 0 : -1;
+        return bs(nums, target, 0, nums.Length - 1);
+    }
+
+    private int bs(int[] nums, int target, int start, int end)
+    {
+        if (start > end) return -1;
+        int middle = start + (end - start) / 2;
+        int ret = -1;
+        if (nums[middle] >= nums[start] && nums[middle] <= nums[end])
+        {
+            if (nums[middle] > target)
+            {
+                ret = bs(nums, target, start, middle - 1);
+            }
+            else if (nums[middle] < target)
+            {
+                ret = bs(nums, target, middle + 1, end);
+            }
+            else if (nums[middle] == target) return middle;
+        }
+        else {
+            ret = bs(nums, target, middle + 1, end);
+            if (ret != -1) return ret;
+            ret = bs(nums, target, start, middle);
+        }
+
+        return ret;
+    }
+}
+
+
+public class Solution
+{
+    public int NumSquares(int n)
+    {
+
+        if (n == 1) return 1;
+        int[] dp = new int[n + 1];
+        for (int i = 0; i <= n; i++)
+        {
+            dp[i] = 0;
+        }
+
+        dp[1] = 1;
+
+        for (int i = 2; i <= n; i++)
+        {
+            int min = int.MaxValue;
+            for (int k = 1; k * k <= i; k++)
+            {
+                min = Math.Min(1 + dp[i - k * k], min);
+            }
+
+            dp[i] = min;
+        }
+
+        return dp[n];
+    }
+}
+
+
+public class Solution
+{
+    public ListNode DetectCycle(ListNode head)
+    {
+        ListNode p = head;
+        ListNode pp = head;
+        int hh = 0;
+
+        while (p != null && pp != null)
+        {
+            p = p.next; hh++;
+            if (pp.next == null) return null;
+            pp = pp.next.next;
+
+            if (p == pp) break;
+        }
+
+        if (pp == null) return null;
+
+        int ah = hh / 2;
+        pp = head;
+        while (ah > 0)
+        {
+            pp = pp.next.next;
+            ah--;
+        }
+
+        if (hh % 2 != 0) pp = pp.next;
+        p = head;
+
+        while (hh >= 0)
+        {
+            if (p == pp) return p;
+            p = p.next;
+            pp = pp.next;
+            hh--;
+        }
+
+        return null;
+    }
+}
 Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index. 
 
 According to the definition of h-index on Wikipedia: "A scientist has index h if h of his/her N papers have at least h citations each, and the other N − h papers have no more than h citations each." 
@@ -2674,6 +2873,7 @@ public class Solution {
     }
 }
 
+<<<<<<< HEAD
 Follow up for "Search in Rotated Sorted Array":
  What if duplicates are allowed?
 
@@ -2710,6 +2910,126 @@ public class Solution {
                 ret = bs(nums, target, start, lM);
         }
         
+=======
+
+
+public class Solution {
+    public ListNode MergeKLists(ListNode[] lists) {
+        return MergeK(lists, 0, lists.Length-1);
+    }
+    
+    private ListNode MergeK(ListNode[] lists, int start, int end){
+        
+        if(start>end) return null;
+        if(start==end) return lists[start];
+        if(start+1 ==end) return Merge(lists[start], lists[end]);
+        
+        int middle = start+ (end-start)/2;
+        
+        ListNode a = MergeK(lists, start, middle);
+        ListNode b = MergeK(lists, middle+1, end);
+        return Merge(a, b);
+    }
+    
+    private ListNode Merge(ListNode a, ListNode b){
+        ListNode head = new ListNode(-1);
+        
+        ListNode ret = head;
+        while(a!= null && b!=null){
+            if(a.val < b.val){
+                head.next = a;
+                a = a.next;
+            }else{
+                head.next = b;
+                b = b.next;
+            }
+            
+            head = head.next;
+        }
+        
+        if(a==null) head.next = b;
+        else head.next = a;
+        return ret.next;
+    }
+}
+
+
+
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note:
+
+•Elements in a subset must be in non-descending order.
+•The solution set must not contain duplicate subsets.
+
+
+For example,
+ If nums = [1, 2, 2], a solution is: 
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+public class Solution
+{
+    public IList<IList<int>> Subsets(int[] nums)
+    {
+        List<int> last = new List<int>();
+        Array.Sort(nums);
+        IList<IList<int>> ret = new List<IList<int>>();
+        ret.Add(last);
+        int n = nums.Length;
+        for (int i = 0; i < n; i++)
+        {
+            int len = ret.Count;
+            for (int j = 0; j < len; j++)
+            {
+                last = ret[j].ToList<int>();
+                last.Add(nums[i]);
+                ret.Add(last);
+            }
+        }
+
+        return ret;
+    }
+}
+
+public class Solution
+{
+    public IList<IList<int>> SubsetsWithDup(int[] nums)
+    {
+        List<int> last = new List<int>();
+        Array.Sort(nums);
+        IList<IList<int>> ret = new List<IList<int>>();
+        ret.Add(last);
+        int len = ret.Count;
+        int n = nums.Length;
+        int j = 0;
+        for (int i = 0; i < n; i++)
+        {
+
+            if (i > 0 && nums[i] == nums[i - 1])
+            {
+                j = len;
+            }
+            else {
+                j = 0;
+            }
+
+            len = ret.Count;
+            for (; j < len; j++)
+            {
+                last = ret[j].ToList<int>();
+                last.Add(nums[i]);
+                ret.Add(last);
+            }
+        }
+
+>>>>>>> 929a070c893ce55d1710beb9eae5dd210547fb3c
         return ret;
     }
 }
