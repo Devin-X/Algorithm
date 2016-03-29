@@ -2914,3 +2914,83 @@ public class Solution {
         return ret.next;
     }
 }
+
+
+
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note:
+
+•Elements in a subset must be in non-descending order.
+•The solution set must not contain duplicate subsets.
+
+
+For example,
+ If nums = [1, 2, 2], a solution is: 
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+public class Solution
+{
+    public IList<IList<int>> Subsets(int[] nums)
+    {
+        List<int> last = new List<int>();
+        Array.Sort(nums);
+        IList<IList<int>> ret = new List<IList<int>>();
+        ret.Add(last);
+        int n = nums.Length;
+        for (int i = 0; i < n; i++)
+        {
+            int len = ret.Count;
+            for (int j = 0; j < len; j++)
+            {
+                last = ret[j].ToList<int>();
+                last.Add(nums[i]);
+                ret.Add(last);
+            }
+        }
+
+        return ret;
+    }
+}
+
+public class Solution
+{
+    public IList<IList<int>> SubsetsWithDup(int[] nums)
+    {
+        List<int> last = new List<int>();
+        Array.Sort(nums);
+        IList<IList<int>> ret = new List<IList<int>>();
+        ret.Add(last);
+        int len = ret.Count;
+        int n = nums.Length;
+        int j = 0;
+        for (int i = 0; i < n; i++)
+        {
+
+            if (i > 0 && nums[i] == nums[i - 1])
+            {
+                j = len;
+            }
+            else {
+                j = 0;
+            }
+
+            len = ret.Count;
+            for (; j < len; j++)
+            {
+                last = ret[j].ToList<int>();
+                last.Add(nums[i]);
+                ret.Add(last);
+            }
+        }
+
+        return ret;
+    }
+}
