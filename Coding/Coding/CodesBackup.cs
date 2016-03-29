@@ -2673,3 +2673,43 @@ public class Solution {
         return max;
     }
 }
+
+Follow up for "Search in Rotated Sorted Array":
+ What if duplicates are allowed?
+
+Would this affect the run-time complexity? How and why?
+
+Write a function to determine if a given target is in the array.
+
+
+public class Solution {
+    public bool Search(int[] nums, int target) {
+        return bs(nums, target, 0, nums.Length-1) == -1 ? false: true;
+    }
+    
+    private int bs(int[] nums, int target, int start, int end){
+        if(start>end) return -1;
+        while(start<end && nums[start] == nums[end]) start++;
+        int middle = start + (end-start)/2;
+        int ret = -1;
+        int lM = middle;
+        int rM = middle;
+        
+        while(lM>start && nums[lM] == nums[lM-1])lM--;
+        while(rM < end && nums[rM] == nums[rM+1])rM++;
+        
+        if(nums[middle] >= nums[start] && nums[middle] <= nums[end]){
+            if(nums[middle] > target){
+                ret = bs(nums, target, start, lM-1);
+            }else if(nums[middle] < target){
+                ret = bs(nums, target, rM+1, end);
+            }else if(nums[middle] == target) return lM;
+        }else{
+                ret = bs(nums, target, rM+1, end);
+                if(ret!= -1) return ret;
+                ret = bs(nums, target, start, lM);
+        }
+        
+        return ret;
+    }
+}
