@@ -2873,7 +2873,6 @@ public class Solution {
     }
 }
 
-<<<<<<< HEAD
 Follow up for "Search in Rotated Sorted Array":
  What if duplicates are allowed?
 
@@ -2910,7 +2909,6 @@ public class Solution {
                 ret = bs(nums, target, start, lM);
         }
         
-=======
 
 
 public class Solution {
@@ -3029,7 +3027,151 @@ public class Solution
             }
         }
 
->>>>>>> 929a070c893ce55d1710beb9eae5dd210547fb3c
         return ret;
+    }
+}
+
+
+One way to serialize a binary tree is to use pre-order traversal. When we encounter a non-null node, we record the node's value. If it is a null node, we record using a sentinel value such as #.
+     _9_
+    /   \
+   3     2
+  / \   / \
+ 4   1  #  6
+/ \ / \   / \
+# # # #   # #
+
+
+For example, the above binary tree can be serialized to the string "9,3,4,#,#,1,#,#,2,#,6,#,#", where # represents a null node. 
+
+Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree. Find an algorithm without reconstructing the tree.
+
+Each comma separated value in the string must be either an integer or a character '#' representing null pointer.
+
+You may assume that the input format is always valid, for example it could never contain two consecutive commas such as "1,,3".
+
+Example 1:
+"9,3,4,#,#,1,#,#,2,#,6,#,#"
+ Return true
+
+Example 2:
+"1,#"
+ Return false
+
+Example 3:
+"9,#,#,1"
+ Return false
+
+public class Solution {
+    public bool IsValidSerialization(string preorder) {
+        int next = 0;
+        
+        string[] preO = preorder.Split(',');
+        if(preO.Length == 1) return preO[0] == "#";
+        if(preO.Length == 2) return false;
+        bool ret = isBT(preO, 0, ref next);
+        if(ret && next == preO.Length) return true;
+        return false;
+    }
+    
+    private bool isBT(string[] preO, int i, ref int next){
+        
+        if(i == preO.Length){
+            if(preO[i-1] == preO[i-2] && preO[i-1] == "#"){
+                return true;
+            }else return false;
+        }
+        
+        if(preO[i] == "#"){
+            next = i+1;
+            return true;
+        }
+        
+        bool ret = isBT(preO, i+1, ref next);
+        if(ret) ret = isBT(preO, next, ref next);
+        
+        return ret;
+    }
+}
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public IList<IList<int>> PathSum(TreeNode root, int sum) {
+        IList<IList<int>> final = new List<IList<int>>();
+        List<int> current = new List<int>();
+        int s = 0;
+        if(root == null) return final;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.Push(root);
+        HashSet<TreeNode> visited = new HashSet<TreeNode>();
+        visited.Add(null);
+        while(stack.Any()){
+            
+            TreeNode node = stack.Peek();
+            if(node==null){
+                stack.Pop();
+                continue;
+            }
+            
+            if(visited.Contains(node)){
+                if(visited.Contains(node.right)){
+                    stack.Pop();
+                    s -= node.val;
+                    current.Remove(current.Count-1);
+                    continue;
+                }else{
+                    stack.Push(node.right);
+                    continue;
+                }
+            }else{
+                visited.Add(node);
+            }
+
+            s+= node.val;
+            current.Add(node.val);
+            
+            if(node.left == null && node.right == null){
+                if(s == sum){
+                    final.Add(new List<int>(current));
+                }
+                
+                s-=node.val;
+                current.Remove(current.Count-1);
+                stack.Pop();
+                continue;
+            }
+            
+            stack.Push(node.left);
+        }
+        
+        
+        return final;
+    }
+    
+    private void bt(TreeNode root, int sum, int s, List<int> current, IList<IList<int>> final){
+        current.Add(root.val);
+        s += root.val;
+        
+        if(root.left == null && root.right == null){
+            if(sum == s){
+                final.Add(new List<int>(current));
+            }
+        }
+        
+        if(root.left != null) bt(root.left, sum, s, current, final);
+        if(root.right != null) bt(root.right, sum, s, current, final);
+        
+        current.Remove(current.Count-1);
+        s -= root.val;
     }
 }
