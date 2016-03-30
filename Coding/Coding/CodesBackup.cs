@@ -2873,7 +2873,6 @@ public class Solution {
     }
 }
 
-<<<<<<< HEAD
 Follow up for "Search in Rotated Sorted Array":
  What if duplicates are allowed?
 
@@ -2910,7 +2909,6 @@ public class Solution {
                 ret = bs(nums, target, start, lM);
         }
         
-=======
 
 
 public class Solution {
@@ -3029,7 +3027,67 @@ public class Solution
             }
         }
 
->>>>>>> 929a070c893ce55d1710beb9eae5dd210547fb3c
         return ret;
     }
+}
+
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode SortedListToBST(ListNode head) {
+        ListNode t = head;
+        int count = 0;
+        if(head == null) return null;
+        
+        while(t!=null){
+            t = t.next;
+            count++;
+        }
+        
+        List<TreeNode> ltr = new List<TreeNode>(count);
+        for(int i = 0; i < count; i++){
+            ltr.Add(new TreeNode(int.MinValue));
+        }
+        
+        TreeNode root = ConstructTree(ltr, 0, count-1);
+        DFS(root, ref head);
+        return root;
+    }
+    
+    private TreeNode ConstructTree(List<TreeNode> ltr, int start, int end){
+        if(start > end) return null;
+        
+        int middle = start + (end-start)/2;
+        TreeNode root = ltr[middle];
+        root.left = ConstructTree(ltr, start, middle-1);
+        root.right = ConstructTree(ltr, middle+1, end);
+        
+        return root;
+    }
+    
+    private void DFS(TreeNode root, ref ListNode head){
+        if(root == null) return;
+        
+        DFS(root.left, ref head);
+        root.val = head.val;
+        head = head.next;
+        DFS(root.right, ref head);
+    }
+   
 }
