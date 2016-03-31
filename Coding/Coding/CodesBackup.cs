@@ -3177,34 +3177,17 @@ public class Solution
     public IList<TreeNode> GenerateTrees(int n)
     {
         List<TreeNode>[,] cache = new List<TreeNode>[n + 2, n + 2];
-
-        for (int i = 0; i <= n+1; i++)
-        {
-            for (int j = 0; j <= n+1; j++)
-            {
-                cache[i, j] = null;
-            }
-        }
-
         if (n == 0) return new List<TreeNode>();
-
-        for (int len = 1; len <= n; len++)
-        {
-            for (int i = 1; i <= n - len + 1; i++)
-            {
-                for (int j = i; j < i + len; j++)
-                {
-
+        for (int len = 1; len <= n; len++){
+            for (int i = 1; i <= n - len + 1; i++){
+                for (int j = i; j < i + len; j++){
                     List<TreeNode> left = cache[i, j-1];
-                    List<TreeNode> right = cache[j + 1, i + len - 1];
-                    
+                    List<TreeNode> right = cache[j + 1, i + len - 1];         
                     if (left == null) { left = new List<TreeNode>(); left.Add(null); }
                     if (right == null) { right = new List<TreeNode>(); right.Add(null); }
                     if (cache[i, i + len - 1] == null) cache[i, i + len - 1] = new List<TreeNode>();
-                    for (int lni = 0; lni < left.Count; lni++)
-                    {
-                        for (int rni = 0; rni < right.Count; rni++)
-                        {
+                    for (int lni = 0; lni < left.Count; lni++){
+                        for (int rni = 0; rni < right.Count; rni++){
                             TreeNode l = null;
                             l = CopyTree(left[lni], ref l);
                             TreeNode r = null;
