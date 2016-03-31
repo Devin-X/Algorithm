@@ -3038,7 +3038,7 @@ One way to serialize a binary tree is to use pre-order traversal. When we encoun
    3     2
   / \   / \
  4   1  #  6
- \ / \   / \
+/ \ / \   / \
 # # # #   # #
 
 
@@ -3172,5 +3172,134 @@ public class Solution {
         
         current.Remove(current.Count-1);
         s -= root.val;
+    }
+}
+
+
+
+  public class TreeNode {
+      public int val;
+      public TreeNode left;
+      public TreeNode right;
+      public TreeNode(int x) { val = x; }
+  }
+public class Solution {
+    public int NumTrees(int n) {
+        
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        int[] cache = new int[n+1];
+        cache[0] = 1;
+        cache[1] = 1;
+        cache[2] = 2;
+        for(int i = 3; i <= n; i++){
+            cache[i] = 0;
+            for(int j = 0; j < i; j++){
+                cache[i] += cache[j]*cache[i-j-1];
+            }
+        }
+        
+        return cache[n];
+    }
+    
+    
+    public IList<TreeNode> GenerateTrees(int n) {
+        List<TreeNode>[,] dp = new List<TreeNode>[n+1,n+1];
+        for(int i = 0; i <= n; i++){
+            dp[i,i]= new List<TreeNode>();
+            dp[i,i].Add(new TreeNode(i));
+        }
+        if(n == 0) return dp[0,0]; 
+        if(n == 1){
+            ret.Add(new TreeNode(1));
+            return ret;
+        }
+        
+        for(int i = 1; i <= n ; i++){
+            for(int j = 1; j <= i; j++){
+                
+                List<TreeNode> left;
+                List<TreeNode> right;
+                if(j-1 >=1) left = dp[1,j-1];
+                else {left = new List<TreeNode>(); left.Add(null);}
+                if(j+1 <= i) right = dp[j+1, i];
+                else {right = new List<TreeNode>(); right.Add(null);}                
+                
+                foreach (TreeNode ln in left)
+                {
+                    foreach (TreeNode rn in right)
+                    {
+                        TreeNode root = new TreeNode(j);
+                        root.left = ln;
+                        root.right = rn;
+                        
+                        if(dp[1, j] == null) dp[1,j] = new List<TreeNode>();
+                        
+                        dp[1,j].Add(root);
+                    }
+                }   
+            }
+        }
+        
+        reutrn dp[1,n];
+    }
+}
+
+
+public class Solution {
+    public IList<TreeNode> GenerateTrees(int n) {
+        List<TreeNode>[,] cache = new List<TreeNode>[n+1,n+1];
+        
+        for(int i = 0; i <= n; i++){
+            for(int j = 0; j <=n; j++){
+                cache[i,j] = null;
+            }
+        }
+        
+        for(int i = 0; i <= n; i++){
+            cache[i,i]= new List<TreeNode>();
+            cache[i,i].Add(new TreeNode(i));
+            
+        }
+        
+        if(n == 0) return cache[0,0]; 
+        
+        for(int len = 1; len <= n; len++){
+            for(int i = 1; i <= n-len; i++){
+                for(int j = i; j <= i+len; j++){
+                    
+                    List<TreeNode> left;
+                    List<TreeNode> right;
+                    left = cache[1,j];
+                    if(left == null){ left = new List<TreeNode>(); left.Add(null);}
+                    right = cache[j+1, i];
+                    if(right == null) {right = new List<TreeNode>(); right.Add(null);}                
+                    
+                    foreach (TreeNode ln in left){
+                        foreach (TreeNode rn in right){
+                            if(ln!=null){
+                                TreeNode temp = ln;
+                                while(temp.right!=null) temp = temp.right;
+                                temp.right = rn;
+                                if(cache[1,i] == null) cache[1,i] = new List<TreeNode>();
+                                cache[1,i].Add(ln);
+                            }
+                            
+                            if(rn != null){
+                                TreeNode temp = rn;
+                                while(temp.right!=null) temp = temp.left;
+                                temp.left = ln;
+                                if(cache[1,i] == null) cache[1,i] = new List<TreeNode>();
+                                cache[1,i].Add(rn);
+                            }
+                        }
+                    }
+                }
+            }
+        
+        
+        
+        }
+        return cache[1,n];
     }
 }
