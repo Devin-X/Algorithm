@@ -3038,7 +3038,7 @@ One way to serialize a binary tree is to use pre-order traversal. When we encoun
    3     2
   / \   / \
  4   1  #  6
-/ \ / \   / \
+ \ / \   / \
 # # # #   # #
 
 
@@ -3115,6 +3115,7 @@ public class Solution {
         stack.Push(root);
         HashSet<TreeNode> visited = new HashSet<TreeNode>();
         visited.Add(null);
+
         while(stack.Any()){
             
             TreeNode node = stack.Peek();
@@ -3153,8 +3154,6 @@ public class Solution {
             
             stack.Push(node.left);
         }
-        
-        
         return final;
     }
     
