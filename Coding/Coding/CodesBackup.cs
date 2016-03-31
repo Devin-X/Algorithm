@@ -88,7 +88,7 @@ public class Solution {
 
 
 
-Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements. 
+// Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements. 
 
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0]. 
 
@@ -631,9 +631,9 @@ public class Solution {
 }
 
 
-Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
+// Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
 
-For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.
+// For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.
 
 Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
@@ -756,7 +756,7 @@ Given an array and a value, remove all instances of that value in place and retu
 
 Do not allocate extra space for another array, you must do this in place with constant memory.
 
-The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+// The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 
 Example:
  Given input array nums = [3,2,2,3], val = 3 
@@ -785,7 +785,7 @@ Do not allocate extra space for another array, you must do this in place with co
 For example,
  Given input array nums = [1,1,2], 
 
-Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length. 
+// Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length. 
 
 public class Solution {
     public int RemoveDuplicates(int[] nums) {
@@ -841,8 +841,7 @@ public class Solution {
 }
 
 
-<<<<<<< HEAD
-Given numRows, generate the first numRows of Pascal's triangle.
+// Given numRows, generate the first numRows of Pascal's triangle.
 
 For example, given numRows = 5,
  Return 
@@ -1214,10 +1213,10 @@ public class Solution {
 }
 
 
-Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+// Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
 
 For example,
- Given n = 3, there are a total of 5 unique BST's. 
+//  Given n = 3, there are a total of 5 unique BST's. 
    1         3     3      2      1
     \       /     /      / \      \
      3     2     1      1   3      2
@@ -2843,7 +2842,9 @@ public class Solution
         return null;
     }
 }
-Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index. 
+
+
+// Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index. 
 
 According to the definition of h-index on Wikipedia: "A scientist has index h if h of his/her N papers have at least h citations each, and the other N − h papers have no more than h citations each." 
 
@@ -3090,4 +3091,70 @@ public class Solution {
         DFS(root.right, ref head);
     }
    
+}
+
+
+    // Given a range[m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+
+// For example, given the range[5, 7], you should return 4. 
+
+
+    public class Solution
+    {
+        public int RangeBitwiseAnd(int m, int n)
+        {
+            int sum = m;
+            int lgM = (int)Math.Log(m, 2);
+            int lgN = (int)Math.Log(n, 2);
+            if (lgM == lgN)
+            {
+                for (int i = m; i <= n; i++)
+                {
+                    sum = sum & i;
+                    if (i == n) break;
+                }
+                return sum;
+            }
+
+            sum = RangeBitwiseAnd(0, n - (int)Math.Pow(2, lgN)) & (int)Math.Pow(2, lgN);
+            return sum;
+        }
+    }
+    
+
+A message containing letters from A-Z is being encoded to numbers using the following mapping: 
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+
+
+Given an encoded message containing digits, determine the total number of ways to decode it. 
+
+For example,
+ Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12). 
+
+    
+    public class Solution {
+    public int NumDecodings(string s) {
+        if(string.IsNullOrEmpty(s)) return 0;
+        if(s[0] == '0') return 0;
+        int[] ret = new int[s.Length+1];
+        int n = s.Length;
+        for(int i=0; i <= n; i++){
+            ret[i] = 0;    
+        }
+        
+        ret[0] = 1;
+        ret[1] = 1;
+        for(int i = 2; i <= n; i++){
+            if(s[i-1] == '0' && s[i-2] != '1' && s[i-2] != '2') return 0;
+            if(s[i-1] != '0') ret[i] +=ret[i-1];
+            if((s[i-2] =='1' || s[i-2] == '2'  && s[i-1] <= '6')){
+                ret[i] += ret[i-2];
+            }
+        }
+        
+        return ret[n];
+    }
 }
