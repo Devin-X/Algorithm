@@ -7,14 +7,6 @@ using System.Threading.Tasks;
 namespace Coding.Array
 {
 
-    // Definition for singly-linked list.
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int x) { val = x; }
-    }
-
     class DeleteLinkedListNode
     {
         public void DeleteNode(ListNode node)
