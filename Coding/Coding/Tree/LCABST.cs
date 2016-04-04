@@ -8,14 +8,6 @@ using System.Threading.Tasks;
 namespace Coding.Tree
 {
     //Definition for a binary tree node.
-    public class TreeNode
-    {
-        public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int x) { val = x; }
-    }
-
     class LCABST
     {
         public TreeNode LowestCommonAncestorBST(TreeNode root, TreeNode p, TreeNode q)
@@ -69,7 +61,7 @@ namespace Coding.Tree
                 if (preTravel[preTravel.Count - 1 - i] == q.val && preQ == -1) preQ = preTravel.Count - 1 - i; 
             }
 
-            Coding.Tree.TreeNode ret = null;
+            Coding.TreeNode ret = null;
             int leastLevelIndex = 0;
 
             while (target == int.MinValue && middleRoot < middleTravel.Count)
@@ -156,28 +148,28 @@ namespace Coding.Tree
 
         public static void Test()
         {
-            Coding.Tree.TreeNode root = new Coding.Tree.TreeNode(-1);
-            Coding.Tree.TreeNode left = new Coding.Tree.TreeNode(2);
-            Coding.Tree.TreeNode right = new Coding.Tree.TreeNode(3);
+            TreeNode root = new TreeNode(-1);
+            TreeNode left = new TreeNode(2);
+            TreeNode right = new TreeNode(3);
             root.left = left;
             root.right = right;
 
-            //Coding.Tree.TreeNode left1 = new Coding.Tree.TreeNode(-2);
-            //Coding.Tree.TreeNode right1 = new Coding.Tree.TreeNode(4);
-            ////Coding.Tree.TreeNode right2 = new Coding.Tree.TreeNode(48);
+            //TreeNode left1 = new TreeNode(-2);
+            //TreeNode right1 = new TreeNode(4);
+            ////TreeNode right2 = new TreeNode(48);
             //left.left = left1;
             //left.right = right1;
             ////right.right = right2;
 
-            //Coding.Tree.TreeNode right3 = new Coding.Tree.TreeNode(8);
+            //TreeNode right3 = new TreeNode(8);
             //left1.left = right3;
 
-            //Coding.Tree.TreeNode right4left = new Coding.Tree.TreeNode(-71);
-            //Coding.Tree.TreeNode right4right = new Coding.Tree.TreeNode(-22);
+            //TreeNode right4left = new TreeNode(-71);
+            //TreeNode right4right = new TreeNode(-22);
             //right3.left = right4left;
             //right3.right = right4right;
 
-            //Coding.Tree.TreeNode right5right = new Coding.Tree.TreeNode(8);
+            //TreeNode right5right = new TreeNode(8);
             //right4right.right = right5right;
             LowestCommonAncestorBinaryTree(root, left, right);
         }

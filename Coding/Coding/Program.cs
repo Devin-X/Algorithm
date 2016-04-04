@@ -13,81 +13,6 @@ namespace Coding
 {
     class Program
     {
-        public class ListNode
-        {
-            public int val;
-            public ListNode next;
-
-            public ListNode(int x)
-            {
-                val = x;
-                next = null;
-            }
-        }
-
-        public class TreeNoden
-        {
-            public int val;
-            public TreeNoden left;
-            public TreeNoden right;
-
-            public TreeNoden(int x)
-            {
-                val = x;
-            }
-        }
-        public static IList<TreeNode> GenerateTrees(int n) {
-        List<TreeNode>[,] cache = new List<TreeNode>[n+1,n+1];
-        
-        for(int i = 0; i <= n; i++){
-            cache[i,i]= new List<TreeNode>();
-            cache[i,i].Add(new TreeNode(i));
-        }
-        if(n == 0) return cache[0,0]; 
-        
-        for(int i = 1; i <= n ; i++){
-            for(int j = 1; j <= i; j++){
-                
-                List<TreeNode> left;
-                List<TreeNode> right;
-                if(j-1 >=1) left = cache[1,j-1];
-                else {left = new List<TreeNode>(); left.Add(null);}
-                if(j+1 <= i) right = cache[j+1, i];
-                else {right = new List<TreeNode>(); right.Add(null);}                
-                
-                foreach (TreeNode ln in left){
-                    foreach (TreeNode rn in right){
-                        TreeNode root = new TreeNode(j);
-                        root.left = ln;
-                        root.right = rn;
-                        
-                        if(cache[1, j] == null) cache[1,j] = new List<TreeNode>();
-                        
-                        cache[1,j].Add(root);
-                    }
-                }
-            }
-        }
-        
-        return cache[1,n];
-    }
-        private static void bt(TreeNoden root, int sum, int s, List<int> current, IList<IList<int>> final)
-        {
-        current.Add(root.val);
-        s += root.val;
-        
-        if(root.left == null && root.right == null){
-            if(sum == s){
-                final.Add(new List<int>(current));
-            }
-        }
-        
-        if(root.left != null) bt(root.left, sum, s, current, final);
-        if(root.right != null) bt(root.right, sum, s, current, final);
-        
-        current.Remove(current.Count-1);
-        s -= root.val;
-    }
         static void Main(string[] args)
         {
             MaxSlidingWindowSolution.Test();
@@ -96,24 +21,20 @@ namespace Coding
             
              IList<IList<int>> final = new List<IList<int>>(1000);
              List<int> current = new List<int>();
-            int s = 0;
 
-            TreeNoden root = new TreeNoden(0);
-            TreeNoden r = root;
-            for (int i = 0; i < 5000; i++)
-            {
-                TreeNoden newNode = new TreeNoden(1);
-                root.left = newNode;
-                root.right = null;
-                root = root.left;
-            }
+            Solution sl = new Solution();
             
 
-        
-             bt(r, 5000, s, current, final);
 
-            Console.Write(final.Count);
+            Coding.ListNode head = new Coding.ListNode(3);
+            head.next = new Coding.ListNode(4);
 
+            head.next.next = new Coding.ListNode(1);
+            //head.next.next.next = new Array.ListNode(4);
+            head = sl.SortList(head);
+
+            int[] test = { -1, -1, -2, -2 };
+            sl.MaxProductInt(test);
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

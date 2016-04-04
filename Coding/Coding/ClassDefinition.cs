@@ -10,10 +10,38 @@ namespace Coding
     {
         public int val;
         public ListNode next;
-        public ListNode(int x)
+        public ListNode(int v)
         {
-            this.val = x;
-            next = null;
+            val = v;
+        }
+    }
+
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+
+        public TreeNode(int value, TreeNode l, TreeNode r)
+        {
+            val = value;
+            left = l;
+            right = r;
+        }
+
+        public TreeNode(int v)
+        {
+            val = v;
+        }
+    }
+
+    public class Vertex
+    {
+        public int value;
+        public List<Vertex> neighbours;
+        public Vertex(int v)
+        {
+            value = v;
         }
     }
 }
