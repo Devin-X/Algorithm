@@ -10,12 +10,12 @@ using Coding.Tree;
 namespace Coding
 {
 
-    public class Solution
-    {
+public class Solution
+{
         public bool IsPowerOfThree(int n)
         {
             int maxP3 = 1162261467;
-            if (n > maxP3 || n <= 0 || n > int.MaxValue)
+                if (n > maxP3 || n <= 0 || n > int.MaxValue)
                 return false;
             return maxP3 % n == 0;
         }
@@ -3304,8 +3304,132 @@ namespace Coding
             else head.next = a;
             return hh.next;
         }
+        
+        
+        
+        // Find the contiguous subarray within an array (containing at least one number) which has the largest product. 
 
-    }
+        // For example, given the array [2,3,-2,4],
+        // the contiguous subarray [2,3] has the largest product = 6. 
+        public int MaxProductInt(int[] nums) {
+            int n = nums.Length;
+            List<int> num = new List<int>();
+            int ret = nums[0];
+            int cnt = 0;
+            int cntP = 0;
+            for(int i = 0; i < n; i++){ 
+                ret = Math.Max(nums[i], ret);
+                if(nums[i] == 1) {cntP++;continue;}
+                else if(nums[i] == -1){cnt++; continue;}
+                else {
+                  if(cnt > 0){
+                      if(cnt%2 == 0) num.Add(1);
+                      else num.Add(-1);
+                      cnt = 0;
+                  }else if(cntP > 0){
+                      num.Add(1);
+                      cntP = 0;
+                  }
+                  num.Add(nums[i]);
+                }
+            }
+            
+            if(cnt > 0){
+                if(cnt%2 == 0) num.Add(1);
+                else num.Add(-1);
+                cnt = 0;
+            }else if(cntP > 0){
+                 num.Add(1);
+                 cntP = 0;
+            }
+            
+            n = num.Count;
+            nums = num.ToArray();
+            int[,] dp = new int[n,n];
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < n; j++){
+                    dp[i,j] = 1;
+                }
+                dp[i,i] = nums[i];
+                ret = Math.Max(nums[i], ret);
+            }
+
+            for(int i = 2; i <= n; i++){
+                for(int start = 0; start <= n-i; start++){
+                        int end = start+i-1;
+                        dp[start,end] = dp[start,start] * dp[start+1, end];
+                        ret = Math.Max(dp[start,end], ret);
+                }
+            }
+            return ret;
+        }
+        
+        public int MaxProductIntOn(int[] nums){
+            int n = nums.Length;
+            int ret = int.MinValue;
+            List<int> maxP = new List<int>();
+            List<int> minP = new List<int>();
+            
+            maxP.Add(nums[0]);
+            minP.Add(nums[0]);
+            
+            for(int i = 1; i < n; i++){
+                maxP.Add(Math.Max(Math.Max(nums[i], nums[i]*maxP[i-1]), nums[i]*minP[i-1]));
+                minP.Add(Math.Min(Math.Min(nums[i], nums[i]*minP[i-1]), nums[i]*maxP[i-1]));
+            }
+            
+            foreach(int i in maxP){
+                ret = Math.Max(i,ret);
+            }
+            return ret;
+        }
+        
+        
+        // Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+
+        // Example:
+
+        // Given nums = [-2, 0, 3, -5, 2, -1]
+
+        // sumRange(0, 2) -> 1
+        // sumRange(2, 5) -> -1
+        // sumRange(0, 5) -> -3
+
+
+
+        // Note:
+
+        // 1.You may assume that the array does not change.
+        // 2.There are many calls to sumRange function.
+        
+        //private int[,] rangeSumCache = new int[n, n];
+        private int[] rangeCacheRight;
+        private int rangeSumCache = 0;
+        private int rangeSumLen;
+        public NumArray(int[] nums) {
+            int n = nums.Length;
+            rangeSumLen = n;
+            if(n == 0) return;
+            rangeCacheLeft = new int[n];
+            rangeCacheRight = new int[n];
+            rangeCacheLeft[0] = nums[0];
+            rangeCacheRight[n-1] = nums[n-1];
+            rangeSumCache += nums[0];
+            for(int i = 1; i < n; i++){
+                rangeSumCache += nums[i];
+                rangeCacheLeft[i] = rangeCacheLeft[i-1] + nums[i];
+                rangeCacheRight[n-1-i] = rangeCacheRight[n-i] + nums[n-1-i];
+            }
+        }
+
+        public int SumRange(int i, int j) {
+            if(rangeSumLen == 0) return 0;
+            if(i == 0 && j == rangeSumLen-1) return rangeSumCache;
+            else if(i==0) return rangeSumCache-rangeCacheRight[j+1];
+            else if(j == rangeSumLen-1) return rangeSumCache-rangeCacheLeft[i-1];
+            else return rangeSumCache-rangeCacheLeft[i-1]-rangeCacheRight[j+1];
+        }       
+}
 
 
 
