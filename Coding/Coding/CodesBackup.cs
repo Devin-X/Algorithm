@@ -3429,7 +3429,88 @@ public class Solution
             else if(i==0) return rangeSumCache-rangeCacheRight[j+1];
             else if(j == rangeSumLen-1) return rangeSumCache-rangeCacheLeft[i-1];
             else return rangeSumCache-rangeCacheLeft[i-1]-rangeCacheRight[j+1];
-        }       
+        }
+        
+        // Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area. 
+
+        // For example, given the following matrix: 
+        // 1 0 1 0 0
+        // 1 0 1 1 1
+        // 1 1 1 1 1
+        // 1 0 0 1 0
+
+        // Return 4.
+        
+        public int MaximalSquare(char[,] matrix) {
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[,] v = new int[n,m];
+            int[,] h = new int[n,m];
+            int[,] ret = new int[n,m];
+            int max = 0;
+            if(n==0 && m == 0) return 0;
+            
+            for(int i = 0; i < n; i++){
+                if(m == 1 && matrix[i,0] == '1') return 1;
+                if(matrix[i,0] == '1') h[i,0] = 1;
+                else h[i,0] = 0;
+                for(int j = 1; j < m ; j++){
+                    if(matrix[i,j] == '1') h[i,j] = h[i,j-1] + 1;
+                    else h[i,j] = 0;
+                }
+            }
+            
+            for(int j = 0; j < m; j++){
+                if(n == 1 && matrix[0,j] == '1') return 1;
+                if(matrix[0,j] == '1') v[0,j] = 1;
+                else v[0,j] = 0;
+                for(int i = 1; i < n ; i++){
+                    if(matrix[i,j] == '1') v[i,j] = v[i-1,j] + 1;
+                    else v[i,j] = 0;
+                }
+            }
+            
+            for(int i = 0; i < n; i++){
+                ret[i, 0] = matrix[i,0] == '1' ? 1 : 0;
+                max = Math.Max(ret[i,0], max);
+            } 
+            for(int j = 0; j < m; j++){
+                ret[0, j] = matrix[0,j] == '1' ? 1 : 0;
+                max = Math.Max(ret[0,j], max);
+            }
+            
+            for(int i = 1; i < n; i++){
+                for(int j = 1; j < m; j++){
+                    if(matrix[i,j] == '0'){
+                        ret[i,j] = 0;
+                        h[i,j] = 0;
+                        v[i,j] = 0;
+                        continue;    
+                    } 
+                    else if(matrix[i-1,j-1] == '0'){
+                        ret[i,j] = 1;
+                        h[i,j] = 1;
+                        v[i,j] = 1; 
+                        max = Math.Max(max, 1);
+                        continue;
+                    }
+                    
+                    int shortSide = Math.Min(v[i,j], h[i,j]);
+                    if(ret[i-1,j-1] >= (shortSide-1)*(shortSide-1)){
+                        ret[i,j] = shortSide*shortSide;
+                        v[i,j] = shortSide;
+                        h[i,j] = shortSide;
+                    }else{
+                        ret[i,j] = ret[i-1, j-1] + 2 * v[i-1,j-1] + 1;   
+                        v[i,j] = v[i-1,j-1] + 1;
+                        h[i,j] = v[i-1,j-1] + 1;  
+                    }
+                    max = Math.Max(ret[i,j], max);
+                }
+            }
+            
+            return max;
+        }
 }
 
 
