@@ -37,10 +37,11 @@ namespace Coding
             sl.MaxProductInt(test);
             char[,] m = new char[2, 2];
             m[0, 0] = '0';
-            m[0, 1] = '0';
-            m[1, 0] = '0';
+            m[0, 1] = '1';
+            m[1, 0] = '1';
             m[1, 1] = '0';
             sl.MaximalSquare(m);
+            sl.MaximalRectangle(m);
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

@@ -3444,72 +3444,115 @@ public class Solution
         public int MaximalSquare(char[,] matrix) {
             int n = matrix.GetLength(0);
             int m = matrix.GetLength(1);
-            int[,] v = new int[n,m];
-            int[,] h = new int[n,m];
             int[,] ret = new int[n,m];
             int max = 0;
             if(n==0 && m == 0) return 0;
             
             for(int i = 0; i < n; i++){
-                if(m == 1 && matrix[i,0] == '1') return 1;
-                if(matrix[i,0] == '1') h[i,0] = 1;
-                else h[i,0] = 0;
-                for(int j = 1; j < m ; j++){
-                    if(matrix[i,j] == '1') h[i,j] = h[i,j-1] + 1;
-                    else h[i,j] = 0;
-                }
-            }
-            
-            for(int j = 0; j < m; j++){
-                if(n == 1 && matrix[0,j] == '1') return 1;
-                if(matrix[0,j] == '1') v[0,j] = 1;
-                else v[0,j] = 0;
-                for(int i = 1; i < n ; i++){
-                    if(matrix[i,j] == '1') v[i,j] = v[i-1,j] + 1;
-                    else v[i,j] = 0;
-                }
-            }
-            
-            for(int i = 0; i < n; i++){
                 ret[i, 0] = matrix[i,0] == '1' ? 1 : 0;
                 max = Math.Max(ret[i,0], max);
             } 
+            
             for(int j = 0; j < m; j++){
                 ret[0, j] = matrix[0,j] == '1' ? 1 : 0;
                 max = Math.Max(ret[0,j], max);
             }
             
+            if(n == 1 || m == 1) return max;
+            
             for(int i = 1; i < n; i++){
                 for(int j = 1; j < m; j++){
-                    if(matrix[i,j] == '0'){
-                        ret[i,j] = 0;
-                        h[i,j] = 0;
-                        v[i,j] = 0;
-                        continue;    
-                    } 
-                    else if(matrix[i-1,j-1] == '0'){
-                        ret[i,j] = 1;
-                        h[i,j] = 1;
-                        v[i,j] = 1; 
-                        max = Math.Max(max, 1);
-                        continue;
-                    }
+                    if(matrix[i,j] == '0'){ret[i,j] = 0; continue;} 
+                    else if(matrix[i-1,j-1] == '0'){ret[i,j] = 1; continue;}
                     
-                    int shortSide = Math.Min(v[i,j], h[i,j]);
-                    if(ret[i-1,j-1] >= (shortSide-1)*(shortSide-1)){
-                        ret[i,j] = shortSide*shortSide;
-                        v[i,j] = shortSide;
-                        h[i,j] = shortSide;
-                    }else{
-                        ret[i,j] = ret[i-1, j-1] + 2 * v[i-1,j-1] + 1;   
-                        v[i,j] = v[i-1,j-1] + 1;
-                        h[i,j] = v[i-1,j-1] + 1;  
-                    }
+                    int shortSide = (int)Math.Min(Math.Sqrt(ret[i-1,j]), Math.Sqrt(ret[i,j-1]));
+                    int min = (int)Math.Sqrt(ret[i-1,j-1]);
+                    if(min >= shortSide) ret[i,j] = (shortSide+1)*(shortSide+1);
+                    else ret[i,j] = ret[i-1, j-1] + 2 * min + 1;   
+                    
                     max = Math.Max(ret[i,j], max);
                 }
             }
             
             return max;
+        }
+        
+        //[
+        //    "1010",
+        //    "1011",
+        //    "1011",
+        //    "1111"
+        //]
+        public int MaximalRectangle(char[,] matrix){
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[,] yCache = new int[n,m];
+            int max = 0;
+            if(n==0 && m == 0) return 0;
+                  
+            for(int j = 0; j < m; j++){
+                if(matrix[0,j] == '1') yCache[0,j] = 1;
+                else yCache[0,j] = 0;
+                for(int i = 1; i < n ; i++){
+                    if(matrix[i,j] == '1') yCache[i,j] = yCache[i-1,j] + 1;
+                    else yCache[i,j] = 0;
+                }
+            }
+
+            int h;
+            int v;
+            for(int i = 0; i < n; i++){
+                    h = 0;
+                    v = int.MaxValue;
+                    for (int j = start; j < m; j++){
+                        if(matrix[i,j] == '1'){
+                            h++;
+                            v = Math.Min(yCache[i,j], v);
+                                max = Math.Max(max, v*h);
+                        }else{
+                            h = 0;v = int.MaxValue;
+                        }
+                    }
+                }
+            }            
+            return max;
+        }
+        
+        public int MaxRectangle(char[,] matrix){
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[] left = new int[m];
+            int[] right = new int[m];
+            int[] h = new int[m];
+            if(n == 0 || m == 0 ) return 0;
+            int area = int.MinValue;
+            for(int i = 0; i < n; i++){
+                int l = 0;
+                int r = m;
+                for(int j = 0; j < m; j++){
+                    if(matrix[i,j] == '1'){
+                        h[j]++;
+                        left[j] = Math.Max(l, left[j]);
+                    }else{
+                        l = j+1;
+                        h[j] = 0;
+                        left[j] = 0;
+                    }
+                }
+                
+                for(int j = m-1; j > -1; j--){
+                    if(matrix[i,j] == '1'){
+                        right[j] = Math.Min(r, right[j]);
+                        area = Math.Max(area, h[j] * (right[j] - left[j]));
+                    }else{
+                        right[j] = m;
+                        r = j;
+                    }
+                }
+            }
+            
+            return area;
+        }
         }
 }
 
