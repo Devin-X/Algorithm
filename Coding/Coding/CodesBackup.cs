@@ -3431,6 +3431,74 @@ public class Solution
             else return rangeSumCache-rangeCacheLeft[i-1]-rangeCacheRight[j+1];
         }
         
+//  Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+//  Range Sum Query 2D
+//  The above rectangle (with the red border) is defined by (row1, col1) = (2, 1) and (row2, col2) = (4, 3), which contains sum = 8. 
+
+//  Example:
+
+//   Given matrix = [
+//   [3, 0, 1, 4, 2],
+//   [5, 6, 3, 2, 1],
+//   [1, 2, 0, 1, 5],
+//   [4, 1, 0, 1, 7],
+//   [1, 0, 3, 0, 5]
+//   ]
+
+//  sumRegion(2, 1, 4, 3) -> 8
+//  sumRegion(1, 1, 2, 2) -> 11
+//  sumRegion(1, 2, 2, 4) -> 12
+        
+        private int[,] rangeCacheRight2D;
+        private int[,] rangeCacheLeft2D;
+        private int[] rangeSumCache2D;
+        private int rangeSum2DLen = 0;
+        public NumMatrix(int[,] matrix) {
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            rangeSum2DLen = m;
+            if(n == 0) return;
+            rangeCacheLeft2D = new int[n,m];
+            rangeCacheRight2D = new int[n,m];
+            rangeSumCache2D = new int[n];
+            for(int i = 0; i < n; i++) rangeCacheLeft2D[i,0] = matrix[i,0];
+            for(int j = 0; j < n; j++) rangeCacheRight2D[j, m-1] = matrix[j, m-1];
+            for(int i = 0; i < n; i++) rangeSumCache2D[i] += matrix[i,0];
+            for(int i = 0; i < n; i++){
+                for(int j = 1; j < m; j++){
+                    rangeSumCache2D[i] += matrix[i, j];
+                    rangeCacheLeft2D[i,j] = rangeCacheLeft2D[i, j-1] + matrix[i,j];
+                    rangeCacheRight2D[i,m-1-j] = rangeCacheRight2D[i, m-j] + matrix[i,m-1-j];
+                }
+            }
+        }
+
+        public int SumRegion(int row1, int col1, int row2, int col2) {
+            if(rangeSum2DLen == 0) return 0;
+            int sum = 0;
+            if(col1 == 0 && col2 == rangeSum2DLen-1 || col2 == 0 && col1 == rangeSum2DLen-1){
+                for(int i = row1; i <= row2; i++) sum += rangeSumCache2D[i];
+                return sum;
+            } 
+            else if(col1==0) {
+                for(int i = row1; i <= row2; i++)
+                    sum += rangeSumCache2D[i]-rangeCacheRight2D[i,col2+1];
+                return sum;
+            }
+            else if(col2 == rangeSum2DLen-1){
+                for(int i = row1; i <= row2; i++)  sum += rangeSumCache2D[i] - rangeCacheLeft2D[i,col1-1];
+                return sum;
+            }
+            else{
+                for(int i = row1; i <= row2; i++)
+                    sum += rangeSumCache2D[i] - rangeCacheLeft2D[i,col1-1] - rangeCacheRight2D[i, col2+1];
+                return sum;
+            }
+            
+            return sum;
+        }
+    
         // Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area. 
 
         // For example, given the following matrix: 
@@ -3609,6 +3677,36 @@ public class Solution
             }
             
             return area;
+        }
+
+
+// // You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. 
+
+// // Example 1:
+// //  coins = [1, 2, 5], amount = 11
+// //  return 3 (11 = 5 + 5 + 1) 
+
+// // Example 2:
+// //  coins = [2], amount = 3
+// //  return -1. 
+             
+        public int CoinChange(int[] coins, int amount){
+            int n = coins.Length;
+            int[] ret = new int[amount+1];
+            
+            for(int i = 0; i <= amount ;i++){
+                ret[i] = int.MaxValue;
+            }
+            
+            ret[0] = 0;
+            
+            for(int a = 1; a <= amount; a++){
+                for(int i = 0; i < n; i++){  
+                    if(a >= coins[i] && ret[a-coins[i]] != int.MaxValue)  ret[a] = Math.Min(ret[a-coins[i]]+1, ret[a]);
+                }
+            }
+            
+            return ret[amount] == int.MaxValue ? -1 : ret[amount];
         }
 }
 
