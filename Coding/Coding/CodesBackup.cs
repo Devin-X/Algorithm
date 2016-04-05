@@ -3502,6 +3502,7 @@ public class Solution
             int h;
             int v;
             for(int i = 0; i < n; i++){
+                for(int start = 0; start < m; start++){
                     h = 0;
                     v = int.MaxValue;
                     for (int j = start; j < m; j++){
@@ -3514,7 +3515,7 @@ public class Solution
                         }
                     }
                 }
-            }            
+            }           
             return max;
         }
         
@@ -3525,7 +3526,8 @@ public class Solution
             int[] right = new int[m];
             int[] h = new int[m];
             if(n == 0 || m == 0 ) return 0;
-            int area = int.MinValue;
+            for(int i = 0; i < m; i++) right[i] = m;
+            int area = 0;
             for(int i = 0; i < n; i++){
                 int l = 0;
                 int r = m;
@@ -3553,6 +3555,60 @@ public class Solution
             
             return area;
         }
+        
+// Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram. 
+
+
+
+
+// Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
+
+
+
+
+
+// The largest rectangle is shown in the shaded area, which has area = 10 unit.
+
+
+// For example,
+//  Given heights = [2,1,5,6,2,3],
+//                   0, 0, 2, 3, 3, 5
+//  return 10. 
+
+        public int LargestRectangleArea(int[] heights) {
+            int area = 0;
+            int n = heights.Length;
+            if(n == 0) return 0;
+            int[] left = new int[n];
+            int[] right = new int[n];
+            left[0] = -1;
+            right[n-1] = n;
+            
+            for(int i = 1; i < n; i++){
+                if(heights[i] > heights[i-1]){
+                    left[i] = i-1;
+                }else{
+                    int j = i-1;
+                    while(j >= 0 && heights[i] <= heights[j]) j = left[j];
+                    left[i] = j;
+                }
+            }
+            
+            area = Math.Max(area,heights[n-1]*(right[n-1]-left[n-1]-1));
+            
+            for(int i = n-2; i > -1; i--){
+                if(heights[i] > heights[i+1]){
+                    right[i] = i+1;
+                }else{
+                    int j = i+1;
+                    while(j < n && heights[i] <= heights[j])j = right[j];
+                    right[i] = j;
+                }
+                
+                area = Math.Max(area, heights[i]*(right[i]-left[i]-1));
+            }
+            
+            return area;
         }
 }
 
