@@ -10,9 +10,3 @@ C:\github\Algorithm\Coding\Coding\obj\Debug\Coding.exe
 C:\github\Algorithm\Coding\Coding\obj\Debug\Coding.pdb
 C:\github\Algorithm\Coding\Coding\bin\Debug\Coding.pdb
 C:\github\Algorithm\Coding\Coding\obj\Debug\Coding.csprojResolveAssemblyReference.cache
-E:\git\Algorithm\Coding\Coding\bin\Debug\Coding.exe.config
-E:\git\Algorithm\Coding\Coding\obj\Debug\Coding.exe
-E:\git\Algorithm\Coding\Coding\obj\Debug\Coding.pdb
-E:\git\Algorithm\Coding\Coding\bin\Debug\Coding.exe
-E:\git\Algorithm\Coding\Coding\bin\Debug\Coding.pdb
-E:\git\Algorithm\Coding\Coding\obj\Debug\Coding.csprojResolveAssemblyReference.cache
