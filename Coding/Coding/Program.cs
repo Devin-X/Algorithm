@@ -42,6 +42,13 @@ namespace Coding
             m[1, 1] = '0';
             sl.MaximalSquare(m);
             sl.MaximalRectangle(m);
+
+
+            bool m1 =  sl.IsMatch("abefcdgiescdfimde", "ab*cd?i*de");
+            bool m2 = sl.IsMatch2("abefcdgiescdfimde", "ab*cd?i*de");
+
+            
+            m1 = sl.IsMatch2("ab", "*?*?*");
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);

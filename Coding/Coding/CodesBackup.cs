@@ -3454,7 +3454,7 @@ public class Solution
         private int[,] rangeCacheLeft2D;
         private int[] rangeSumCache2D;
         private int rangeSum2DLen = 0;
-        public NumMatrix(int[,] matrix) {
+        public void NumMatrix(int[,] matrix) {
             int n = matrix.GetLength(0);
             int m = matrix.GetLength(1);
             rangeSum2DLen = m;
@@ -3708,7 +3708,153 @@ public class Solution
             
             return ret[amount] == int.MaxValue ? -1 : ret[amount];
         }
-}
+        
+// '?' Matches any single character.
+// '*' Matches any sequence of characters (including the empty sequence).
+
+// The matching should cover the entire input string (not partial).
+
+// The function prototype should be:
+// bool isMatch(const char *s, const char *p)
+
+// Some examples:
+// isMatch("aa","a") → false
+// isMatch("aa","aa") → true
+// isMatch("aaa","aa") → false
+// isMatch("aa", "*") → true
+// isMatch("aa", "a*") → true
+// isMatch("ab", "?*") → true
+// isMatch("aab", "c*a*b") → false
+
+        public bool IsMatch(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            int ret;
+            int[,] match = new int[n, m];
+            if(string.IsNullOrEmpty(s) && string.IsNullOrEmpty(p)) return true;
+            if(string.IsNullOrEmpty(s)){
+                foreach (char c in p)
+                {
+                    if (c != '*') return false;
+                }
+                return true;
+            }
+            if(string.IsNullOrEmpty(p)) return false;
+            
+            if(s[0] != p[0] && p[0] != '?' && p[0] != '*') return false;
+            if(s[0] == p[0] || p[0] == '?') match[0, 0] = 1;
+               
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if(s[i] == p[j] || p[j] == '?'){
+                        match[i, j] = 1;
+                    } 
+                    else if(p[j] == '*'){
+                        if (i > 0 && j > 0){
+                            match[i, j] = 1;
+                            for (int k = i; k < n; k++) match[k, j] = 1;
+                        }                         
+                    }else match[i,j] = 0;
+                }
+            }
+            
+            if(SearchMatch(s, p, n-1, m-1, match) > 0) return true;
+            return false;
+        }
+        
+        private int SearchMatch(string s, string p, int i, int j, int[,] match){
+            if(i < 0 && j < 0) return 1;
+            if(i < 0 || j < 0 || match[i,j] == 0) return 0;
+            if(i >= s.Length) i = s.Length-1;
+            
+            if(s[i] == p[j] || p[j] == '?') return SearchMatch(s, p, i-1, j-1, match);
+            else if(p[j] == '*'){
+                    int k = i;
+                    while(k >= j-1){
+                        if(SearchMatch(s, p, k--, j-1, match) > 0) return 1;    
+                    }   
+                } 
+            
+            
+            return 0;
+        }
+        
+        public bool IsMatch2(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            int[,] match = new int[n, m];
+            if(string.IsNullOrEmpty(s) && string.IsNullOrEmpty(p)) return true;
+            if(string.IsNullOrEmpty(s)){
+                foreach (char c in p)
+                {
+                    if (c != '*') return false;
+                }
+                return true;
+            }
+            if(string.IsNullOrEmpty(p)) return false;
+            
+            if(s[0] != p[0] && p[0] != '?' && p[0] != '*') return false;
+            if(s[0] == p[0] || p[0] == '?' || p[0] == '*') match[0, 0] = 1;
+            
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if(s[i] == p[j] || p[j] == '?'){
+                        if (i > 0 && j > 0) match[i,j] = match[i-1, j-1];
+                        else if(i == 0 && j > 0){
+                           match[i,j] = 1;
+                           for(int k = j-1;  k >= 0; k--){
+                               if(p[k] != '*'){ match[i,j] = 0; break;}
+                           }
+                        }else if(i > 0 && j == 0) match[i,j] = 0;
+                        else match[i,j] = 1;
+                    } 
+                    else if(p[j] == '*'){
+                        if (i > 0 && j > 0){
+                            int k = i;
+                            match[i,j] = 0;
+                            while(k >= 0){
+                                if (match[k--, j - 1] > 0) { match[i, j] = 1; break; }
+                            }
+                        } 
+                        else if (i == 0 && j > 0) match[i,j] = match[i, j-1];
+                        else if (i > 0 && j == 0) match[i,j] = 1;
+                        else match[i,j] = 1;
+                        
+                    }else match[i,j] = 0;
+                }
+            }
+            
+            return match[n-1, m-1] == 1 ? true : false;
+        }
+        
+        public bool IsMatchMostShortAndQuick(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            bool[,] match = new bool[n+1, m+1];
+            
+            match[0,0] = true;
+            for(int j = 1; j < m+1; j++){
+                match[0, j] = match[0, j-1] & p[j] == '*';
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                match[i, 0] = false;
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                for(int j = 1; j < m+1; j++){
+                    if(s[i] == p[j] || p[j] == '?'){
+                        match[i,j] = match[i-1,j-1];
+                    } 
+                    else if(p[j] == '*'){
+                        match[i,j] = match[i-1,j] | match[i, j-1];
+                    } 
+                }
+            }
+            
+            return match[n, m];
+        }
+    }
 
 
 
