@@ -3903,7 +3903,111 @@ public class Solution
             
             return match[n, m];
         }
-    }
+        
+        //Sort a linked list using insertion sort.
+        public ListNode InsertionSortList(ListNode head) {
+            ListNode min = head;
+            ListNode w = head;
+            ListNode newTail = new ListNode(0);
+            newTail.next = head;
+            ListNode minP = newTail;
+            ListNode ret = null;
+            while(w!=null){
+                while(w.next!=null){
+                    if(min.val > w.next.val){
+                        min = w.next;
+                        minP = w;
+                    }
+                    w = w.next;
+                }
+                if(ret == null) ret = min;
+                minP.next = min.next;
+                min.next = newTail.next;
+                newTail.next = min;
+                newTail = newTail.next;
+                minP = min;
+                min = min.next;
+                w = min;
+            }
+            
+            return ret;
+        }
+        
+        public ListNode InsertionSortListFaster(ListNode head) {
+            ListNode pre = head;
+            ListNode next = head;
+            ListNode w = head;
+            ListNode newTail = new ListNode(int.MinValue);
+            newTail.next = null;
+            while(w!=null){
+                next = w.next;
+                w.next = null;
+                if(pre.val < w.val) InsertLinkList(pre, w);
+                else InsertLinkList(newTail, w);
+                pre = w;
+                w = next;
+            }
+            return newTail.next;
+        }
+        
+        private ListNode InsertLinkList(ListNode head, ListNode insert){
+            ListNode p = head;
+            while(p!= null){
+                if(p.val <= insert.val && (p.next == null ||  p.next.val > insert.val)){
+                    insert.next = p.next;
+                    p.next = insert;
+                    break;
+                }
+                p = p.next;
+            }
+            return head;
+        }
+        
+
+// Given an array of non-negative integers, you are initially positioned at the first index of the array. 
+
+// Each element in the array represents your maximum jump length at that position. 
+
+// Determine if you are able to reach the last index. 
+
+// For example:
+//  A = [2,3,1,1,4], return true. 
+
+// A = [3,2,1,0,4], return false. 
+
+        public bool CanJump(int[] nums) {
+            bool[] cache = new bool[nums.Length];
+            for(int i = 0; i < nums.Length; i++) cache[i] = true;
+            return JumpToEnd(nums, 0, cache);
+        }        
+        
+        private bool JumpToEnd(int[] nums, int i, bool[] cache){
+            if(i >= nums.Length) return true;
+            if(nums[i] == 0) return false;
+            if(!cache[i]) return false;
+                        
+            int k = nums[i];
+            while(k>0){
+                if(JumpToEnd(nums, i+(k--)))return true;
+            }
+            
+            cache[i] = false;
+            return false;
+        }
+        
+        public bool CanJumpSuperFast(int[] nums){
+            int max = nums[0];
+            int maxi = 0;
+            int n = nums.Length;
+            int i = 0;
+            for(; i < n; i++){
+                if(i > maxi + max) return false;
+                if(nums[i]+i >=n-1) return true;
+                if(nums[i] >= max-(i-maxi)){max = nums[i]; maxi = i;}
+            }
+            return false;
+        }
+}
 
 
 
