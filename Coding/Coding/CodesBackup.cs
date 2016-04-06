@@ -3834,7 +3834,7 @@ public class Solution
             
             match[0,0] = true;
             for(int j = 1; j < m+1; j++){
-                match[0, j] = match[0, j-1] & p[j] == '*';
+                match[0, j] = match[0, j-1] & p[j-1] == '*';
             }
             
             for(int i = 1; i < n+1; i++){
@@ -3843,11 +3843,60 @@ public class Solution
             
             for(int i = 1; i < n+1; i++){
                 for(int j = 1; j < m+1; j++){
-                    if(s[i] == p[j] || p[j] == '?'){
+                    if(s[i-1] == p[j-1] || p[j-1] == '?'){
                         match[i,j] = match[i-1,j-1];
                     } 
-                    else if(p[j] == '*'){
+                    else if(p[j-1] == '*'){
                         match[i,j] = match[i-1,j] | match[i, j-1];
+                    } 
+                }
+            }
+            
+            return match[n, m];
+        }
+        
+
+// Implement regular expression matching with support for '.' and '*'.
+// '.' Matches any single character.
+// '*' Matches zero or more of the preceding element.
+
+// The matching should cover the entire input string (not partial).
+
+// The function prototype should be:
+// bool isMatch(const char *s, const char *p)
+
+// Some examples:
+// isMatch("aa","a") → false
+// isMatch("aa","aa") → true
+// isMatch("aaa","aa") → false
+// isMatch("aa", "a*") → true
+// isMatch("aa", ".*") → true
+// isMatch("ab", ".*") → true
+// isMatch("aab", "c*a*b") → true
+
+        public bool IsMatchRegex(string s, string p){
+            int n = s.Length;
+            int m = p.Length;
+            bool[,] match = new bool[n+1, m+1];
+            match[0,0] = true;
+            if(m!= 0)
+                match[0,1] = false;
+            for(int j = 2; j < m+1; j++){
+                match[0, j] = match[0, j-2] & p[j-1] == '*';
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                match[i, 0] = false;
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                for(int j = 1; j < m+1; j++){
+                    if(s[i-1] == p[j-1] || p[j-1] == '.'){
+                        match[i,j] = match[i-1,j-1];
+                    } 
+                    else if(p[j-1] == '*'){
+                        if(s[i-1] == p[j-2] || p[j-2] == '.') match[i,j] |= match[i-1,j];
+                        match[i,j] |= match[i, j-2];
                     } 
                 }
             }

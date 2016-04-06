@@ -49,6 +49,9 @@ namespace Coding
 
             
             m1 = sl.IsMatch2("ab", "*?*?*");
+
+
+            m1 = sl.IsMatchRegex("aaa", "ab*a*c*a");
             //MinStack ms = new MinStack();
             //ms.Push(-2);
             //ms.Push(0);
