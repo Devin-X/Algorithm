@@ -4007,6 +4007,174 @@ public class Solution
             }
             return false;
         }
+
+        //        Given a sorted array of integers, find the starting and ending position of a given target value.
+        //        Your algorithm's runtime complexity must be in the order of O(log n).
+        //If the target is not found in the array, return [-1, -1].
+        //For example,
+        //        Given[5, 7, 7, 8, 8, 10] and target value 8,
+        //        return [3, 4]. 
+
+        public int[] SearchRange(int[] nums, int target)
+        {
+            int n = nums.Length;
+            int[] ret = new int[2];
+            ret[0] = BSRangeLeft(nums, target, 0, n - 1);
+            ret[1] = BSRangeRight(nums, target, 0, n - 1);
+            return ret;
+        }
+        private int BSRangeLeft(int[] nums, int target, int start, int end)
+        {
+            if (start > end) return -1;
+            int middle = start + (end - start) / 2;
+            if (nums[middle] == target && (middle == 0 || nums[middle - 1] < target)) return middle;
+            else if (nums[middle] >= target)
+            {
+                return BSRangeLeft(nums, target, start, middle - 1);
+            }
+            return BSRangeLeft(nums, target, middle + 1, end);
+        }
+
+        private int BSRangeRight(int[] nums, int target, int start, int end)
+        {
+            if (start > end) return -1;
+            int middle = start + (end - start) / 2;
+            if (nums[middle] == target && (middle == nums.Length - 1 || nums[middle + 1] > target)) return middle;
+            else if (nums[middle] > target)
+            {
+                return BSRangeRight(nums, target, start, middle - 1);
+            }
+            return BSRangeRight(nums, target, middle + 1, end);
+        }
+
+
+        //  Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target.Return the sum of the three integers.You may assume that each input would have exactly one solution.
+        //  For example, given array S = { -1 2 1 - 4 }, and target = 1.
+
+        //  The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+
+        public int ThreeSumClosest(int[] nums, int target)
+        {
+            int n = nums.Length;
+            System.Array.Sort(nums);
+            int sum3 = 0;
+            int sum2 = 0;
+            int ret = 0;
+            int minDiff = int.MaxValue;
+
+            for (int i = 0; i < n - 2; i++)
+            {
+
+                sum3 = nums[i] + nums[i + 1] + nums[i + 2];
+                if (3 * nums[i] > target)
+                {
+                    if (Math.Abs(target - sum3) < minDiff)
+                    {
+                        minDiff = Math.Abs(target - sum3);
+                        ret = sum3;
+                    }
+                    return ret;
+                }
+
+                int left = i + 1;
+                int right = n - 1;
+
+                if (3 * nums[right] < target) return nums[right] + nums[right - 1] + nums[right - 2];
+                while (left < right)
+                {
+                    sum2 = nums[left] + nums[right];
+                    sum3 = nums[i] + sum2;
+
+
+                    if (Math.Abs(target - sum3) < minDiff)
+                    {
+                        minDiff = Math.Abs(target - sum3);
+                        ret = sum3;
+                    }
+
+                    if (nums[left] + nums[left] > sum2)
+                    {
+                        break;
+                    }
+                    if (sum3 < target) left++;
+                    else right--;
+                }
+            }
+            return ret;
+        }
+
+        //There are two sorted arrays nums1 and nums2 of size m and n respectively.Find the median of the two sorted arrays.The overall run time complexity should be O(log (m+n)).
+
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int n = nums1.Length;
+            int m = nums2.Length;
+            int l = (n + m + 1) / 2;
+            int r = (n + m + 2) / 2;
+            return (MedianBinarySearchFindMth(nums1, 0, nums2, 0, l) + MedianBinarySearchFindMth(nums1, 0, nums2, 0, r)) / 2.0;
+        }
+
+        private int MedianBinarySearchFindMth(int[] a, int ai, int[] b, int bi, int m)
+        {
+            if (ai > a.Length - 1) return b[bi + m - 1];
+            if (bi > b.Length - 1) return a[ai + m - 1];
+            int aM = int.MaxValue;
+            int bM = int.MaxValue;
+            if (m == 1) return Math.Min(a[ai], b[bi]);
+            if (ai + m / 2 - 1 < a.Length) aM = a[ai + m / 2 - 1];
+            if (bi + m / 2 - 1 < b.Length) bM = b[bi + m / 2 - 1];
+
+            if (aM < bM) return MedianBinarySearchFindMth(a, ai + m / 2, b, bi, m - m / 2);
+            else return MedianBinarySearchFindMth(a, ai, b, bi + m / 2, m - m / 2);
+        }
+
+        //Given a digit string, return all possible letter combinations that the number could represent.
+
+        //A mapping of digit to letters(just like on the telephone buttons) is given below.
+
+        public IList<string> LetterCombinations(string digits)
+        {
+            List<string> ret = new List<string>();
+            List<char>[] map = new List<char>[10];
+            char[] s = new char[digits.Length];
+            if (digits.Length == 0) return ret;
+            map[1] = new List<char>();
+            map[2] = new List<char>() { 'a', 'b', 'c' };
+            map[3] = new List<char>() { 'd', 'e', 'f' };
+            map[4] = new List<char>() { 'g', 'h', 'i' };
+            map[5] = new List<char>() { 'j', 'k', 'l' };
+            map[6] = new List<char>() { 'm', 'n', 'o' };
+            map[7] = new List<char>() { 'p', 'q', 'r', 's' };
+            map[8] = new List<char>() { 't', 'u', 'v' };
+            map[9] = new List<char>() { 'w', 'x', 'y', 'z' };
+            map[0] = new List<char>() { ' ' };
+            for(int i = 0; i < digits.Length; i++)
+            {
+                s[i] = map[digits[i] - '0'][0];
+            }
+
+            BTDigits(digits, 0, s, map, ret);
+            return ret;
+        }
+
+        private void BTDigits(string digits, int step, char[] s, List<char>[] map, IList<string> ret)
+        {
+            if (step >= digits.Length)
+            {
+                ret.Add(new string(s));
+                return;
+            }
+
+            BTDigits(digits, step + 1, s, map, ret);
+            int k = digits[step] - '0';
+            for (int i = 1; i < map[k].Count; i++)
+            {
+                s[step] = map[k][i];
+                BTDigits(digits, step + 1, s, map, ret);
+            }
+            s[step] = map[k][0];
+        }
 }
 
 
