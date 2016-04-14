@@ -3429,7 +3429,584 @@ public class Solution
             else if(i==0) return rangeSumCache-rangeCacheRight[j+1];
             else if(j == rangeSumLen-1) return rangeSumCache-rangeCacheLeft[i-1];
             else return rangeSumCache-rangeCacheLeft[i-1]-rangeCacheRight[j+1];
-        }       
+        }
+        
+//  Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+//  Range Sum Query 2D
+//  The above rectangle (with the red border) is defined by (row1, col1) = (2, 1) and (row2, col2) = (4, 3), which contains sum = 8. 
+
+//  Example:
+
+//   Given matrix = [
+//   [3, 0, 1, 4, 2],
+//   [5, 6, 3, 2, 1],
+//   [1, 2, 0, 1, 5],
+//   [4, 1, 0, 1, 7],
+//   [1, 0, 3, 0, 5]
+//   ]
+
+//  sumRegion(2, 1, 4, 3) -> 8
+//  sumRegion(1, 1, 2, 2) -> 11
+//  sumRegion(1, 2, 2, 4) -> 12
+        
+        private int[,] rangeCacheRight2D;
+        private int[,] rangeCacheLeft2D;
+        private int[] rangeSumCache2D;
+        private int rangeSum2DLen = 0;
+        public void NumMatrix(int[,] matrix) {
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            rangeSum2DLen = m;
+            if(n == 0) return;
+            rangeCacheLeft2D = new int[n,m];
+            rangeCacheRight2D = new int[n,m];
+            rangeSumCache2D = new int[n];
+            for(int i = 0; i < n; i++) rangeCacheLeft2D[i,0] = matrix[i,0];
+            for(int j = 0; j < n; j++) rangeCacheRight2D[j, m-1] = matrix[j, m-1];
+            for(int i = 0; i < n; i++) rangeSumCache2D[i] += matrix[i,0];
+            for(int i = 0; i < n; i++){
+                for(int j = 1; j < m; j++){
+                    rangeSumCache2D[i] += matrix[i, j];
+                    rangeCacheLeft2D[i,j] = rangeCacheLeft2D[i, j-1] + matrix[i,j];
+                    rangeCacheRight2D[i,m-1-j] = rangeCacheRight2D[i, m-j] + matrix[i,m-1-j];
+                }
+            }
+        }
+
+        public int SumRegion(int row1, int col1, int row2, int col2) {
+            if(rangeSum2DLen == 0) return 0;
+            int sum = 0;
+            if(col1 == 0 && col2 == rangeSum2DLen-1 || col2 == 0 && col1 == rangeSum2DLen-1){
+                for(int i = row1; i <= row2; i++) sum += rangeSumCache2D[i];
+                return sum;
+            } 
+            else if(col1==0) {
+                for(int i = row1; i <= row2; i++)
+                    sum += rangeSumCache2D[i]-rangeCacheRight2D[i,col2+1];
+                return sum;
+            }
+            else if(col2 == rangeSum2DLen-1){
+                for(int i = row1; i <= row2; i++)  sum += rangeSumCache2D[i] - rangeCacheLeft2D[i,col1-1];
+                return sum;
+            }
+            else{
+                for(int i = row1; i <= row2; i++)
+                    sum += rangeSumCache2D[i] - rangeCacheLeft2D[i,col1-1] - rangeCacheRight2D[i, col2+1];
+                return sum;
+            }
+            
+            return sum;
+        }
+    
+        // Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area. 
+
+        // For example, given the following matrix: 
+        // 1 0 1 0 0
+        // 1 0 1 1 1
+        // 1 1 1 1 1
+        // 1 0 0 1 0
+
+        // Return 4.
+        
+        public int MaximalSquare(char[,] matrix) {
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[,] ret = new int[n,m];
+            int max = 0;
+            if(n==0 && m == 0) return 0;
+            
+            for(int i = 0; i < n; i++){
+                ret[i, 0] = matrix[i,0] == '1' ? 1 : 0;
+                max = Math.Max(ret[i,0], max);
+            } 
+            
+            for(int j = 0; j < m; j++){
+                ret[0, j] = matrix[0,j] == '1' ? 1 : 0;
+                max = Math.Max(ret[0,j], max);
+            }
+            
+            if(n == 1 || m == 1) return max;
+            
+            for(int i = 1; i < n; i++){
+                for(int j = 1; j < m; j++){
+                    if(matrix[i,j] == '0'){ret[i,j] = 0; continue;} 
+                    else if(matrix[i-1,j-1] == '0'){ret[i,j] = 1; continue;}
+                    
+                    int shortSide = (int)Math.Min(Math.Sqrt(ret[i-1,j]), Math.Sqrt(ret[i,j-1]));
+                    int min = (int)Math.Sqrt(ret[i-1,j-1]);
+                    if(min >= shortSide) ret[i,j] = (shortSide+1)*(shortSide+1);
+                    else ret[i,j] = ret[i-1, j-1] + 2 * min + 1;   
+                    
+                    max = Math.Max(ret[i,j], max);
+                }
+            }
+            
+            return max;
+        }
+        
+        //[
+        //    "1010",
+        //    "1011",
+        //    "1011",
+        //    "1111"
+        //]
+        public int MaximalRectangle(char[,] matrix){
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[,] yCache = new int[n,m];
+            int max = 0;
+            if(n==0 && m == 0) return 0;
+                  
+            for(int j = 0; j < m; j++){
+                if(matrix[0,j] == '1') yCache[0,j] = 1;
+                else yCache[0,j] = 0;
+                for(int i = 1; i < n ; i++){
+                    if(matrix[i,j] == '1') yCache[i,j] = yCache[i-1,j] + 1;
+                    else yCache[i,j] = 0;
+                }
+            }
+
+            int h;
+            int v;
+            for(int i = 0; i < n; i++){
+                for(int start = 0; start < m; start++){
+                    h = 0;
+                    v = int.MaxValue;
+                    for (int j = start; j < m; j++){
+                        if(matrix[i,j] == '1'){
+                            h++;
+                            v = Math.Min(yCache[i,j], v);
+                                max = Math.Max(max, v*h);
+                        }else{
+                            h = 0;v = int.MaxValue;
+                        }
+                    }
+                }
+            }           
+            return max;
+        }
+        
+        public int MaxRectangle(char[,] matrix){
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+            int[] left = new int[m];
+            int[] right = new int[m];
+            int[] h = new int[m];
+            if(n == 0 || m == 0 ) return 0;
+            for(int i = 0; i < m; i++) right[i] = m;
+            int area = 0;
+            for(int i = 0; i < n; i++){
+                int l = 0;
+                int r = m;
+                for(int j = 0; j < m; j++){
+                    if(matrix[i,j] == '1'){
+                        h[j]++;
+                        left[j] = Math.Max(l, left[j]);
+                    }else{
+                        l = j+1;
+                        h[j] = 0;
+                        left[j] = 0;
+                    }
+                }
+                
+                for(int j = m-1; j > -1; j--){
+                    if(matrix[i,j] == '1'){
+                        right[j] = Math.Min(r, right[j]);
+                        area = Math.Max(area, h[j] * (right[j] - left[j]));
+                    }else{
+                        right[j] = m;
+                        r = j;
+                    }
+                }
+            }
+            
+            return area;
+        }
+        
+// Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram. 
+
+
+
+
+// Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
+
+
+
+
+
+// The largest rectangle is shown in the shaded area, which has area = 10 unit.
+
+
+// For example,
+//  Given heights = [2,1,5,6,2,3],
+//                   0, 0, 2, 3, 3, 5
+//  return 10. 
+
+        public int LargestRectangleArea(int[] heights) {
+            int area = 0;
+            int n = heights.Length;
+            if(n == 0) return 0;
+            int[] left = new int[n];
+            int[] right = new int[n];
+            left[0] = -1;
+            right[n-1] = n;
+            
+            for(int i = 1; i < n; i++){
+                if(heights[i] > heights[i-1]){
+                    left[i] = i-1;
+                }else{
+                    int j = i-1;
+                    while(j >= 0 && heights[i] <= heights[j]) j = left[j];
+                    left[i] = j;
+                }
+            }
+            
+            area = Math.Max(area,heights[n-1]*(right[n-1]-left[n-1]-1));
+            
+            for(int i = n-2; i > -1; i--){
+                if(heights[i] > heights[i+1]){
+                    right[i] = i+1;
+                }else{
+                    int j = i+1;
+                    while(j < n && heights[i] <= heights[j])j = right[j];
+                    right[i] = j;
+                }
+                
+                area = Math.Max(area, heights[i]*(right[i]-left[i]-1));
+            }
+            
+            return area;
+        }
+
+
+// // You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. 
+
+// // Example 1:
+// //  coins = [1, 2, 5], amount = 11
+// //  return 3 (11 = 5 + 5 + 1) 
+
+// // Example 2:
+// //  coins = [2], amount = 3
+// //  return -1. 
+             
+        public int CoinChange(int[] coins, int amount){
+            int n = coins.Length;
+            int[] ret = new int[amount+1];
+            
+            for(int i = 0; i <= amount ;i++){
+                ret[i] = int.MaxValue;
+            }
+            
+            ret[0] = 0;
+            
+            for(int a = 1; a <= amount; a++){
+                for(int i = 0; i < n; i++){  
+                    if(a >= coins[i] && ret[a-coins[i]] != int.MaxValue)  ret[a] = Math.Min(ret[a-coins[i]]+1, ret[a]);
+                }
+            }
+            
+            return ret[amount] == int.MaxValue ? -1 : ret[amount];
+        }
+        
+// '?' Matches any single character.
+// '*' Matches any sequence of characters (including the empty sequence).
+
+// The matching should cover the entire input string (not partial).
+
+// The function prototype should be:
+// bool isMatch(const char *s, const char *p)
+
+// Some examples:
+// isMatch("aa","a") → false
+// isMatch("aa","aa") → true
+// isMatch("aaa","aa") → false
+// isMatch("aa", "*") → true
+// isMatch("aa", "a*") → true
+// isMatch("ab", "?*") → true
+// isMatch("aab", "c*a*b") → false
+
+        public bool IsMatch(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            int ret;
+            int[,] match = new int[n, m];
+            if(string.IsNullOrEmpty(s) && string.IsNullOrEmpty(p)) return true;
+            if(string.IsNullOrEmpty(s)){
+                foreach (char c in p)
+                {
+                    if (c != '*') return false;
+                }
+                return true;
+            }
+            if(string.IsNullOrEmpty(p)) return false;
+            
+            if(s[0] != p[0] && p[0] != '?' && p[0] != '*') return false;
+            if(s[0] == p[0] || p[0] == '?') match[0, 0] = 1;
+               
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if(s[i] == p[j] || p[j] == '?'){
+                        match[i, j] = 1;
+                    } 
+                    else if(p[j] == '*'){
+                        if (i > 0 && j > 0){
+                            match[i, j] = 1;
+                            for (int k = i; k < n; k++) match[k, j] = 1;
+                        }                         
+                    }else match[i,j] = 0;
+                }
+            }
+            
+            if(SearchMatch(s, p, n-1, m-1, match) > 0) return true;
+            return false;
+        }
+        
+        private int SearchMatch(string s, string p, int i, int j, int[,] match){
+            if(i < 0 && j < 0) return 1;
+            if(i < 0 || j < 0 || match[i,j] == 0) return 0;
+            if(i >= s.Length) i = s.Length-1;
+            
+            if(s[i] == p[j] || p[j] == '?') return SearchMatch(s, p, i-1, j-1, match);
+            else if(p[j] == '*'){
+                    int k = i;
+                    while(k >= j-1){
+                        if(SearchMatch(s, p, k--, j-1, match) > 0) return 1;    
+                    }   
+                } 
+            
+            
+            return 0;
+        }
+        
+        public bool IsMatch2(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            int[,] match = new int[n, m];
+            if(string.IsNullOrEmpty(s) && string.IsNullOrEmpty(p)) return true;
+            if(string.IsNullOrEmpty(s)){
+                foreach (char c in p)
+                {
+                    if (c != '*') return false;
+                }
+                return true;
+            }
+            if(string.IsNullOrEmpty(p)) return false;
+            
+            if(s[0] != p[0] && p[0] != '?' && p[0] != '*') return false;
+            if(s[0] == p[0] || p[0] == '?' || p[0] == '*') match[0, 0] = 1;
+            
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if(s[i] == p[j] || p[j] == '?'){
+                        if (i > 0 && j > 0) match[i,j] = match[i-1, j-1];
+                        else if(i == 0 && j > 0){
+                           match[i,j] = 1;
+                           for(int k = j-1;  k >= 0; k--){
+                               if(p[k] != '*'){ match[i,j] = 0; break;}
+                           }
+                        }else if(i > 0 && j == 0) match[i,j] = 0;
+                        else match[i,j] = 1;
+                    } 
+                    else if(p[j] == '*'){
+                        if (i > 0 && j > 0){
+                            int k = i;
+                            match[i,j] = 0;
+                            while(k >= 0){
+                                if (match[k--, j - 1] > 0) { match[i, j] = 1; break; }
+                            }
+                        } 
+                        else if (i == 0 && j > 0) match[i,j] = match[i, j-1];
+                        else if (i > 0 && j == 0) match[i,j] = 1;
+                        else match[i,j] = 1;
+                        
+                    }else match[i,j] = 0;
+                }
+            }
+            
+            return match[n-1, m-1] == 1 ? true : false;
+        }
+        
+        public bool IsMatchMostShortAndQuick(string s, string p) {
+            int n = s.Length;
+            int m = p.Length;
+            bool[,] match = new bool[n+1, m+1];
+            
+            match[0,0] = true;
+            for(int j = 1; j < m+1; j++){
+                match[0, j] = match[0, j-1] & p[j-1] == '*';
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                match[i, 0] = false;
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                for(int j = 1; j < m+1; j++){
+                    if(s[i-1] == p[j-1] || p[j-1] == '?'){
+                        match[i,j] = match[i-1,j-1];
+                    } 
+                    else if(p[j-1] == '*'){
+                        match[i,j] = match[i-1,j] | match[i, j-1];
+                    } 
+                }
+            }
+            
+            return match[n, m];
+        }
+        
+
+// Implement regular expression matching with support for '.' and '*'.
+// '.' Matches any single character.
+// '*' Matches zero or more of the preceding element.
+
+// The matching should cover the entire input string (not partial).
+
+// The function prototype should be:
+// bool isMatch(const char *s, const char *p)
+
+// Some examples:
+// isMatch("aa","a") → false
+// isMatch("aa","aa") → true
+// isMatch("aaa","aa") → false
+// isMatch("aa", "a*") → true
+// isMatch("aa", ".*") → true
+// isMatch("ab", ".*") → true
+// isMatch("aab", "c*a*b") → true
+
+        public bool IsMatchRegex(string s, string p){
+            int n = s.Length;
+            int m = p.Length;
+            bool[,] match = new bool[n+1, m+1];
+            match[0,0] = true;
+            if(m!= 0)
+                match[0,1] = false;
+            for(int j = 2; j < m+1; j++){
+                match[0, j] = match[0, j-2] & p[j-1] == '*';
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                match[i, 0] = false;
+            }
+            
+            for(int i = 1; i < n+1; i++){
+                for(int j = 1; j < m+1; j++){
+                    if(s[i-1] == p[j-1] || p[j-1] == '.'){
+                        match[i,j] = match[i-1,j-1];
+                    } 
+                    else if(p[j-1] == '*'){
+                        if(s[i-1] == p[j-2] || p[j-2] == '.') match[i,j] |= match[i-1,j];
+                        match[i,j] |= match[i, j-2];
+                    } 
+                }
+            }
+            
+            return match[n, m];
+        }
+        
+        //Sort a linked list using insertion sort.
+        public ListNode InsertionSortList(ListNode head) {
+            ListNode min = head;
+            ListNode w = head;
+            ListNode newTail = new ListNode(0);
+            newTail.next = head;
+            ListNode minP = newTail;
+            ListNode ret = null;
+            while(w!=null){
+                while(w.next!=null){
+                    if(min.val > w.next.val){
+                        min = w.next;
+                        minP = w;
+                    }
+                    w = w.next;
+                }
+                if(ret == null) ret = min;
+                minP.next = min.next;
+                min.next = newTail.next;
+                newTail.next = min;
+                newTail = newTail.next;
+                minP = min;
+                min = min.next;
+                w = min;
+            }
+            
+            return ret;
+        }
+        
+        public ListNode InsertionSortListFaster(ListNode head) {
+            ListNode pre = head;
+            ListNode next = head;
+            ListNode w = head;
+            ListNode newTail = new ListNode(int.MinValue);
+            newTail.next = null;
+            while(w!=null){
+                next = w.next;
+                w.next = null;
+                if(pre.val < w.val) InsertLinkList(pre, w);
+                else InsertLinkList(newTail, w);
+                pre = w;
+                w = next;
+            }
+            return newTail.next;
+        }
+        
+        private ListNode InsertLinkList(ListNode head, ListNode insert){
+            ListNode p = head;
+            while(p!= null){
+                if(p.val <= insert.val && (p.next == null ||  p.next.val > insert.val)){
+                    insert.next = p.next;
+                    p.next = insert;
+                    break;
+                }
+                p = p.next;
+            }
+            return head;
+        }
+        
+
+// Given an array of non-negative integers, you are initially positioned at the first index of the array. 
+
+// Each element in the array represents your maximum jump length at that position. 
+
+// Determine if you are able to reach the last index. 
+
+// For example:
+//  A = [2,3,1,1,4], return true. 
+
+// A = [3,2,1,0,4], return false. 
+
+        public bool CanJump(int[] nums) {
+            bool[] cache = new bool[nums.Length];
+            for(int i = 0; i < nums.Length; i++) cache[i] = true;
+            return JumpToEnd(nums, 0, cache);
+        }        
+        
+        private bool JumpToEnd(int[] nums, int i, bool[] cache){
+            if(i >= nums.Length) return true;
+            if(nums[i] == 0) return false;
+            if(!cache[i]) return false;
+                        
+            int k = nums[i];
+            while(k>0){
+                if(JumpToEnd(nums, i+(k--)))return true;
+            }
+            
+            cache[i] = false;
+            return false;
+        }
+        
+        public bool CanJumpSuperFast(int[] nums){
+            int max = nums[0];
+            int maxi = 0;
+            int n = nums.Length;
+            int i = 0;
+            for(; i < n; i++){
+                if(i > maxi + max) return false;
+                if(nums[i]+i >=n-1) return true;
+                if(nums[i] >= max-(i-maxi)){max = nums[i]; maxi = i;}
+            }
+            return false;
+        }
 }
 
 
