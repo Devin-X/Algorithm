@@ -3546,7 +3546,7 @@ namespace Coding
                 return sum;
             }
 
-            return sum;
+
         }
 
         // Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area. 
@@ -3806,7 +3806,6 @@ namespace Coding
         {
             int n = s.Length;
             int m = p.Length;
-            int ret;
             int[,] match = new int[n, m];
             if (string.IsNullOrEmpty(s) && string.IsNullOrEmpty(p)) return true;
             if (string.IsNullOrEmpty(s))
