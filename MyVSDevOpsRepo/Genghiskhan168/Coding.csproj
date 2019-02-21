@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC081910-3C69-48E3-8BA2-9615F9165CB4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Coding</RootNamespace>
+    <AssemblyName>Coding</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Array\DeleteLinkedListNode.cs" />
+    <Compile Include="Array\FindMaxSubArraySumWithDuplicate.cs" />
+    <Compile Include="Array\FistMissingInteger.cs" />
+    <Compile Include="Array\GroupNumbers.cs" />
+    <Compile Include="Array\MinWindowString.cs" />
+    <Compile Include="Array\ProductExceptItselfSolution.cs" />
+    <Compile Include="ClassDefinition.cs" />
+    <Compile Include="CombineMax.cs" />
+    <Compile Include="Array\getMaxSubArraySum.cs" />
+    <Compile Include="CountDigitOne.cs" />
+    <Compile Include="DP\DecodingWays.cs" />
+    <Compile Include="DP\DistinctSubSequences.cs" />
+    <Compile Include="DP\HouseRobber.cs" />
+    <Compile Include="DP\Interleave.cs" />
+    <Compile Include="DP\MaxAccendingSubSeq.cs" />
+    <Compile Include="DP\PrintParathesies.cs" />
+    <Compile Include="DP\RegexMatch.cs" />
+    <Compile Include="goog\BASH_Brace.cs" />
+    <Compile Include="goog\Calculator.cs" />
+    <Compile Include="Graph\CloneGraphI.cs" />
+    <Compile Include="Combi-Permu\Combination.cs" />
+    <Compile Include="Divideby235.cs" />
+    <Compile Include="FindClosestShareFather.cs" />
+    <Compile Include="Combi-Permu\FullPermutation.cs" />
+    <Compile Include="Graph\FindConnectedGraph.cs" />
+    <Compile Include="H2O.cs" />
+    <Compile Include="HighestInterval.cs" />
+    <Compile Include="goog\KSwap.cs" />
+    <Compile Include="DP\MaxRectangle.cs" />
+    <Compile Include="InsertIntervalSolution.cs" />
+    <Compile Include="LinkList.cs" />
+    <Compile Include="MakeChange.cs" />
+    <Compile Include="MaxBitWindowFlip.cs" />
+    <Compile Include="MaxNumOfCars.cs" />
+    <Compile Include="Array\MaxSubProduction.cs" />
+    <Compile Include="DP\MinPath.cs" />
+    <Compile Include="DP\MousesandHoles.cs" />
+    <Compile Include="MaxSlidingWindow.cs" />
+    <Compile Include="PowerOfThree.cs" />
+    <Compile Include="QuickSort.cs" />
+    <Compile Include="SortLinkedList.cs" />
+    <Compile Include="Stack\MinStack.cs" />
+    <Compile Include="SumRootToLeafNumbers.cs" />
+    <Compile Include="Tree\IsBST.cs" />
+    <Compile Include="Tree\LCABST.cs" />
+    <Compile Include="Tree\MaxTreeNodePathSum.cs" />
+    <Compile Include="Palindrome.cs" />
+    <Compile Include="Parethesis.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReverseWordsInString.cs" />
+    <Compile Include="Sorting.cs" />
+    <Compile Include="DP\Stock.cs" />
+    <Compile Include="SubSet.cs" />
+    <Compile Include="Tree\TreeNextRightPointers.cs" />
+    <Compile Include="DP\Triangle.cs" />
+    <Compile Include="DP\UniqueBST.cs" />
+    <Compile Include="DP\UniquePath.cs" />
+    <Compile Include="WebRequestTest.cs" />
+    <Compile Include="DP\WordBreaker.cs" />
+    <Compile Include="Graph\WordsLadderLength.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+    <Compile Include="CodesBackup.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
