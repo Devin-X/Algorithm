@@ -1,7 +1,0 @@
-/Users/chenneo/Algorithm/Coding/Coding/obj/Debug/Coding.csprojResolveAssemblyReference.cache
-/Users/chenneo/Algorithm/Coding/Coding/obj/Debug/Coding.csproj.CoreCompileInputs.cache
-/Users/chenneo/Algorithm/Coding/Coding/bin/Debug/Coding.exe.config
-/Users/chenneo/Algorithm/Coding/Coding/bin/Debug/Coding.exe
-/Users/chenneo/Algorithm/Coding/Coding/bin/Debug/Coding.pdb
-/Users/chenneo/Algorithm/Coding/Coding/obj/Debug/Coding.exe
-/Users/chenneo/Algorithm/Coding/Coding/obj/Debug/Coding.pdb
