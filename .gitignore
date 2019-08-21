@@ -2,6 +2,6 @@
 coding/bin/*
 .DS_Store
 .DS_Store/*
-coding/obj/*
+Coding/Coding/obj/*
 .vs/*
 **/.vs
