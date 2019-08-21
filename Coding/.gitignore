@@ -1,4 +1,6 @@
 .idea*
+coding/.DS_Store
+coding/bin/*
 ../.DS_Store
-bin/*
-obj/*
+.DS_Store
+coding/obj/*
