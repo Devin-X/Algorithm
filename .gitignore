@@ -1,0 +1,7 @@
+.idea*
+coding/bin/*
+.DS_Store
+.DS_Store/*
+coding/obj/*
+.vs/*
+**/.vs
